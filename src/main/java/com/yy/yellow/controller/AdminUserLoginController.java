@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(method=RequestMethod.GET)
+@RequestMapping(method=RequestMethod.POST)
 public class AdminUserLoginController {
 	
 	@RequestMapping("/adminUserLogin")
