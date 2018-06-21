@@ -12,34 +12,32 @@ public class Page {
 	private int showCount = 5; //显示当前页，前几页，或后几页的页数，默认为5
 	
 	public Page(int pageSize) {
-		this.pageSize = pageSize;
+		setPageSize(pageSize);
 	}
 	
 	public Page(int pageSize, int pageNo) {
-		this.pageSize = pageSize;
-		this.pageNo = pageNo;
+		this(pageSize);
+		setPageNo(pageNo);
 	}
 	
-	public Page(int pageSize, int pageNo, int rowCount) {
-		this.pageSize = pageSize;
-		this.pageNo = pageNo;
-		this.rowCount = rowCount;
-	}
-	
-	public Page(int pageSize, int pageNo, int rowCount, int showCount) {
-		this.pageSize = pageSize;
-		this.pageNo = pageNo;
-		this.rowCount = rowCount;
+	public Page(int pageSize, int pageNo, int showCount) {
+		this(pageSize, pageNo);
 		this.showCount = showCount;
 	}
 	
 	//设置pageSize
 	public void setPageSize(int pageSize) {
+		if(pageSize <= 0) {
+			throw new RuntimeException("pageSize必须大于零");
+		}
 		this.pageSize = pageSize;
 	}
 	
 	//设置pageNo
 	public void setPageNo(int pageNo) {
+		if(pageNo <= 0) {
+			throw new RuntimeException("pageNo必须大于零");
+		}
 		this.pageNo = pageNo;
 	}
 	
@@ -56,6 +54,11 @@ public class Page {
 	//得到查询起始索引，从0开始
 	public int getBeginIndex() {
 		return (this.pageNo - 1) * this.pageSize;
+	}
+	
+	//返回pageSize;
+	public int getPageSize() {
+		return pageSize;
 	}
 	
 	//得到总页数
