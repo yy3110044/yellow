@@ -14,6 +14,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Util {
 	private Util() {}
 	
@@ -169,6 +172,20 @@ public class Util {
 		}
 		public void setServerUrl(String serverUrl) {
 			this.serverUrl = serverUrl;
+		}
+	}
+	
+	/**
+	 * 将对象转换成json字符串
+	 * @param o
+	 * @return
+	 */
+	public static String toJsonStr(Object o) {
+		try {
+			return new ObjectMapper().writeValueAsString(o);
+		} catch (JsonProcessingException e) {
+			logger.error(o.toString() + "：转换json错误：" + e.toString());
+			throw new RuntimeException(e);
 		}
 	}
 }
