@@ -9,4 +9,3 @@ CREATE TABLE `yellow_admin_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `userName` (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `yellow_admin_user` VALUE (null, 'admin', 'e10adc3949ba59abbe56e057f20f883e', now());

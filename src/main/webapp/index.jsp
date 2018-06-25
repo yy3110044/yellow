@@ -89,6 +89,7 @@ var paths = [
 	//后台管理员登陆接口
 	{"path":"adminUserLogin", "paramNames":["userName", "passWord"]},
 	{"path":"adminUserLogout", "paramNames":[]},
+	{"path":"addAdminUser", "paramNames":["userName", "passWord"]},
 	
 	//后台管理接口
 	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord1", "newPassWord2"]},
