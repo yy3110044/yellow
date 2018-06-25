@@ -91,7 +91,8 @@ var paths = [
 	{"path":"adminUserLogout", "paramNames":[]},
 	
 	//后台管理接口
-	{"path":"administration/modifyPassWord", "paramNames":["oldPassWord", "newPassWord1", "newPassWord2"]}
+	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord1", "newPassWord2"]},
+	{"path":"administration/getWebsiteInfo", "paramNames":[]}
 ];
 
 $(document).ready(function(){
@@ -115,7 +116,7 @@ $(document).ready(function(){
 		<tbody>
 			<tr>
 				<td>URL:</td>
-				<td>${basePath}&nbsp;<input type="text" id="path" style="width:200px;">&nbsp;<select id="pathSelect" onchange="pathSelectChange()"></select></td>
+				<td>${basePath}&nbsp;<input type="text" id="path" style="width:300px;">&nbsp;<select id="pathSelect" onchange="pathSelectChange()"></select></td>
 			</tr>
 			<tr>
 				<td>参数:</td>

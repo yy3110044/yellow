@@ -1,6 +1,5 @@
 package com.yy.yellow.util;
 
-import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
@@ -12,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ResponseObject {
 	private int code;
 	private String msg;
-	private Map<String, Object> result;
+	private Object result;
 	public ResponseObject() {}
 	
 	public ResponseObject(int code, String msg) {
@@ -20,7 +19,7 @@ public class ResponseObject {
 		this.msg = msg;
 	}
 	
-	public ResponseObject(int code, String msg, Map<String, Object> result) {
+	public ResponseObject(int code, String msg, Object result) {
 		this(code, msg);
 		this.result = result;
 	}
@@ -33,7 +32,7 @@ public class ResponseObject {
 		return msg;
 	}
 
-	public Map<String, Object> getResult() {
+	public Object getResult() {
 		return result;
 	}
 
@@ -45,7 +44,7 @@ public class ResponseObject {
 		this.msg = msg;
 	}
 
-	public void setResult(Map<String, Object> result) {
+	public void setResult(Object result) {
 		this.result = result;
 	}
 }

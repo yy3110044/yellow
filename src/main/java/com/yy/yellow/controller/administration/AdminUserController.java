@@ -1,7 +1,6 @@
 package com.yy.yellow.controller.administration;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +25,8 @@ public class AdminUserController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/modifyPassWord")
-	public ResponseObject modifyPassWord(@RequestParam String oldPassWord, @RequestParam String newPassWord1, @RequestParam String newPassWord2, HttpServletRequest req) {
+	@RequestMapping("/modifyAdminUserPassWord")
+	public ResponseObject modifyAdminUserPassWord(@RequestParam String oldPassWord, @RequestParam String newPassWord1, @RequestParam String newPassWord2, HttpServletRequest req) {
 		int adminUserId = (Integer)req.getAttribute("adminUserId");
 
 		if(!newPassWord1.equals(newPassWord2)) {
