@@ -24,7 +24,7 @@ public class AdminUserLoginController {
 	@Autowired
 	private AdminUserService aus;
 	
-	@Value("${web.config.upload.addAdminUser}")
+	@Value("${web.config.addAdminUser}")
 	private boolean addAdminUser;
 	
 	/**
