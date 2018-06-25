@@ -7,6 +7,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -99,8 +101,8 @@ public class Util {
 	}
 	
 	//保存上传文件方法
-	public static SaveFileResult saveFile(MultipartFile file, ServletContext context, String uploadPath) {
-		SaveFileResult saveFileResult = new SaveFileResult();
+	public static ResponseObject saveFile(MultipartFile file, ServletContext context, String uploadPath) {
+		ResponseObject ro = new ResponseObject();
 		
 		if(file != null && file.getSize() > 0) {
 			CreateFolderResult result = getBaseFolder(context, uploadPath);
@@ -111,20 +113,22 @@ public class Util {
 			
 			try {
 				file.transferTo(newFile);
-				saveFileResult.setCode(100);
-				saveFileResult.setMsg("文件上传成功");
-				saveFileResult.setServerUrl(result.baseUrl + newFileName);
+				ro.setCode(100);
+				ro.setMsg("文件上传成功");
+				Map<String, Object> roResult = new HashMap<String, Object>();
+				roResult.put("serverUrl", result.baseUrl + newFileName);
+				ro.setResult(roResult);
 				logger.debug(newFile.getPath());
 			} catch (IllegalStateException | IOException e) {
-				saveFileResult.setCode(102);
-				saveFileResult.setMsg("文件上传失败");
+				ro.setCode(102);
+				ro.setMsg("文件上传失败");
 				logger.warn(e.toString());
 			}
 		} else {
-			saveFileResult.setCode(101);
-			saveFileResult.setMsg("上传文件为空");
+			ro.setCode(101);
+			ro.setMsg("上传文件为空");
 		}
-		return saveFileResult;
+		return ro;
 	}
 	private static CreateFolderResult getBaseFolder(ServletContext context, String uploadPath) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -148,30 +152,6 @@ public class Util {
 		public CreateFolderResult(File baseFolder, String baseUrl) {
 			this.baseFolder = baseFolder;
 			this.baseUrl = baseUrl;
-		}
-	}
-	//文件保存结果类
-	public static class SaveFileResult {
-		private int code; //结果代码 100：文件上传成功，101：上传文件为空，102：文件上传失败
-		private String msg; //结果信息
-		private String serverUrl; //保存成功后，在服务器上的url
-		public int getCode() {
-			return code;
-		}
-		public void setCode(int code) {
-			this.code = code;
-		}
-		public String getMsg() {
-			return msg;
-		}
-		public void setMsg(String msg) {
-			this.msg = msg;
-		}
-		public String getServerUrl() {
-			return serverUrl;
-		}
-		public void setServerUrl(String serverUrl) {
-			this.serverUrl = serverUrl;
 		}
 	}
 	

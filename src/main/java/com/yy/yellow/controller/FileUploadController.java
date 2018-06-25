@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import com.yy.yellow.util.ResponseObject;
 import com.yy.yellow.util.Util;
-import com.yy.yellow.util.Util.SaveFileResult;
 
 /**
  * 文件上传controller
@@ -20,7 +20,7 @@ public class FileUploadController {
 	private String uploadPath;
 	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
-	public SaveFileResult upload(MultipartFile file, HttpServletRequest req) {
+	public ResponseObject upload(MultipartFile file, HttpServletRequest req) {
 		return Util.saveFile(file, req.getServletContext(), uploadPath);
 	}
 }
