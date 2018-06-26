@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>spring boot参数配置</comment>
+
+	<!-- web配置，若在web容器里运行，此参数无效 -->
+	<entry key="server.port">8080</entry>
+	<entry key="server.servlet.context-path">/yellow</entry>
+	
+	<!-- 数据库连接配置 -->
+	<entry key="spring.datasource.url">jdbc:mysql://47.92.88.95:3306/yellow?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</entry>
+	<entry key="spring.datasource.username">yellow</entry>
+	<entry key="spring.datasource.password">twepsxXyabi6i4XZ</entry>
+	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
+
+	<!-- 日志相关配置 TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
+	<entry key="logging.file">/tmp/testlogs/yellow/yellow.log</entry>
+	<entry key="logging.level.com.yy.yellow">DEBUG</entry>
+	<entry key="logging.level.org.mybatis">DEBUG</entry>
+	
+	<!-- jackson时间格式设置 -->
+	<entry key="spring.jackson.date-format">yyyy-MM-dd HH:mm:ss</entry>
+	<entry key="spring.jackson.time-zone">GMT+8</entry>
+
+	<!-- 网站相关配置 -->
+	<entry key="web.config.upload.path">/upload</entry><!-- 上传文件目录，以webapp目录为基目录 -->
+	<entry key="web.config.addAdminUser">true</entry><!-- 此参数为true时，可以直接添加一个后台管理员，请在生产环境将此参数设为false -->
+	<entry key="web.config.cache.clearDelay">60</entry><!-- 定时清除无效缓存的间隔时间，单位：分 -->
+	<entry key="web.config.token.expirationTime">360</entry><!-- token过期时间，单位：小时 -->
+
+</properties>

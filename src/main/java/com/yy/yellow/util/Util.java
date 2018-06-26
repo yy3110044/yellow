@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -162,7 +161,7 @@ public class Util {
 	 */
 	public static String toJsonStr(Object o) {
 		try {
-			return new ObjectMapper().writeValueAsString(o);
+			return new ObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).writeValueAsString(o);
 		} catch (JsonProcessingException e) {
 			logger.error(o.toString() + "：转换json错误：" + e.toString());
 			throw new RuntimeException(e);

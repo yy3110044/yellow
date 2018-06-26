@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("cache")
 public class Cache {
-	public Cache(@Value("${web.config.cache.clearDelay}") final long clearDelay) {//从application.properties中读取清除时间间隔
+	public Cache(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.properties中读取清除时间间隔
 		if(clearDelay < 1) {
 			throw new RuntimeException("clearDelay必须大于零");
 		}
@@ -37,7 +37,6 @@ public class Cache {
 						break;
 					}
 				}
-				System.out.println(clearDelay);
 			}
 		}, clearDelay, clearDelay, TimeUnit.MINUTES);
 	}
@@ -49,17 +48,20 @@ public class Cache {
 	private Map<String, CacheObject> cacheMap;
 	
 	//缓存一个数据，永久有效
-	public void set(String key, Object value) {
+	public void set(CacheKeyPre pre, String key, Object value) {
+		key = pre + ":" + key;
 		this.cacheMap.put(key, new CacheObject(key, value));
 	}
 	
 	//缓存一个数据，并设置有效时间，单位：秒
-	public void set(String key, Object value, int seconds) {
+	public void set(CacheKeyPre pre, String key, Object value, int seconds) {
+		key = pre + ":" + key;
 		this.cacheMap.put(key, new CacheObject(key, value, System.currentTimeMillis() + seconds * 1000));
 	}
 	
 	//取出一个数据
-	public Object get(String key) {
+	public Object get(CacheKeyPre pre, String key) {
+		key = pre + ":" + key;
 		CacheObject co = this.cacheMap.get(key);
 		if(co != null) {
 			if(co.expirationTime > System.currentTimeMillis()) { //未过期
@@ -72,14 +74,25 @@ public class Cache {
 			return null;
 		}
 	}
-	public Integer getInt(String key) {
-		return (Integer)get(key);
+	public Integer getInt(CacheKeyPre pre, String key) {
+		return (Integer)get(pre, key);
 	}
-	public Double getDouble(String key) {
-		return (Double)get(key);
+	public Double getDouble(CacheKeyPre pre, String key) {
+		return (Double)get(pre, key);
 	}
-	public String getString(String key) {
-		return (String)get(key);
+	public String getString(CacheKeyPre pre, String key) {
+		return (String)get(pre, key);
+	}
+	
+	//删除一个缓存
+	public Object remove(CacheKeyPre pre, String key) {
+		key = pre + ":" + key;
+		CacheObject co = this.cacheMap.remove(key);
+		if(co != null) {
+			return co.value;
+		} else {
+			return null;
+		}
 	}
 	
 	//返回缓存数量

@@ -86,6 +86,14 @@ var pathChange = function(index){
 
 //服务端接口定义
 var paths = [
+	//用户接口
+	{"path":"userRegistry", "paramNames":["userName", "passWord1", "passWord2", "nickName", "email", "yzm"]},
+	{"path":"userLogin", "paramNames":["loginType", "userName", "passWord"]},
+	{"path":"userLogout", "paramNames":["token"]},
+	
+	//用户中心接口
+	{"path":"user/getUserInfo", "paramNames":["token"]},
+	
 	//后台管理员登陆接口
 	{"path":"adminUserLogin", "paramNames":["userName", "passWord"]},
 	{"path":"adminUserLogout", "paramNames":[]},
