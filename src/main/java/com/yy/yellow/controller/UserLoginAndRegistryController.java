@@ -2,7 +2,6 @@ package com.yy.yellow.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import com.google.code.kaptcha.Constants;
 import com.yy.yellow.po.User;
 import com.yy.yellow.service.UserService;
 import com.yy.yellow.util.Cache;
-import com.yy.yellow.util.CacheKeyPre;
+import com.yy.yellow.util.LoginManager;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.ResponseObject;
 
@@ -49,25 +48,12 @@ public class UserLoginAndRegistryController {
 		if(user == null) {
 			return new ResponseObject(101, "用户名或密码错误");
 		}
-
-		if("web".equals(loginType)) { //web登陆
-			session.setAttribute("userId", user.getId());
+		
+		if("web".equals(loginType)) {
+			LoginManager.webLogin(user.getId(), cache, session);
 			return new ResponseObject(100, "web登陆成功");
-		} else if("app".equals(loginType)) { //app登陆
-			//先检查此用户有没有登陆过，如果有，则删除以前的token
-			String token = cache.getString(CacheKeyPre.user_current_token, String.valueOf(user.getId()));
-			if(token != null) { //删除以前的token缓存
-				cache.remove(CacheKeyPre.token, token);
-			}
-			
-			//创建新的token，使用uuid作为token
-			token = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-			
-			//将新的当前用户token覆盖原来的token
-			int seconds = tokenExpirationTime * 60 * 60;
-			cache.set(CacheKeyPre.user_current_token, String.valueOf(user.getId()), token, seconds);
-			cache.set(CacheKeyPre.token, token, user.getId(), seconds);
-			
+		} else if("app".equals(loginType)) {
+			String token = LoginManager.appLogin(user.getId(), cache, tokenExpirationTime);
 			Map<String, Object> result = new HashMap<String, Object>();
 			result.put("token", token);
 			return new ResponseObject(100, "app登陆成功", result);
@@ -82,13 +68,8 @@ public class UserLoginAndRegistryController {
 	 */
 	@RequestMapping("/userLogout")
 	public ResponseObject logout(String token, HttpSession session) {
-		session.removeAttribute("userId");
-		if(token != null) {
-			Integer userId = (Integer)cache.remove(CacheKeyPre.token, token);
-			if(userId != null) {
-				cache.remove(CacheKeyPre.user_current_token, userId.toString());
-			}
-		}
+		LoginManager.appLogout(token, cache);
+		LoginManager.webLogout(session);
 		return new ResponseObject(100, "退出登陆成功");
 	}
 	

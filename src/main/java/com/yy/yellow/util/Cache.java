@@ -27,16 +27,7 @@ public class Cache {
 		this.service.scheduleWithFixedDelay(new Runnable() {
 			@Override
 			public void run() {
-				List<CacheObject> coList = new ArrayList<CacheObject>(cacheMap.values());
-				Collections.sort(coList);//排序
-				long currentTimeMillis = System.currentTimeMillis();//当前时间
-				for(CacheObject co : coList) {
-					if(co.expirationTime <= currentTimeMillis) {
-						cacheMap.remove(co.key); //已过期，移除缓数据
-					} else {
-						break;
-					}
-				}
+				cleanInvalidCache();
 			}
 		}, clearDelay, clearDelay, TimeUnit.MINUTES);
 	}
@@ -98,6 +89,20 @@ public class Cache {
 	//返回缓存数量
 	public int size() {
 		return this.cacheMap.size();
+	}
+	
+	//清除无效缓存(已过期的)
+	public void cleanInvalidCache() {
+		List<CacheObject> coList = new ArrayList<CacheObject>(cacheMap.values());
+		Collections.sort(coList);//排序
+		long currentTimeMillis = System.currentTimeMillis();//当前时间
+		for(CacheObject co : coList) {
+			if(co.expirationTime <= currentTimeMillis) {
+				cacheMap.remove(co.key); //已过期，移除缓数据
+			} else {
+				break;
+			}
+		}
 	}
 	
 	//缓存对象
