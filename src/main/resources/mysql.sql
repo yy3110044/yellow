@@ -27,7 +27,7 @@ CREATE TABLE `yellow_user` (
 DROP TABLE IF EXISTS `yellow_movie`;
 CREATE TABLE `yellow_movie` (
   `id` varchar(64) NOT NULL COMMENT '主键id',
-  `title` varchar(512) COMMENT '影片标题',
+  `title` varchar(512) NOT NULL COMMENT '影片标题',
   `tags` varchar(512) COMMENT '标签',
   `externalLink` varchar(512) COMMENT '资源外部链接',
   `internalLink` varchar(512) COMMENT '资源内部链接',

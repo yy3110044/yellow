@@ -101,7 +101,10 @@ var paths = [
 	
 	//后台管理接口
 	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord1", "newPassWord2"]},
-	{"path":"administration/getWebsiteInfo", "paramNames":[]}
+	{"path":"administration/getWebsiteInfo", "paramNames":[]},
+	
+	//后台影片管理
+	{"path":"administration/addMovie", "paramNames":["title", "tags", "externalLink", "internalLink", "createTime"]}
 ];
 
 $(document).ready(function(){

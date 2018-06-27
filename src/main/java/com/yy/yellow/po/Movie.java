@@ -1,6 +1,7 @@
 package com.yy.yellow.po;
 
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Movie {
 	private String id;
@@ -8,6 +9,8 @@ public class Movie {
 	private String tags;
 	private String externalLink;
 	private String internalLink;
+	还要添加一个文件本地磁盘url的参数
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createTime = new Date();
 	public String getId() {
 		return id;
