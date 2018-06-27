@@ -22,4 +22,17 @@ CREATE TABLE `yellow_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `userName` (`userName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8;
+
+/*影片表*/
+DROP TABLE IF EXISTS `yellow_movie`;
+CREATE TABLE `yellow_movie` (
+  `id` varchar(64) NOT NULL COMMENT '主键id',
+  `title` varchar(512) COMMENT '影片标题',
+  `tags` varchar(512) COMMENT '标签',
+  `externalLink` varchar(512) COMMENT '资源外部链接',
+  `internalLink` varchar(512) COMMENT '资源内部链接',
+  `createTime` datetime COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 show tables;
