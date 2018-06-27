@@ -19,7 +19,7 @@ public class LoginManager {
 	//app登陆
 	public static String appLogin(Integer userId, Cache cache, int tokenExpirationTime) {
 		//先检查此用户有没有app登陆过，如果有，则删除以前的token
-		String token = cache.getString(CacheKeyPre.user_current_token, userId.toString());
+		String token = (String)cache.remove(CacheKeyPre.user_current_token, userId.toString());
 		if(token != null) { //删除以前的token缓存
 			cache.remove(CacheKeyPre.token, token);
 		}
@@ -42,7 +42,7 @@ public class LoginManager {
 	//web登陆
 	public static void webLogin(Integer userId, Cache cache, HttpSession session) {
 		//先检查此用户有没有app登陆过，如果有，则删除以前的token
-		String token = cache.getString(CacheKeyPre.user_current_token, userId.toString());
+		String token = (String)cache.remove(CacheKeyPre.user_current_token, userId.toString());
 		if(token != null) { //删除以前的token缓存
 			cache.remove(CacheKeyPre.token, token);
 		}
