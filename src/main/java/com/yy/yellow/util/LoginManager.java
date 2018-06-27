@@ -1,6 +1,8 @@
 package com.yy.yellow.util;
 
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpSession;
@@ -72,7 +74,13 @@ public class LoginManager {
 		Integer userId = (Integer)session.getAttribute("userId");
 		if(userId != null) {
 			session.removeAttribute("userId");
-			webLoginUserMap.remove(userId).removeAttribute("userId");
+			session = webLoginUserMap.remove(userId);
+			if(session != null) session.removeAttribute("userId");
 		}
+	}
+	
+	//返回entrySet
+	public static Set<Entry<Integer, HttpSession>> getEntrySet() {
+		return webLoginUserMap.entrySet();
 	}
 }

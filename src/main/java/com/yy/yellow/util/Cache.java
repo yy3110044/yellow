@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -105,8 +107,13 @@ public class Cache {
 		}
 	}
 	
+	//返回map的entry set
+	public Set<Entry<String, CacheObject>> getEntrySet() {
+		return cacheMap.entrySet();
+	}
+	
 	//缓存对象
-	private class CacheObject implements Comparable<CacheObject> {
+	public class CacheObject implements Comparable<CacheObject> {
 		private String key; //key
 		private Object value; //缓存数据
 		private long expirationTime; //到期时间
@@ -119,7 +126,24 @@ public class Cache {
 			this.value = value;
 			this.expirationTime = expirationTime;
 		}
-
+		public String getKey() {
+			return key;
+		}
+		public Object getValue() {
+			return value;
+		}
+		public long getExpirationTime() {
+			return expirationTime;
+		}
+		public void setKey(String key) {
+			this.key = key;
+		}
+		public void setValue(Object value) {
+			this.value = value;
+		}
+		public void setExpirationTime(long expirationTime) {
+			this.expirationTime = expirationTime;
+		}
 		@Override
 		public int compareTo(CacheObject o) {
 			if(this.expirationTime > o.expirationTime) {
