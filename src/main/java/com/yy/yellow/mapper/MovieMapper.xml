@@ -4,8 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yy.yellow.mapper.MovieMapper">
 	<insert id="add" parameterType="com.yy.yellow.po.Movie">
-		insert yellow_movie(id, title, tags, externalLink, internalLink, createTime)
-		values(#{id}, #{title}, #{tags}, #{externalLink}, #{internalLink}, #{createTime})
+		insert yellow_movie(id, title, tags, externalLink, internalLink, filePath, createTime)
+		values(#{id}, #{title}, #{tags}, #{externalLink}, #{internalLink}, #{filePath}, #{createTime})
 	</insert>
 	
 	<delete id="delete" parameterType="String">
@@ -15,7 +15,7 @@
 	<update id="update" parameterType="com.yy.yellow.po.Movie">
 		update yellow_movie set
 		title = #{title}, tags = #{tags}, externalLink = #{externalLink},
-		internalLink = #{internalLink}, createTime = #{createTime}
+		internalLink = #{internalLink}, filePath = #{filePath}, createTime = #{createTime}
 		where id = #{id}
 	</update>
 	
@@ -41,7 +41,7 @@
 		limit 0, 1
 	</select>
 	
-	<select id="findById" parameterType="int" resultType="com.yy.yellow.po.Movie">
+	<select id="findById" parameterType="String" resultType="com.yy.yellow.po.Movie">
 		select * from yellow_movie where id = #{id}
 	</select>
 	

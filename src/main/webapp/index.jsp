@@ -100,11 +100,16 @@ var paths = [
 	{"path":"addAdminUser", "paramNames":["userName", "passWord"]},
 	
 	//后台管理接口
-	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord1", "newPassWord2"]},
+	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord"]},
 	{"path":"administration/getWebsiteInfo", "paramNames":[]},
 	
 	//后台影片管理
-	{"path":"administration/addMovie", "paramNames":["title", "tags", "externalLink", "internalLink", "createTime"]}
+	{"path":"administration/addMovie", "paramNames":["title", "tags", "externalLink", "internalLink", "filePath", "createTime"]},
+	{"path":"administration/getMovie", "paramNames":["id"]},
+	{"path":"administration/deleteMovie", "paramNames":["id", "deleteFile"]},
+	{"path":"administration/updateMovie", "paramNames":["id", "title", "tags", "externalLink", "internalLink", "filePath", "createTime"]},
+	{"path":"administration/listMovie", "paramNames":["startTime", "endTime", "pageSize", "pageNo", "showCount", "sortField", "sortType"]},
+	{"path":"administration/checkFile", "paramNames":["id"]}
 ];
 
 $(document).ready(function(){

@@ -26,19 +26,15 @@ public class AdminUserController {
 	 * @return
 	 */
 	@RequestMapping("/modifyAdminUserPassWord")
-	public ResponseObject modifyAdminUserPassWord(@RequestParam String oldPassWord, @RequestParam String newPassWord1, @RequestParam String newPassWord2, HttpServletRequest req) {
+	public ResponseObject modifyAdminUserPassWord(@RequestParam String oldPassWord, @RequestParam String newPassWord, HttpServletRequest req) {
 		int adminUserId = (Integer)req.getAttribute("adminUserId");
 
-		if(!newPassWord1.equals(newPassWord2)) {
-			return new ResponseObject(102, "两次输入密码不一致");
-		}
-		
 		AdminUser au = aus.findById(adminUserId);
 		if(!au.getPassWord().equals(DigestUtils.md5Hex(oldPassWord))) {
-			return new ResponseObject(103, "原密码错误");
+			return new ResponseObject(102, "原密码错误");
 		}
 		
-		au.setPassWord(DigestUtils.md5Hex(newPassWord1));
+		au.setPassWord(DigestUtils.md5Hex(newPassWord));
 		aus.update(au);
 		return new ResponseObject(100, "密码修改成功");
 	}

@@ -31,6 +31,7 @@ CREATE TABLE `yellow_movie` (
   `tags` varchar(512) COMMENT '标签',
   `externalLink` varchar(512) COMMENT '资源外部链接',
   `internalLink` varchar(512) COMMENT '资源内部链接',
+  `filePath` varchar(256) COMMENT '文件本地路径',
   `createTime` datetime COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
