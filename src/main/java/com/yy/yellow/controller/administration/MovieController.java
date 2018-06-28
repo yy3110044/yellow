@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,7 +89,7 @@ public class MovieController {
 			Movie movie = ms.findById(id);
 			if(movie != null) {
 				if(!Util.empty(movie.getFilePath())) { //删除本地文件
-					new File(movie.getFilePath()).delete();
+					FileUtils.deleteQuietly(new File(movie.getFilePath()));
 				}
 				ms.delete(id);
 			}
