@@ -31,7 +31,7 @@ public class AdminUserController {
 
 		AdminUser au = aus.findById(adminUserId);
 		if(!au.getPassWord().equals(DigestUtils.md5Hex(oldPassWord))) {
-			return new ResponseObject(102, "原密码错误");
+			return new ResponseObject(101, "原密码错误");
 		}
 		
 		au.setPassWord(DigestUtils.md5Hex(newPassWord));

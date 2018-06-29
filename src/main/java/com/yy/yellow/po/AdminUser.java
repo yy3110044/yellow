@@ -6,6 +6,8 @@ public class AdminUser {
 	private int id;
 	private String userName;
 	private String passWord;
+	private String lastLoginIp;
+	private Date lastLoginTime;
 	private Date createTime = new Date();
 	public int getId() {
 		return id;
@@ -30,5 +32,17 @@ public class AdminUser {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public String getLastLoginIp() {
+		return lastLoginIp;
+	}
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
+	}
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
 	}
 }

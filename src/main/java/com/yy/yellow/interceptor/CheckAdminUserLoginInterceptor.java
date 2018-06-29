@@ -20,7 +20,7 @@ public class CheckAdminUserLoginInterceptor implements HandlerInterceptor {
 		Integer adminUserId = (Integer)request.getSession().getAttribute("adminUserId");
 		if(adminUserId == null) {
 			response.setContentType("application/json;charset=utf-8");
-			response.getWriter().write(Util.toJsonStr(new ResponseObject(101, "您还未登陆，请先登陆")));
+			response.getWriter().write(Util.toJsonStr(new ResponseObject(200, "您还未登陆，请先登陆")));
 			return false;
 		} else {
 			request.setAttribute("adminUserId", adminUserId);

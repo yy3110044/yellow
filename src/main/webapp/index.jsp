@@ -87,35 +87,35 @@ var pathChange = function(index){
 //服务端接口定义
 var paths = [
 	//用户接口
-	{"path":"userRegistry", "paramNames":["userName", "passWord1", "passWord2", "nickName", "email", "yzm"]},
-	{"path":"userLogin", "paramNames":["loginType", "userName", "passWord"]},
-	{"path":"userLogout", "paramNames":["token"]},
+	{"path":"userRegistry", "paramNames":["userName", "passWord", "nickName", "email", "yzm"], "desc":"用户注册"},
+	{"path":"userLogin", "paramNames":["loginType", "userName", "passWord"], "desc":"用户登陆"},
+	{"path":"userLogout", "paramNames":["token"], "desc":"用户退出"},
 	
 	//用户中心接口
-	{"path":"user/getUserInfo", "paramNames":["token"]},
+	{"path":"user/getUserInfo", "paramNames":["token"], "desc":"返回用户信息"},
 	
 	//后台管理员登陆接口
-	{"path":"adminUserLogin", "paramNames":["userName", "passWord"]},
-	{"path":"adminUserLogout", "paramNames":[]},
-	{"path":"addAdminUser", "paramNames":["userName", "passWord"]},
+	{"path":"adminUserLogin", "paramNames":["userName", "passWord"], "desc":"后台管理员登陆"},
+	{"path":"adminUserLogout", "paramNames":[], "desc":"后台管理员退出"},
+	{"path":"addAdminUser", "paramNames":["userName", "passWord"], "desc":"添加一个管理员"},
 	
 	//后台管理接口
-	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord"]},
-	{"path":"administration/getWebsiteInfo", "paramNames":[]},
+	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord"], "desc":"修改管理员密码"},
+	{"path":"administration/getWebsiteInfo", "paramNames":[], "desc":"返回网站相关信息"},
 	
 	//后台影片管理
-	{"path":"administration/addMovie", "paramNames":["title", "tags", "externalLink", "internalLink", "filePath", "createTime"]},
-	{"path":"administration/getMovie", "paramNames":["id"]},
-	{"path":"administration/deleteMovie", "paramNames":["id", "deleteFile"]},
-	{"path":"administration/updateMovie", "paramNames":["id", "title", "tags", "externalLink", "internalLink", "filePath", "createTime"]},
-	{"path":"administration/listMovie", "paramNames":["startTime", "endTime", "pageSize", "pageNo", "showCount", "sortField", "sortType"]},
-	{"path":"administration/checkFile", "paramNames":["id"]}
+	{"path":"administration/addMovie", "paramNames":["title", "tags", "externalLink", "internalLink", "filePath", "createTime"], "desc":"添加一个影片"},
+	{"path":"administration/getMovie", "paramNames":["id"], "desc":"返回一个影片的信息"},
+	{"path":"administration/deleteMovie", "paramNames":["id", "deleteFile"], "desc":"删除一个影片"},
+	{"path":"administration/updateMovie", "paramNames":["id", "title", "tags", "externalLink", "internalLink", "filePath", "createTime"], "desc":"更新一个影片"},
+	{"path":"administration/listMovie", "paramNames":["startTime", "endTime", "pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"分页查询影片"},
+	{"path":"administration/checkFile", "paramNames":["id"], "desc":"检查影片是否存在"}
 ];
 
 $(document).ready(function(){
 	var pathSelect = $("#pathSelect");
 	for(var i=0; i<paths.length; i++) {
-		pathSelect.append('<option value="' + i + '">' + paths[i].path + '</option>');
+		pathSelect.append('<option value="' + i + '">' + paths[i].path + ' - ' + paths[i].desc + '</option>');
 	}
 	if(paths.length > 0) {
 		pathChange(0);

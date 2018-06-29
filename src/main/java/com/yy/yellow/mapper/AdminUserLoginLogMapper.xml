@@ -2,28 +2,28 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yy.yellow.mapper.UserMapper">
-	<insert id="add" parameterType="com.yy.yellow.po.User">
+<mapper namespace="com.yy.yellow.mapper.AdminUserLoginLogMapper">
+	<insert id="add" parameterType="com.yy.yellow.po.AdminUserLoginLog">
 		<selectKey keyProperty="id" order="AFTER" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into yellow_user(id, userName, passWord, nickName, email, lastLoginIp, lastLoginTime, lastLoginType, createTime)
-		values(#{id}, #{userName}, #{passWord}, #{nickName}, #{email}, #{lastLoginIp}, #{lastLoginTime}, #{lastLoginType}, #{createTime})
+		insert into yellow_admin_user_login_log(id, adminUserId, adminUserName, loginIp, loginTime, userAgent, createTime)
+		values(#{id}, #{adminUserId}, #{adminUserName}, #{loginIp}, #{loginTime}, #{userAgent}, #{createTime})
 	</insert>
 	
 	<delete id="delete" parameterType="int">
-		delete from yellow_user where id = #{id}
+		delete from yellow_admin_user_login_log where id = #{id}
 	</delete>
 	
-	<update id="update" parameterType="com.yy.yellow.po.User">
-		update yellow_user set
-		userName = #{userName}, passWord = #{passWord}, nickName = #{nickName},	email = #{email},
-		lastLoginIp = #{lastLoginIp}, lastLoginTime = #{lastLoginTime}, lastLoginType = #{lastLoginType}, createTime = #{createTime}
+	<update id="update" parameterType="com.yy.yellow.po.AdminUserLoginLog">
+		update yellow_admin_user_login_log set
+		adminUserId = #{adminUserId}, adminUserName = #{adminUserName}, loginIp = #{loginIp},
+		loginTime = #{loginTime}, userAgent = #{userAgent}, createTime = #{createTime}
 		where id = #{id}
 	</update>
 	
-	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.User">
-		select * from yellow_user
+	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.AdminUserLoginLog">
+		select * from yellow_admin_user_login_log
 		<if test="useWhere">
 			where
 			<foreach collection="conditions" index="index" item="obj">
@@ -44,12 +44,12 @@
 		limit 0, 1
 	</select>
 	
-	<select id="findById" parameterType="int" resultType="com.yy.yellow.po.User">
-		select * from yellow_user where id = #{id}
+	<select id="findById" parameterType="int" resultType="com.yy.yellow.po.AdminUserLoginLog">
+		select * from yellow_admin_user_login_log where id = #{id}
 	</select>
 	
-	<select id="query" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.User">
-		select * from yellow_user
+	<select id="query" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.AdminUserLoginLog">
+		select * from yellow_admin_user_login_log
 		<if test="useWhere"> <!-- 添加查询条件 -->
 			where
 			<foreach collection="conditions" index="index" item="obj">
@@ -73,7 +73,7 @@
 	</select>
 	
 	<select id="getCount" parameterType="com.yy.yellow.util.QueryCondition" resultType="int">
-		select count(*) from yellow_user
+		select count(*) from yellow_admin_user_login_log
 		<if test="useWhere">
 			where
 			<foreach collection="conditions" index="index" item="obj">

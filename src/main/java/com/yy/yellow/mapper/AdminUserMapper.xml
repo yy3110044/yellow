@@ -7,8 +7,8 @@
 		<selectKey keyProperty="id" order="AFTER" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into yellow_admin_user(id, userName, passWord, createTime)
-		values(#{id}, #{userName}, #{passWord}, #{createTime})
+		insert into yellow_admin_user(id, userName, passWord, lastLoginIp, lastLoginTime, createTime)
+		values(#{id}, #{userName}, #{passWord}, #{lastLoginIp}, #{lastLoginTime}, #{createTime})
 	</insert>
 	
 	<delete id="delete" parameterType="int">
@@ -17,7 +17,8 @@
 	
 	<update id="update" parameterType="com.yy.yellow.po.AdminUser">
 		update yellow_admin_user set
-		userName = #{userName}, passWord = #{passWord}, createTime = #{createTime}
+		userName = #{userName}, passWord = #{passWord}, lastLoginIp = #{lastLoginIp},
+		lastLoginTime = #{lastLoginTime}, createTime = #{createTime}
 		where id = #{id}
 	</update>
 	

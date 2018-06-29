@@ -8,6 +8,9 @@ public class User {
 	private String passWord;
 	private String nickName;
 	private String email;
+	private String lastLoginIp;
+	private Date lastLoginTime;
+	private String lastLoginType;
 	private Date createTime = new Date();
 	public int getId() {
 		return id;
@@ -41,6 +44,24 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getLastLoginIp() {
+		return lastLoginIp;
+	}
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
+	}
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+	public String getLastLoginType() {
+		return lastLoginType;
+	}
+	public void setLastLoginType(String lastLoginType) {
+		this.lastLoginType = lastLoginType;
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;

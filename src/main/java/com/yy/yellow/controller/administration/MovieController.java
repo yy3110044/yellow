@@ -33,11 +33,11 @@ public class MovieController {
 	@RequestMapping("/addMovie")
 	public ResponseObject addMovie(Movie movie) {
 		if(Util.empty(movie.getTitle())) {
-			return new ResponseObject(102, "标题不能为空");
+			return new ResponseObject(101, "标题不能为空");
 		}
 		
 		if(Util.empty(movie.getExternalLink()) && Util.empty(movie.getInternalLink())) {
-			return new ResponseObject(103, "外部链接和内部链接，至少要填一个");
+			return new ResponseObject(102, "外部链接和内部链接，至少要填一个");
 		}
 		
 		movie.setId(UUID.randomUUID().toString().replaceAll("-", "").toUpperCase());
@@ -63,15 +63,15 @@ public class MovieController {
 	@RequestMapping("/updateMovie")
 	public ResponseObject updateMovie(Movie movie) {
 		if(Util.empty(movie.getTitle())) {
-			return new ResponseObject(102, "标题不能为空");
+			return new ResponseObject(101, "标题不能为空");
 		}
 		
 		if(Util.empty(movie.getExternalLink()) && Util.empty(movie.getInternalLink())) {
-			return new ResponseObject(103, "外部链接和内部链接，至少要填一个");
+			return new ResponseObject(102, "外部链接和内部链接，至少要填一个");
 		}
 		
 		if(Util.empty(movie.getId())) {
-			return new ResponseObject(104, "id不能为空");
+			return new ResponseObject(103, "id不能为空");
 		}
 		ms.update(movie);
 		return new ResponseObject(100, "修改成功");
@@ -113,7 +113,7 @@ public class MovieController {
 				return new ResponseObject(100, "文件存在");
 			}
 		}
-		return new ResponseObject(102, "文件不存在");
+		return new ResponseObject(101, "文件不存在");
 	}
 
 	/**

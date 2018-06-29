@@ -1,5 +1,8 @@
 package com.yy.yellow.controller;
 
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.yy.yellow.po.AdminUser;
+import com.yy.yellow.po.AdminUserLoginLog;
+import com.yy.yellow.service.AdminUserLoginLogService;
 import com.yy.yellow.service.AdminUserService;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.ResponseObject;
+import com.yy.yellow.util.Util;
 
 /**
  * 管理员登陆接口
@@ -24,6 +30,9 @@ public class AdminUserLoginController {
 	@Autowired
 	private AdminUserService aus;
 	
+	@Autowired
+	private AdminUserLoginLogService aulls;
+	
 	@Value("${web.config.addAdminUser}")
 	private boolean addAdminUser;
 	
@@ -35,7 +44,7 @@ public class AdminUserLoginController {
 	 * @return
 	 */
 	@RequestMapping("/adminUserLogin")
-	public ResponseObject adminUserLogin(@RequestParam String userName, @RequestParam String passWord, HttpSession session) {
+	public ResponseObject adminUserLogin(@RequestParam String userName, @RequestParam String passWord, HttpServletRequest req) {
 		ResponseObject ro = new ResponseObject();
 		AdminUser au = aus.find(new QueryCondition().addCondition("userName", "=", userName).addCondition("passWord", "=", DigestUtils.md5Hex(passWord)));
 		if(au == null) {
@@ -44,7 +53,16 @@ public class AdminUserLoginController {
 		} else {
 			ro.setCode(100);
 			ro.setMsg("登陆成功");
-			session.setAttribute("adminUserId", au.getId());//在session中存入adminUser的Id
+			req.getSession().setAttribute("adminUserId", au.getId());//在session中存入adminUser的Id
+			
+			//添加登陆日志
+			AdminUserLoginLog log = new AdminUserLoginLog();
+			log.setAdminUserId(au.getId());
+			log.setAdminUserName(au.getUserName());
+			log.setLoginIp(req.getRemoteAddr());
+			log.setLoginTime(new Date());
+			log.setUserAgent(req.getHeader("user-agent"));
+			aulls.addLog(log);
 		}
 		return ro;
 	}
@@ -68,17 +86,21 @@ public class AdminUserLoginController {
 	 */
 	@RequestMapping("/addAdminUser")
 	public ResponseObject addAdminUser(@RequestParam String userName, @RequestParam String passWord) {
+		if(Util.empty(userName, passWord)) {
+			return new ResponseObject(101, "用户名或密码不能为空");
+		}
+		
 		if(!this.addAdminUser) {
-			return new ResponseObject(101, "不允许添加管理员");
+			return new ResponseObject(102, "不允许添加管理员");
 		}
 		
 		AdminUser au = aus.find(new QueryCondition().addCondition("userName", "=", userName));
 		if(au != null) {
-			return new ResponseObject(102, userName + "已存在");
+			return new ResponseObject(103, userName + "已存在");
 		}
 		
 		au = new AdminUser();
-		au.setUserName(userName);
+		au.setUserName(userName.trim());
 		au.setPassWord(DigestUtils.md5Hex(passWord));
 		aus.add(au);
 		return new ResponseObject(100, "添加管理员成功");

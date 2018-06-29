@@ -38,12 +38,12 @@ public class CheckUserLoginInterceptor implements HandlerInterceptor {
 				return true;
 			} else {
 				response.setContentType("application/json;charset=utf-8");
-				response.getWriter().write(Util.toJsonStr(new ResponseObject(101, "您还未登陆，或登陆已过期，请重新登陆")));
+				response.getWriter().write(Util.toJsonStr(new ResponseObject(200, "您还未登陆，或登陆已过期，请重新登陆")));
 				return false;
 			}
 		} else {
 			response.setContentType("application/json;charset=utf-8");
-			response.getWriter().write(Util.toJsonStr(new ResponseObject(101, "您还未登陆，或登陆已过期，请重新登陆")));
+			response.getWriter().write(Util.toJsonStr(new ResponseObject(200, "您还未登陆，或登陆已过期，请重新登陆")));
 			return false;
 		}
 	}

@@ -18,7 +18,7 @@
 	<div class="right">
 	<div class="right_cont">
 	<div class="breadcrumb">当前位置：
-		<a href="javascript:;"></a><span class="divider">/</span>
+		<a href="javascript:;">网站管理</a><span class="divider">/</span>
 		<a href="javascript:;"></a>
 	</div>
 	<div class="title_right"><strong></strong><span style="color:red;font-size:18px;padding-left:200px;" id="showMsg"></span></div>
