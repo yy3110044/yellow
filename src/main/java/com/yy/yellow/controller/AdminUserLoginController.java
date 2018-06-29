@@ -66,7 +66,7 @@ public class AdminUserLoginController {
 		}
 		return ro;
 	}
-	
+
 	/**
 	 * 管理员退出登陆
 	 * @param session

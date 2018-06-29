@@ -4,7 +4,7 @@
 		<div>
 			<span>网站管理</span>
 			<a href="admin/webSiteInfo.jsp">网站信息</a>
-			<a href="administrator/admin?action=addActivityPage">添加门票</a>
+			<a href="admin/movieList.jsp">影片列表</a>
 			<a href="administrator/admin?action=activityListPage">门票列表</a>
 			<a href="administrator/admin?action=blueberryQueryPage">蓝莓销售查询</a>
 		</div>

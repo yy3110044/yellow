@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yy.yellow.po.AdminUser;
 import com.yy.yellow.service.AdminUserService;
 import com.yy.yellow.util.ResponseObject;
+import com.yy.yellow.util.Util;
 
 @RestController
 @RequestMapping(value="/administration", method=RequestMethod.POST)
@@ -29,9 +30,13 @@ public class AdminUserController {
 	public ResponseObject modifyAdminUserPassWord(@RequestParam String oldPassWord, @RequestParam String newPassWord, HttpServletRequest req) {
 		int adminUserId = (Integer)req.getAttribute("adminUserId");
 
+		if(Util.empty(newPassWord)) {
+			return new ResponseObject(101, "新密码不能为空");
+		}
+		
 		AdminUser au = aus.findById(adminUserId);
 		if(!au.getPassWord().equals(DigestUtils.md5Hex(oldPassWord))) {
-			return new ResponseObject(101, "原密码错误");
+			return new ResponseObject(102, "原密码错误");
 		}
 		
 		au.setPassWord(DigestUtils.md5Hex(newPassWord));

@@ -6,8 +6,22 @@
 		<a href="#">帮助</a>
 		-->
 		<i class="icon-off icon-white"></i>
-		<a href="administrator/admin?action=modifyAuPassWordPage">修改管理员密码</a>
+		<a href="admin/modifyAdminUserPassWord.jsp">修改管理员密码</a>
 		<i class="icon-user icon-white"></i>
-		<a href="adminLogin?action=logout" onclick="return confirm('确定退出？')">退出</a>
+		<a href="javascript:;" onclick="logout()">退出</a>
 	</div>
+	<script type="text/javascript">
+	var logout = function(){
+		if(confirm('确定退出？')) {
+			loadData({
+				url : "adminUserLogout",
+				success : function(data){
+					if(data.code == 100) {
+						window.location.href = "admin/login.jsp?msg=" + encodeURI("退出成功");
+					}
+				}
+			});
+		}
+	};
+	</script>
 </div>

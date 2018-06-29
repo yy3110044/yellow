@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="admin/css/bootstrap.css" />
 <link rel="stylesheet" href="admin/css/css.css" />
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 </head>
 <body>
 <%@include file="/admin/header.jsp"%>
