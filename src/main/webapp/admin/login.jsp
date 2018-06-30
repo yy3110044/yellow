@@ -3,7 +3,7 @@
 <head>
 <base href="${basePath}"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>管理员登陆</title>
+<title>管理员登录</title>
 <link rel="stylesheet" href="admin/css/bootstrap.css" />
 <style type="text/css">
 body{ background:#0066A8;}
@@ -42,7 +42,7 @@ var login = function(){
 </head>
 
 <body>
-<div class="tit" style="color:white;font-size:26px;">后台管理登陆</div>
+<div class="tit" style="color:white;font-size:26px;">后台管理登录</div>
 <div class="login-wrap" style="height:270px;">
 	<table style="width:100%;">
 		<tr>
@@ -63,7 +63,7 @@ var login = function(){
 		</tr>
 		 -->
 		<tr>
-			<td height="60" valign="bottom"><input type="button" onclick="login()" value="登陆" class="btn btn-block btn-login"/></td>
+			<td height="60" valign="bottom"><input type="button" onclick="login()" value="登录" class="btn btn-block btn-login"/></td>
 		</tr>
 		<tr><td style="color:red;" id="msg"><%=com.yy.yellow.util.Util.urlDecode(request.getParameter("msg"))%></td></tr>
 	</table>

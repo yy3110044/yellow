@@ -26,6 +26,12 @@
 	</div>
 	<div class="title_right"><strong></strong><span style="color:red;font-size:18px;padding-left:200px;" id="showMsg"></span></div>
 	<table class="table table-bordered table-striped table-hover">
+		<tr>
+			<td colspan="99" style="padding:3px;line-height:30px;">
+				<input type="text" id="" placeholder="" class="laydate-icon" onclick="laydate({istime:true,format:'YYYY-MM-DD hh:mm:ss'});" style="width:140px;cursor:pointer;" readonly="readonly"/>
+				&nbsp;&nbsp;<input type="button" value="查询">
+			</td>
+		</tr>
 		<tr align="center">
 			<td><strong>城市</strong></td>
 			<td><strong>至郑起步价</strong></td>
@@ -34,17 +40,7 @@
 	</table>
 	<table class="margin-bottom-20 table no-border">
 		<tr>
-			<td class="text-center">
-			<span>共
-				<span class="red" id="rowCount"></span>
-				条记录,
-				<span class="red" id="pageCount"></span>
-				页,每页
-				<span class="red" id="pageSize"></span>
-				条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</span>
-			<span id="pageTdSpan"></span>
-			</td>
+			<td class="text-center" id="pageTd"></td>
 		</tr>
 	</table>
 	</div>     

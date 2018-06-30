@@ -29,13 +29,48 @@ var loadData = function(obj) {
 			if(obj.redirectCode == null) {
 				obj.redirectCode = 200;
 			}
-			if(obj.redirectCode == data.code) {
-				window.location.href = obj.redirectUrl;
-				return;
+			if(obj.redirectUrl != null) {
+				if(obj.redirectCode == data.code) {
+					window.location.href = obj.redirectUrl;
+					return;
+				}
 			}
 			obj.success(data, textStatus); //请求成功后调用
 		},
 		"error" : obj.error //请求失败后调用，参数：XMLHttpRequest, textStatus, errorThrown
 	});
+};
+
+//填充内容
+var getContentStr = function(param){
+	var str = '';
+	for(var i=0; i<param.list.length; i++) {
+		var obj = param.list[i];
+		str += '<tr align="center" class="contentTr">';
+		for(var j=0; j<param.fields.length; j++) {
+			var field = param.fields[j];
+			str += '<td>';
+			if(field.fn != null) { //方法不为空，执行方法，并返回
+				str += field.fn(obj);
+			} else { //直接返回字段值
+				str += obj[field.field];
+			}
+			str += '</td>';
+		}
+		str += '</tr>';
+	}
+	return str;
+};
+
+//真充分页
+var getPageStr = function(page){
+	var str = '';
+	str += '共&nbsp;<span style="color:red;font-weight:bold;">' + page.rowCount+ '</span>&nbsp;条记录，';
+	str += '共&nbsp;<span style="color:red;font-weight:bold;">' + page.pageCount + '</span>&nbsp;页，';
+	str += '每页&nbsp;<span style="color:red;font-weight:bold;">' + page.pageSize + '</span>&nbsp;条。';
+	str += '<span>';
+	
+	str += '</span>';
+	return str;
 };
 

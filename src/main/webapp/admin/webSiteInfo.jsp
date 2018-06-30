@@ -24,7 +24,7 @@ $(document).ready(function(){
 				$("#userAgent").html(data.result.userAgent);
 			}
 		},
-		redirectUrl : "admin/login.jsp?msg=" + encodeURI("您还未登陆，请先登陆")
+		redirectUrl : "admin/login.jsp?msg=" + encodeURI("请先登录")
 	});
 });
 </script>

@@ -9,6 +9,48 @@
 <link rel="stylesheet" href="admin/css/css.css" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="laydate/laydate.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+var query = function(pageSize, pageNo){
+	var startTime = $("#startTime").val();
+	var endTime = $("#endTime").val();
+	loadData({
+		url : "administration/listMovie",
+		data : {
+			"startTime" : startTime,
+			"endTime" : endTime
+		},
+		success : function(data) {
+			if(data.code == 100) {
+				var str = getContentStr({
+					list : data.result.list,
+					fields : [
+						{field : "id"},
+						{field : "title"},
+						{field : "tags"},
+						{field : "externalLink"},
+						{field : "internalLink"},
+						{field : "filePath"},
+						{field : "createTime"},
+						{fn : function(obj){
+							return "删除";
+						}}
+					]
+				});
+				$("table.table-bordered").append(str);
+				
+				$("#pageTd").html(getPageStr(data.result.page));
+			} else {
+				$("#showMsg").html(data.msg);
+			}
+		},
+		redirectUrl : "admin/login.jsp?msg=" + encodeURI("请先登录")
+	});	
+};
+$(document).ready(function(){
+	query();
+});
+</script>
 </head>
 
 <body>
@@ -25,29 +67,28 @@
 	</div>
 	<div class="title_right"><strong>影片列表</strong><span style="color:red;font-size:18px;padding-left:200px;" id="showMsg"></span></div>
 	<table class="table table-bordered table-striped table-hover">
+		<tr>
+			<td colspan="99" style="padding:3px;line-height:30px;">
+				<input type="text" id="startTime" class="laydate-icon" onclick="laydate({istime:true,format:'YYYY-MM-DD hh:mm:ss'});" style="width:140px;cursor:pointer;" readonly="readonly" placeholder="开始时间">
+				-
+				<input type="text" id="endTime" class="laydate-icon" onclick="laydate({istime:true,format:'YYYY-MM-DD hh:mm:ss'});" style="width:140px;cursor:pointer;" readonly="readonly" placeholder="结束时间">
+				&nbsp;&nbsp;<input type="button" value="查询" onclick="query()">
+			</td>
+		</tr>
 		<tr align="center">
-			<td><strong>id</strong></td>
+			<td><strong>ID</strong></td>
 			<td><strong>标题</strong></td>
 			<td><strong>标签</strong></td>
 			<td><strong>外部链接</strong></td>
 			<td><strong>内部链接</strong></td>
 			<td><strong>本地文件路径</strong></td>
 			<td><strong>添加时间</strong></td>
+			<td><strong>操作</strong></td>
 		</tr>
 	</table>
 	<table class="margin-bottom-20 table no-border">
 		<tr>
-			<td class="text-center">
-			<span>共
-				<span class="red" id="rowCount"></span>
-				条记录,
-				<span class="red" id="pageCount"></span>
-				页,每页
-				<span class="red" id="pageSize"></span>
-				条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</span>
-			<span id="pageTdSpan"></span>
-			</td>
+			<td class="text-center" id="pageTd"></td>
 		</tr>
 	</table>
 	</div>     

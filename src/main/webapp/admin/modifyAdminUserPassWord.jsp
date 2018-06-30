@@ -27,7 +27,8 @@ var modifyAdminUserPassWord = function(){
 		success : function(data){
 			$("#showMsg").html(data.msg);
 			alert(data.msg);
-		}
+		},
+		redirectUrl : "admin/login.jsp?msg=" + encodeURI("请先登录")
 	});
 };
 </script>
