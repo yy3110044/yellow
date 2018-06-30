@@ -11,6 +11,24 @@
 <script type="text/javascript" src="laydate/laydate.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
+var del = function(id, e){
+	var deleteFile = confirm("是否同时删除服务器文件？");
+	if(confirm("确定删除吗？删除后无法恢复")) {
+		loadData({
+			url : "administration/deleteMovie",
+			data : {
+				"id" : id,
+				"deleteFile" : deleteFile
+			},
+			success : function(data){
+				if(data.code == 100) {
+					$("#showMsg").html("删除成功");
+					$(e).parent().parent().remove();
+				}
+			}
+		});
+	}
+};
 var query = function(pageSize, pageNo){
 	var startTime = $("#startTime").val();
 	var endTime = $("#endTime").val();
@@ -18,10 +36,13 @@ var query = function(pageSize, pageNo){
 		url : "administration/listMovie",
 		data : {
 			"startTime" : startTime,
-			"endTime" : endTime
+			"endTime" : endTime,
+			"pageSize" : pageSize,
+			"pageNo" : pageNo
 		},
 		success : function(data) {
 			if(data.code == 100) {
+				$("tr.contentTr").remove();
 				var str = getContentStr({
 					list : data.result.list,
 					fields : [
@@ -33,7 +54,8 @@ var query = function(pageSize, pageNo){
 						{field : "filePath"},
 						{field : "createTime"},
 						{fn : function(obj){
-							return "删除";
+							var str = '<a href="javascript:;" onclick="del(\'' + obj.id + '\', this)">删除</a>';
+							return str;
 						}}
 					]
 				});
@@ -48,7 +70,7 @@ var query = function(pageSize, pageNo){
 	});	
 };
 $(document).ready(function(){
-	query();
+	query(20, 1);
 });
 </script>
 </head>
@@ -72,7 +94,7 @@ $(document).ready(function(){
 				<input type="text" id="startTime" class="laydate-icon" onclick="laydate({istime:true,format:'YYYY-MM-DD hh:mm:ss'});" style="width:140px;cursor:pointer;" readonly="readonly" placeholder="开始时间">
 				-
 				<input type="text" id="endTime" class="laydate-icon" onclick="laydate({istime:true,format:'YYYY-MM-DD hh:mm:ss'});" style="width:140px;cursor:pointer;" readonly="readonly" placeholder="结束时间">
-				&nbsp;&nbsp;<input type="button" value="查询" onclick="query()">
+				&nbsp;&nbsp;<input type="button" value="查询" onclick="query(20, 1)">
 			</td>
 		</tr>
 		<tr align="center">

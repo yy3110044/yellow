@@ -53,7 +53,7 @@ var getContentStr = function(param){
 			if(field.fn != null) { //方法不为空，执行方法，并返回
 				str += field.fn(obj);
 			} else { //直接返回字段值
-				str += obj[field.field];
+				str += obj[field.field] == null ? '' : obj[field.field];
 			}
 			str += '</td>';
 		}
@@ -67,9 +67,29 @@ var getPageStr = function(page){
 	var str = '';
 	str += '共&nbsp;<span style="color:red;font-weight:bold;">' + page.rowCount+ '</span>&nbsp;条记录，';
 	str += '共&nbsp;<span style="color:red;font-weight:bold;">' + page.pageCount + '</span>&nbsp;页，';
-	str += '每页&nbsp;<span style="color:red;font-weight:bold;">' + page.pageSize + '</span>&nbsp;条。';
+	str += '每页&nbsp;<span style="color:red;font-weight:bold;">' + page.pageSize + '</span>&nbsp;条&nbsp;&nbsp;&nbsp;&nbsp;';
 	str += '<span>';
 	
+	if(page.previous) {
+		str += '<a href="javascript:;" onclick="query(' + page.pageSize + ', 1)">首页</a>&nbsp;';
+		str += '<a href="javascript:;" onclick="query(' + page.pageSize + ', ' + (page.pageNo - 1) + ')">上一页</a>&nbsp;';
+	}
+	var prePage = page.previousPages;
+	for(var i=0; i<prePage.length; i++) {
+		str += '<a href="javascript:;" onclick="query(' + page.pageSize + ', ' + prePage[i] + ')">' + prePage[i] + '</a>&nbsp;';
+	}
+	
+	str += '<span>' + page.pageNo + '</span>&nbsp;';
+
+	var nePage = page.nextPages;
+	for(var i=0; i<nePage.length; i++) {
+		str += '<a href="javascript:;" onclick="query(' + page.pageSize + ', ' + nePage[i] + ')">' + nePage[i] + '</a>&nbsp;';
+	}
+	if(page.next) {
+		str += '<a href="javascript:;" onclick="query(' + page.pageSize + ', ' + (page.pageNo + 1) + ')">下一页</a>&nbsp;';
+		str += '<a href="javascript:;" onclick="query(' + page.pageSize + ', ' + page.pageCount + ')">尾页</a>&nbsp;';
+	}
+
 	str += '</span>';
 	return str;
 };
