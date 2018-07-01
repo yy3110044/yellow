@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -166,5 +167,20 @@ public class Util {
 			logger.error(o.toString() + "：转换json错误：" + e.toString());
 			throw new RuntimeException(e);
 		}
+	}
+	
+	/**
+	 * 返回spring的bean
+	 * @param name
+	 * @param sc
+	 * @return
+	 */
+	public static Object getBean(String name, ServletContext sc) {
+		WebApplicationContext context = (WebApplicationContext)sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		return context.getBean(name);
+	}
+	public static <T> T getBean(Class<T> requiredType, ServletContext sc) {
+		WebApplicationContext context = (WebApplicationContext)sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		return context.getBean(requiredType);
 	}
 }

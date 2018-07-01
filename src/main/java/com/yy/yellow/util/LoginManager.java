@@ -1,25 +1,32 @@
 package com.yy.yellow.util;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * 登陆管理器
  * @author yy
  *
  */
+@Component("loginManager")
 public class LoginManager {
-	private LoginManager() {}
+	private final Map<Integer, HttpSession> webLoginUserMap = new ConcurrentHashMap<Integer, HttpSession>();
 	
-	//web在线用户的map
-	private static final Map<Integer, HttpSession> webLoginUserMap = new ConcurrentHashMap<Integer, HttpSession>();
-
+	@Autowired
+	private Cache cache;
+	
+	@Value("${web.config.token.expirationTime}")
+	private int tokenExpirationTime;//token过期时间，单位：小时
+	
 	//app登陆
-	public static String appLogin(Integer userId, Cache cache, int tokenExpirationTime) {
+	public String appLogin(Integer userId) {
 		//先检查此用户有没有app登陆过，如果有，则删除以前的token
 		String token = (String)cache.remove(CacheKeyPre.user_current_token, userId.toString());
 		if(token != null) { //删除以前的token缓存
@@ -40,9 +47,9 @@ public class LoginManager {
 		cache.set(CacheKeyPre.token, token, userId, seconds);
 		return token;
 	}
-
+	
 	//web登陆
-	public static void webLogin(Integer userId, Cache cache, HttpSession session) {
+	public void webLogin(Integer userId, HttpSession session) {
 		//先检查此用户有没有app登陆过，如果有，则删除以前的token
 		String token = (String)cache.remove(CacheKeyPre.user_current_token, userId.toString());
 		if(token != null) { //删除以前的token缓存
@@ -60,7 +67,7 @@ public class LoginManager {
 	}
 	
 	//app退出登陆
-	public static void appLogout(String token, Cache cache) {
+	public void appLogout(String token) {
 		if(token != null) {
 			Integer userId = (Integer)cache.remove(CacheKeyPre.token, token);
 			if(userId != null) {
@@ -69,8 +76,9 @@ public class LoginManager {
 		}
 	}
 	
+	
 	//web退出登陆
-	public static void webLogout(HttpSession session) {
+	public void webLogout(HttpSession session) {
 		Integer userId = (Integer)session.getAttribute("userId");
 		if(userId != null) {
 			session.removeAttribute("userId");
@@ -80,7 +88,7 @@ public class LoginManager {
 	}
 	
 	//返回entrySet
-	public static Set<Entry<Integer, HttpSession>> getEntrySet() {
+	public Set<Entry<Integer, HttpSession>> getEntrySet() {
 		return webLoginUserMap.entrySet();
 	}
 }

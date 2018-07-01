@@ -3,12 +3,10 @@ package com.yy.yellow.controller;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +16,6 @@ import com.yy.yellow.po.User;
 import com.yy.yellow.po.UserLoginLog;
 import com.yy.yellow.service.UserLoginLogService;
 import com.yy.yellow.service.UserService;
-import com.yy.yellow.util.Cache;
 import com.yy.yellow.util.LoginManager;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.ResponseObject;
@@ -39,10 +36,7 @@ public class UserLoginAndRegistryController {
 	private UserLoginLogService ulls;
 	
 	@Autowired
-	private Cache cache;
-	
-	@Value("${web.config.token.expirationTime}")
-	private int tokenExpirationTime;//token过期时间，单位：小时
+	private LoginManager loginManager;
 	
 	/**
 	 * 用户登陆接口
@@ -68,11 +62,11 @@ public class UserLoginAndRegistryController {
 		log.setLoginType(loginType);
 		
 		if("web".equals(loginType)) {
-			LoginManager.webLogin(user.getId(), cache, req.getSession());
+			loginManager.webLogin(user.getId(), req.getSession());;
 			ulls.addLog(log); //添加日志
 			return new ResponseObject(100, "web登陆成功");
 		} else if("app".equals(loginType)) {
-			String token = LoginManager.appLogin(user.getId(), cache, tokenExpirationTime);
+			String token = loginManager.appLogin(user.getId());
 			Map<String, Object> result = new HashMap<String, Object>();
 			result.put("token", token);
 			ulls.addLog(log); //添加日志
@@ -88,8 +82,8 @@ public class UserLoginAndRegistryController {
 	 */
 	@RequestMapping("/userLogout")
 	public ResponseObject logout(String token, HttpSession session) {
-		LoginManager.appLogout(token, cache);
-		LoginManager.webLogout(session);
+		loginManager.appLogout(token);
+		loginManager.webLogout(session);
 		return new ResponseObject(100, "退出登陆成功");
 	}
 	
