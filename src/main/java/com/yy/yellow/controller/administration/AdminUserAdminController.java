@@ -14,7 +14,7 @@ import com.yy.yellow.util.Util;
 
 @RestController
 @RequestMapping(value="/administration", method=RequestMethod.POST)
-public class AdminUserController {
+public class AdminUserAdminController {
 	@Autowired
 	private AdminUserService aus;
 

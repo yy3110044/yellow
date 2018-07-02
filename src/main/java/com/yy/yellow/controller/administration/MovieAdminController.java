@@ -22,7 +22,7 @@ import com.yy.yellow.util.Util;
 
 @RestController
 @RequestMapping(value="/administration", method=RequestMethod.POST)
-public class MovieController {
+public class MovieAdminController {
 	@Autowired
 	private MovieService ms;
 	
