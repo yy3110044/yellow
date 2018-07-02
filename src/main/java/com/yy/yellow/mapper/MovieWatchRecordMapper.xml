@@ -2,25 +2,28 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yy.yellow.mapper.MovieMapper">
-	<insert id="add" parameterType="com.yy.yellow.po.Movie">
-		insert yellow_movie(id, title, tags, imgUrl, externalLink, internalLink, filePath, createTime)
-		values(#{id}, #{title}, #{tags}, #{imgUrl}, #{externalLink}, #{internalLink}, #{filePath}, #{createTime})
+<mapper namespace="com.yy.yellow.mapper.MovieWatchRecordMapper">
+	<insert id="add" parameterType="com.yy.yellow.po.MovieWatchRecord">
+		<selectKey keyProperty="id" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into yellow_movie_watch_record(id, userId, ip, movieId, lastWatchTime, createTime)
+		values(#{id}, #{userId}, #{ip}, #{movieId}, #{lastWatchTime}, #{createTime})
 	</insert>
 	
-	<delete id="delete" parameterType="String">
-		delete from yellow_movie where id = #{id}
+	<delete id="delete" parameterType="int">
+		delete from yellow_movie_watch_record where id = #{id}
 	</delete>
 	
-	<update id="update" parameterType="com.yy.yellow.po.Movie">
-		update yellow_movie set
-		title = #{title}, tags = #{tags}, imgUrl = #{imgUrl}, externalLink = #{externalLink},
-		internalLink = #{internalLink}, filePath = #{filePath}, createTime = #{createTime}
+	<update id="update" parameterType="com.yy.yellow.po.MovieWatchRecord">
+		update yellow_movie_watch_record set
+		userId = #{userId}, ip = #{ip}, movieId = #{movieId},
+		lastWatchTime = #{lastWatchTime}, createTime = #{createTime}
 		where id = #{id}
 	</update>
 	
-	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.Movie">
-		select * from yellow_movie
+	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.MovieWatchRecord">
+		select * from yellow_movie_watch_record
 		<if test="useWhere">
 			where
 			<foreach collection="conditions" index="index" item="obj">
@@ -41,12 +44,12 @@
 		limit 0, 1
 	</select>
 	
-	<select id="findById" parameterType="String" resultType="com.yy.yellow.po.Movie">
-		select * from yellow_movie where id = #{id}
+	<select id="findById" parameterType="int" resultType="com.yy.yellow.po.MovieWatchRecord">
+		select * from yellow_movie_watch_record where id = #{id}
 	</select>
 	
-	<select id="query" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.Movie">
-		select * from yellow_movie
+	<select id="query" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.MovieWatchRecord">
+		select * from yellow_movie_watch_record
 		<if test="useWhere"> <!-- 添加查询条件 -->
 			where
 			<foreach collection="conditions" index="index" item="obj">
@@ -70,7 +73,7 @@
 	</select>
 	
 	<select id="getCount" parameterType="com.yy.yellow.util.QueryCondition" resultType="int">
-		select count(*) from yellow_movie
+		select count(*) from yellow_movie_watch_record
 		<if test="useWhere">
 			where
 			<foreach collection="conditions" index="index" item="obj">

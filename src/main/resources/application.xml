@@ -27,5 +27,6 @@
 	<entry key="web.config.addAdminUser">true</entry><!-- 此参数为true时，可以直接添加一个后台管理员，请在生产环境将此参数设为false -->
 	<entry key="web.config.cache.clearDelay">60</entry><!-- 定时清除无效缓存的间隔时间，单位：分 -->
 	<entry key="web.config.token.expirationTime">360</entry><!-- token过期时间，单位：小时 -->
+	<entry key="web.config.freeMovieCount">5</entry> <!-- 每天能免费观看的影片数量 -->
 
 </properties>

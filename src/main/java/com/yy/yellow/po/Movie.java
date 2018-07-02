@@ -8,6 +8,7 @@ public class Movie {
 	private String id;
 	private String title;
 	private String tags;
+	private String imgUrl;
 	private String externalLink;
 	private String internalLink;
 	private String filePath;
@@ -45,6 +46,12 @@ public class Movie {
 	}
 	public void setExternalLink(String externalLink) {
 		this.externalLink = externalLink;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 	public void setInternalLink(String internalLink) {
 		this.internalLink = internalLink;

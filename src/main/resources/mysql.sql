@@ -60,14 +60,28 @@ CREATE TABLE `yellow_user_login_log` (
 /*影片表*/
 DROP TABLE IF EXISTS `yellow_movie`;
 CREATE TABLE `yellow_movie` (
-  `id` varchar(64) NOT NULL COMMENT '主键id',
+  `id` varchar(64) NOT NULL COMMENT '主键id，UUID',
   `title` varchar(512) NOT NULL COMMENT '影片标题',
   `tags` varchar(512) COMMENT '标签',
+  `imgUrl` varchar(512) COMMENT '缩略图链接',
   `externalLink` varchar(512) COMMENT '资源外部链接',
   `internalLink` varchar(512) COMMENT '资源内部链接',
   `filePath` varchar(256) COMMENT '文件本地路径',
   `createTime` datetime COMMENT '创建时间',
   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `yellow_movie_watch_record`;
+CREATE TABLE `yellow_movie_watch_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `userId` int(11) COMMENT '用户id',
+  `ip` varchar(128) COMMENT 'IP',
+  `movieId` varchar(64) COMMENT '观看的movieID',
+  `lastWatchTime` datetime COMMENT '最后一次观看时间',
+  `createTime` datetime COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  KEY `ip` (`ip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 show tables;
