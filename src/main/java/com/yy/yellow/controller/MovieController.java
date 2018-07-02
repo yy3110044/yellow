@@ -36,7 +36,7 @@ public class MovieController {
 	@Autowired
 	private UserService us;
 	
-	@Value("{web.config.freeMovieCount}")
+	@Value("${web.config.freeMovieCount}")
 	private int freeMovieCount;//每天能免费观看的影片数量
 	
 	@RequestMapping("/movieList")
@@ -59,6 +59,5 @@ public class MovieController {
 	@RequestMapping("/movieDetail")
 	public ResponseObject movieDetail(@RequestParam String id, HttpSession session) {
 		Integer userId = (Integer)session.getAttribute("userId");
-		return new ResponseObject(100, "返回成功");
 	}
 }
