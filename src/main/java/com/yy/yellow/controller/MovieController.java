@@ -59,6 +59,5 @@ public class MovieController {
 	@RequestMapping("/movieDetail")
 	public ResponseObject movieDetail(@RequestParam String id, HttpSession session) {
 		Integer userId = (Integer)session.getAttribute("userId");
-		return null;
 	}
 }
