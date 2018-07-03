@@ -86,21 +86,27 @@
 	</select>
 
 	<select id="getLoginUserWatchRecord" resultType="com.yy.yellow.po.MovieWatchRecord">
-		select * from yellow_movie_watch_record
-		where (userId = #{userId} OR ip = #{ip}) AND movieId = #{movieId}
-		AND lastWatchTime >= #{startTime} AND lastWatchTime &lt;= #{endTime}
-		limit 0, 1
+		<![CDATA[
+			select * from yellow_movie_watch_record
+			where (userId = #{userId} OR ip = #{ip}) AND movieId = #{movieId}
+			AND lastWatchTime >= #{startTime} AND lastWatchTime <= #{endTime}
+			limit 0, 1
+		]]>
 	</select>
 
 	<select id="getLoginUserWatchCount" resultType="int">
-		select count(*) from yellow_movie_watch_record
-		where (userId = #{userId} OR ip = #{ip}) AND lastWatchTime >= #{startTime} AND lastWatchTime &lt;= #{endTime}
+		<![CDATA[
+			select count(*) from yellow_movie_watch_record
+			where (userId = #{userId} OR ip = #{ip}) AND lastWatchTime >= #{startTime} AND lastWatchTime <= #{endTime}
+		]]>
 	</select>
 	
 	<select id="getLoginUserWatchMovies" resultType="com.yy.yellow.po.MovieWatchRecord">
-		select * from yellow_movie_watch_record
-		where (userId = #{userId} OR ip = #{ip}) AND lastWatchTime >= #{startTime} AND lastWatchTime &lt;= #{endTime}
-		order by lastWatchTime DESC
+		<![CDATA[
+			select * from yellow_movie_watch_record
+			where (userId = #{userId} OR ip = #{ip}) AND lastWatchTime >= #{startTime} AND lastWatchTime <= #{endTime}
+			order by lastWatchTime DESC
+		]]>
 		<if test="page != null">
 			limit ${page.beginIndex}, ${page.pageSize}
 		</if>
