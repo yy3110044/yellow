@@ -1,8 +1,10 @@
 package com.yy.yellow.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +19,9 @@ import com.yy.yellow.service.MovieWatchRecordService;
 import com.yy.yellow.service.UserService;
 import com.yy.yellow.util.Page;
 import com.yy.yellow.util.QueryCondition;
+import com.yy.yellow.util.QueryCondition.ConditionJoin;
 import com.yy.yellow.util.ResponseObject;
+import com.yy.yellow.util.Util;
 
 /**
  * 用户movie controller
@@ -57,7 +61,37 @@ public class MovieController {
 	}
 	
 	@RequestMapping("/movieDetail")
-	public ResponseObject movieDetail(@RequestParam String id, HttpSession session) {
-		Integer userId = (Integer)session.getAttribute("userId");
+	public ResponseObject movieDetail(@RequestParam String id, HttpServletRequest req) {
+		Integer userId = (Integer)req.getSession().getAttribute("userId");
+		long startTime = Util.getEveryDayStartTime(System.currentTimeMillis());
+		long endTime = startTime + Util._24HoursMillis - 1;
+		if(userId != null) { //已登陆
+			return this.isLogin(userId, req.getRemoteAddr(), id, new Date(startTime), new Date(endTime));
+		} else { //未登陆
+			return this.unLogin(id, req.getRemoteAddr(), new Date(startTime), new Date(endTime));
+		}
+	}
+	private ResponseObject isLogin(int userId, String ip, String movieId, Date startTime, Date endTime) { //已登陆
+		//先查看今天有没有观看过此影片，观看过，则直接返回
+		MovieWatchRecord mwr = mwrs.getLoginUserWatchRecord(userId, ip, movieId, startTime, endTime);
+		if(mwr != null) { //观看过，直接返回此影片
+			return new ResponseObject(100, "返回成功", ms.findById(movieId));
+		} else { //未观看过
+			
+		}
+	}
+	private ResponseObject unLogin(String movieId, String ip, Date startTime, Date endTime) { //未登陆
+		//先查看今天有没有观看过此影片，观看过，则直接返回
+		QueryCondition qc = new QueryCondition();
+		qc.addCondition("ip", "=", ip);
+		qc.addCondition("movieId", "=", movieId);
+		qc.addCondition("lastWatchTime", ">=", startTime);
+		qc.addCondition("lastWatchTime", "<=", endTime);
+		MovieWatchRecord mwr = mwrs.find(qc);
+		if(mwr != null) { //观看过，直接返回此影片
+			return new ResponseObject(100, "返回成功", ms.findById(movieId));
+		} else { //未观看过
+			
+		}
 	}
 }

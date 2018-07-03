@@ -8,7 +8,7 @@
 	<entry key="server.servlet.context-path">/yellow</entry>
 	
 	<!-- 数据库连接配置 -->
-	<entry key="spring.datasource.url">jdbc:mysql://47.92.88.95:3306/yellow?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</entry>
+	<entry key="spring.datasource.url"><![CDATA[jdbc:mysql://47.92.88.95:3306/yellow?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull]]></entry>
 	<entry key="spring.datasource.username">yellow</entry>
 	<entry key="spring.datasource.password">twepsxXyabi6i4XZ</entry>
 	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
