@@ -3,6 +3,7 @@ package com.yy.yellow.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yy.yellow.po.Movie;
 
 public class Util {
 	private Util() {}
@@ -182,5 +184,41 @@ public class Util {
 	public static <T> T getBean(Class<T> requiredType, ServletContext sc) {
 		WebApplicationContext context = (WebApplicationContext)sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		return context.getBean(requiredType);
+	}
+	
+	/**
+	 * 生成插入sql语句
+	 * @param cls
+	 * @param tableName
+	 * @return
+	 */
+	public static String generateInsertSql(Class<?> cls, String tableName) {
+		Field[] fields = cls.getDeclaredFields();
+		System.out.println(fields.length);
+		return null;
+	}
+	
+	public static void main(String[] args) {
+		Util.generateInsertSql(Movie.class, "yfadsf");
+	}
+	
+	/**
+	 * 生成update sql语句
+	 * @param cls
+	 * @param tableName
+	 * @return
+	 */
+	public static String generateUpdateSql(Class<?> cls, String tableName) {
+		
+	}
+	
+	/**
+	 * 生成select sql语句
+	 * @param cls
+	 * @param tableName
+	 * @return
+	 */
+	public static String generateSelectSql(Class<?> cls, String tableName) {
+		
 	}
 }
