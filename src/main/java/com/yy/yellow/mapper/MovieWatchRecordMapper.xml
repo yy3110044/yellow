@@ -21,7 +21,7 @@
 		lastWatchTime = #{lastWatchTime}, createTime = #{createTime}
 		where id = #{id}
 	</update>
-	
+
 	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.MovieWatchRecord">
 		select id, userId, ip, movieId, lastWatchTime, createTime from yellow_movie_watch_record
 		<if test="useWhere">
@@ -85,7 +85,7 @@
 			</foreach>
 		</if>
 	</select>
-
+	
 	<select id="getLoginUserWatchRecord" resultType="com.yy.yellow.po.MovieWatchRecord">
 		<![CDATA[
 			select id, userId, ip, movieId, lastWatchTime, createTime from yellow_movie_watch_record

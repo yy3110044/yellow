@@ -12,41 +12,41 @@ import com.yy.yellow.util.QueryCondition;
 @Repository("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
-	@Autowired
-	private UserMapper um;
+    @Autowired
+    private UserMapper mapper;
 
-	@Override
-	public void add(User user) {
-		um.add(user);
-	}
+    @Override
+    public void add(User obj) {
+        mapper.add(obj);
+    }
 
-	@Override
-	public void delete(int id) {
-		um.delete(id);
-	}
+    @Override
+    public void delete(int id) {
+        mapper.delete(id);
+    }
 
-	@Override
-	public void update(User user) {
-		um.update(user);
-	}
+    @Override
+    public void update(User obj) {
+        mapper.update(obj);
+    }
 
-	@Override
-	public User find(QueryCondition qc) {
-		return um.find(qc);
-	}
+    @Override
+    public User find(QueryCondition qc) {
+        return mapper.find(qc);
+    }
 
-	@Override
-	public User findById(int id) {
-		return um.findById(id);
-	}
+    @Override
+    public User findById(int id) {
+        return mapper.findById(id);
+    }
 
-	@Override
-	public List<User> query(QueryCondition qc) {
-		return um.query(qc);
-	}
+    @Override
+    public List<User> query(QueryCondition qc) {
+        return mapper.query(qc);
+    }
 
-	@Override
-	public int getCount(QueryCondition qc) {
-		return um.getCount(qc);
-	}
+    @Override
+    public int getCount(QueryCondition qc) {
+        return mapper.getCount(qc);
+    }
 }

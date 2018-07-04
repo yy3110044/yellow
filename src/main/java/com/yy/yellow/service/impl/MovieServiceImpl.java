@@ -12,41 +12,41 @@ import com.yy.yellow.util.QueryCondition;
 @Repository("movieService")
 @Transactional
 public class MovieServiceImpl implements MovieService {
-	@Autowired
-	private MovieMapper mm;
+    @Autowired
+    private MovieMapper mapper;
 
-	@Override
-	public void add(Movie movie) {
-		mm.add(movie);
-	}
+    @Override
+    public void add(Movie obj) {
+        mapper.add(obj);
+    }
 
-	@Override
-	public void delete(String id) {
-		mm.delete(id);
-	}
+    @Override
+    public void delete(String id) {
+        mapper.delete(id);
+    }
 
-	@Override
-	public void update(Movie movie) {
-		mm.update(movie);
-	}
+    @Override
+    public void update(Movie obj) {
+        mapper.update(obj);
+    }
 
-	@Override
-	public Movie find(QueryCondition qc) {
-		return mm.find(qc);
-	}
+    @Override
+    public Movie find(QueryCondition qc) {
+        return mapper.find(qc);
+    }
 
-	@Override
-	public Movie findById(String id) {
-		return mm.findById(id);
-	}
+    @Override
+    public Movie findById(String id) {
+        return mapper.findById(id);
+    }
 
-	@Override
-	public List<Movie> query(QueryCondition qc) {
-		return mm.query(qc);
-	}
+    @Override
+    public List<Movie> query(QueryCondition qc) {
+        return mapper.query(qc);
+    }
 
-	@Override
-	public int getCount(QueryCondition qc) {
-		return mm.getCount(qc);
-	}
+    @Override
+    public int getCount(QueryCondition qc) {
+        return mapper.getCount(qc);
+    }
 }

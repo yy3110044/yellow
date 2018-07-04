@@ -22,7 +22,7 @@
 		createTime = #{createTime}
 		where id = #{id}
 	</update>
-	
+
 	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.UserLoginLog">
 		select id, userId, userName, loginIp, loginTime, loginType, userAgent, createTime from yellow_user_login_log
 		<if test="useWhere">
@@ -61,7 +61,7 @@
 				</choose>
 			</foreach>
 		</if>
-		
+
 		<if test="useSort"> <!-- 添加排序 -->
 			order by
 			<foreach collection="sorts" item="obj" separator=",">

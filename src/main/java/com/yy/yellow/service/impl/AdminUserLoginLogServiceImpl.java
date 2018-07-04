@@ -14,53 +14,53 @@ import com.yy.yellow.util.QueryCondition;
 @Repository("adminUserLoginLogService")
 @Transactional
 public class AdminUserLoginLogServiceImpl implements AdminUserLoginLogService {
-	@Autowired
-	private AdminUserLoginLogMapper aullm;
-	
+    @Autowired
+    private AdminUserLoginLogMapper mapper;
+    
 	@Autowired
 	private AdminUserMapper aum;
 
-	@Override
-	public void add(AdminUserLoginLog log) {
-		aullm.add(log);
-	}
+    @Override
+    public void add(AdminUserLoginLog obj) {
+        mapper.add(obj);
+    }
 
-	@Override
-	public void delete(int id) {
-		aullm.delete(id);
-	}
+    @Override
+    public void delete(int id) {
+        mapper.delete(id);
+    }
 
-	@Override
-	public void update(AdminUserLoginLog log) {
-		aullm.update(log);
-	}
+    @Override
+    public void update(AdminUserLoginLog obj) {
+        mapper.update(obj);
+    }
 
-	@Override
-	public AdminUserLoginLog find(QueryCondition qc) {
-		return aullm.find(qc);
-	}
+    @Override
+    public AdminUserLoginLog find(QueryCondition qc) {
+        return mapper.find(qc);
+    }
 
-	@Override
-	public AdminUserLoginLog findById(int id) {
-		return aullm.findById(id);
-	}
+    @Override
+    public AdminUserLoginLog findById(int id) {
+        return mapper.findById(id);
+    }
 
-	@Override
-	public List<AdminUserLoginLog> query(QueryCondition qc) {
-		return aullm.query(qc);
-	}
+    @Override
+    public List<AdminUserLoginLog> query(QueryCondition qc) {
+        return mapper.query(qc);
+    }
 
-	@Override
-	public int getCount(QueryCondition qc) {
-		return aullm.getCount(qc);
-	}
-	
+    @Override
+    public int getCount(QueryCondition qc) {
+        return mapper.getCount(qc);
+    }
+    
 	@Override
 	public void addLog(AdminUserLoginLog log) {
 		AdminUser au = aum.findById(log.getAdminUserId());
 		au.setLastLoginIp(log.getLoginIp());
 		au.setLastLoginTime(log.getLoginTime());
 		aum.update(au);
-		aullm.add(log);
+		mapper.add(log);
 	}
 }

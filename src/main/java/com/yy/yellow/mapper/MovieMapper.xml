@@ -19,7 +19,7 @@
 		filePath = #{filePath}, createTime = #{createTime}
 		where id = #{id}
 	</update>
-	
+
 	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.Movie">
 		select id, title, tags, imgUrl, externalLink, internalLink, filePath, createTime from yellow_movie
 		<if test="useWhere">

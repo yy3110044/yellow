@@ -12,41 +12,41 @@ import com.yy.yellow.util.QueryCondition;
 @Repository("adminUserService")
 @Transactional
 public class AdminUserServiceImpl implements AdminUserService {
-	@Autowired
-	private AdminUserMapper aum;
+    @Autowired
+    private AdminUserMapper mapper;
 
-	@Override
-	public void add(AdminUser au) {
-		aum.add(au);
-	}
+    @Override
+    public void add(AdminUser obj) {
+        mapper.add(obj);
+    }
 
-	@Override
-	public void delete(int id) {
-		aum.delete(id);
-	}
+    @Override
+    public void delete(int id) {
+        mapper.delete(id);
+    }
 
-	@Override
-	public void update(AdminUser au) {
-		aum.update(au);
-	}
+    @Override
+    public void update(AdminUser obj) {
+        mapper.update(obj);
+    }
 
-	@Override
-	public AdminUser find(QueryCondition qc) {
-		return aum.find(qc);
-	}
+    @Override
+    public AdminUser find(QueryCondition qc) {
+        return mapper.find(qc);
+    }
 
-	@Override
-	public AdminUser findById(int id) {
-		return aum.findById(id);
-	}
+    @Override
+    public AdminUser findById(int id) {
+        return mapper.findById(id);
+    }
 
-	@Override
-	public List<AdminUser> query(QueryCondition qc) {
-		return aum.query(qc);
-	}
+    @Override
+    public List<AdminUser> query(QueryCondition qc) {
+        return mapper.query(qc);
+    }
 
-	@Override
-	public int getCount(QueryCondition qc) {
-		return aum.getCount(qc);
-	}
+    @Override
+    public int getCount(QueryCondition qc) {
+        return mapper.getCount(qc);
+    }
 }

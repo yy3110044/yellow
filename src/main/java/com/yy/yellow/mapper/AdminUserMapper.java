@@ -7,11 +7,11 @@ import com.yy.yellow.util.QueryCondition;
 
 @Mapper
 public interface AdminUserMapper {
-	void add(AdminUser au);
-	void delete(int id);
-	void update(AdminUser au);
-	AdminUser find(QueryCondition qc);
-	AdminUser findById(int id);
-	List<AdminUser> query(QueryCondition qc);
-	int getCount(QueryCondition qc);
+    void add(AdminUser obj);
+    void delete(int id);
+    void update(AdminUser obj);
+    AdminUser find(QueryCondition qc);
+    AdminUser findById(int id);
+    List<AdminUser> query(QueryCondition qc);
+    int getCount(QueryCondition qc);
 }

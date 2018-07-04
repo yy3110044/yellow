@@ -14,7 +14,7 @@
 	<delete id="delete" parameterType="int">
 		delete from yellow_user where id = #{id}
 	</delete>
-	
+
 	<update id="update" parameterType="com.yy.yellow.po.User">
 		update yellow_user set
 		id = #{id}, userName = #{userName}, passWord = #{passWord}, nickName = #{nickName},
@@ -22,7 +22,7 @@
 		lastLoginTime = #{lastLoginTime}, lastLoginType = #{lastLoginType}, createTime = #{createTime}
 		where id = #{id}
 	</update>
-	
+
 	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.User">
 		select id, userName, passWord, nickName, phone, email, vipLevel, lastLoginIp, lastLoginTime, lastLoginType, createTime from yellow_user
 		<if test="useWhere">

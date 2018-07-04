@@ -14,7 +14,7 @@
 	<delete id="delete" parameterType="int">
 		delete from yellow_admin_user_login_log where id = #{id}
 	</delete>
-	
+
 	<update id="update" parameterType="com.yy.yellow.po.AdminUserLoginLog">
 		update yellow_admin_user_login_log set
 		id = #{id}, adminUserId = #{adminUserId}, adminUserName = #{adminUserName},

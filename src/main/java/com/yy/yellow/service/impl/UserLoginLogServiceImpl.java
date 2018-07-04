@@ -14,47 +14,47 @@ import com.yy.yellow.util.QueryCondition;
 @Repository("userLoginLogService")
 @Transactional
 public class UserLoginLogServiceImpl implements UserLoginLogService {
-	@Autowired
-	private UserLoginLogMapper ullm;
-	
+    @Autowired
+    private UserLoginLogMapper mapper;
+    
 	@Autowired
 	private UserMapper um;
 
-	@Override
-	public void add(UserLoginLog log) {
-		ullm.add(log);
-	}
+    @Override
+    public void add(UserLoginLog obj) {
+        mapper.add(obj);
+    }
 
-	@Override
-	public void delete(int id) {
-		ullm.delete(id);
-	}
+    @Override
+    public void delete(int id) {
+        mapper.delete(id);
+    }
 
-	@Override
-	public void update(UserLoginLog log) {
-		ullm.update(log);
-	}
+    @Override
+    public void update(UserLoginLog obj) {
+        mapper.update(obj);
+    }
 
-	@Override
-	public UserLoginLog find(QueryCondition qc) {
-		return ullm.find(qc);
-	}
+    @Override
+    public UserLoginLog find(QueryCondition qc) {
+        return mapper.find(qc);
+    }
 
-	@Override
-	public UserLoginLog findById(int id) {
-		return ullm.findById(id);
-	}
+    @Override
+    public UserLoginLog findById(int id) {
+        return mapper.findById(id);
+    }
 
-	@Override
-	public List<UserLoginLog> query(QueryCondition qc) {
-		return ullm.query(qc);
-	}
+    @Override
+    public List<UserLoginLog> query(QueryCondition qc) {
+        return mapper.query(qc);
+    }
 
-	@Override
-	public int getCount(QueryCondition qc) {
-		return ullm.getCount(qc);
-	}
-
+    @Override
+    public int getCount(QueryCondition qc) {
+        return mapper.getCount(qc);
+    }
+    
 	@Override
 	public void addLog(UserLoginLog log) {
 		User user = um.findById(log.getUserId());
@@ -62,6 +62,6 @@ public class UserLoginLogServiceImpl implements UserLoginLogService {
 		user.setLastLoginTime(log.getLoginTime());
 		user.setLastLoginType(log.getLoginType());
 		um.update(user);
-		ullm.add(log);
+		mapper.add(log);
 	}
 }

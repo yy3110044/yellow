@@ -7,11 +7,11 @@ import com.yy.yellow.util.QueryCondition;
 
 @Mapper
 public interface MovieMapper {
-	void add(Movie movie);
-	void delete(String id);
-	void update(Movie movie);
-	Movie find(QueryCondition qc);
-	Movie findById(String id);
-	List<Movie> query(QueryCondition qc);
-	int getCount(QueryCondition qc);
+    void add(Movie obj);
+    void delete(String id);
+    void update(Movie obj);
+    Movie find(QueryCondition qc);
+    Movie findById(String id);
+    List<Movie> query(QueryCondition qc);
+    int getCount(QueryCondition qc);
 }

@@ -7,13 +7,13 @@ import com.yy.yellow.util.Page;
 import com.yy.yellow.util.QueryCondition;
 
 public interface MovieWatchRecordService {
-	void add(MovieWatchRecord record);
-	void delete(int id);
-	void update(MovieWatchRecord record);
-	MovieWatchRecord find(QueryCondition qc);
-	MovieWatchRecord findById(int id);
-	List<MovieWatchRecord> query(QueryCondition qc);
-	int getCount(QueryCondition qc);
+    void add(MovieWatchRecord obj);
+    void delete(int id);
+    void update(MovieWatchRecord obj);
+    MovieWatchRecord find(QueryCondition qc);
+    MovieWatchRecord findById(int id);
+    List<MovieWatchRecord> query(QueryCondition qc);
+    int getCount(QueryCondition qc);
 	
 	//查看登陆用户的是否观看了某个影片
 	MovieWatchRecord getLoginUserWatchRecord(int userId, String ip, String movieId, Date startTime, Date endTime);

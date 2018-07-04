@@ -2,20 +2,12 @@ package com.yy.yellow.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-
-import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.yy.yellow.po.Movie;
-import com.yy.yellow.po.User;
 
 /**
  * mybatis mapper xml生成器
@@ -384,11 +376,5 @@ public class MybatisMapperXmlGenerator {
 				logger.error(e);
 			}
 		}
-	}
-
-	public static void main(String[] args) throws Exception {
-		MybatisMapperXmlGenerator g = new MybatisMapperXmlGenerator(Movie.class, "yellow_movie");
-		System.out.println(g.generateMapperXmlStr());
-		System.out.println(new File("/ag/gadg/egaeg").toString());
 	}
 }

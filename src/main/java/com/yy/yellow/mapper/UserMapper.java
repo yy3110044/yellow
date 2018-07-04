@@ -7,11 +7,11 @@ import com.yy.yellow.util.QueryCondition;
 
 @Mapper
 public interface UserMapper {
-	void add(User user);
-	void delete(int id);
-	void update(User user);
-	User find(QueryCondition qc);
-	User findById(int id);
-	List<User> query(QueryCondition qc);
-	int getCount(QueryCondition qc);
+    void add(User obj);
+    void delete(int id);
+    void update(User obj);
+    User find(QueryCondition qc);
+    User findById(int id);
+    List<User> query(QueryCondition qc);
+    int getCount(QueryCondition qc);
 }
