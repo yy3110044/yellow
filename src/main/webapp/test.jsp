@@ -89,7 +89,7 @@ var paths = [
 	{"path":"movieList", "paramNames":["pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"返回影片列表"},
 	
 	//用户接口
-	{"path":"userRegistry", "paramNames":["userName", "passWord", "nickName", "email", "yzm"], "desc":"用户注册"},
+	{"path":"userRegistry", "paramNames":["userName", "passWord", "phone", "nickName", "email", "yzm"], "desc":"用户注册"},
 	{"path":"userLogin", "paramNames":["loginType", "userName", "passWord"], "desc":"用户登陆"},
 	{"path":"userLogout", "paramNames":["token"], "desc":"用户退出"},
 	

@@ -35,7 +35,7 @@ CREATE TABLE `yellow_user` (
   `nickName` varchar(128) COMMENT '用户昵称',
   `phone` varchar(128) COMMENT '手机号码',
   `email` varchar(128) COMMENT '用户邮箱',
-  `vipLevel` int(11) COMMENT '用户vip级别，默认为0'
+  `level` tinyint(11) COMMENT '用户vip级别，默认为0',
   `lastLoginIp` varchar(128) COMMENT '最后登陆IP',
   `lastLoginTime` datetime COMMENT '最后登陆时间',
   `lastLoginType` varchar(64) COMMENT '最后登陆类型：web、app',
@@ -73,6 +73,7 @@ CREATE TABLE `yellow_movie` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+/*观影日志表*/
 DROP TABLE IF EXISTS `yellow_movie_watch_record`;
 CREATE TABLE `yellow_movie_watch_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
@@ -84,6 +85,17 @@ CREATE TABLE `yellow_movie_watch_record` (
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
   KEY `ip` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*用户级别权限表*/
+DROP TABLE IF EXISTS `yellow_user_level_permission`;
+CREATE TABLE `yellow_user_level_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `level` tinyint(11) NOT NULL COMMENT '级别，对应user表的level，多了一个 -1 代表未登陆的游客用户',
+  `watchMovieCount` int(11) NOT NULL COMMENT '此级别每日能够观影的数量',
+  `createTime` datetime COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `level` (`level`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 show tables;

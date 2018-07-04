@@ -99,6 +99,7 @@ public class UserLoginAndRegistryController {
 	@RequestMapping("/userRegistry")
 	public ResponseObject userRegistry(@RequestParam String userName,
 										@RequestParam String passWord,
+										String phone,
 										String nickName,
 										String email,
 										@RequestParam String yzm,
@@ -122,6 +123,7 @@ public class UserLoginAndRegistryController {
 		user = new User();
 		user.setUserName(userName.trim());
 		user.setPassWord(DigestUtils.md5Hex(passWord));
+		user.setPhone(phone);
 		user.setNickName(nickName);
 		user.setEmail(email);
 		us.add(user);

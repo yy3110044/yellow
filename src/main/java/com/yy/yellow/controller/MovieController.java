@@ -18,6 +18,8 @@ import com.yy.yellow.po.User;
 import com.yy.yellow.service.MovieService;
 import com.yy.yellow.service.MovieWatchRecordService;
 import com.yy.yellow.service.UserService;
+import com.yy.yellow.util.Cache;
+import com.yy.yellow.util.CacheKeyPre;
 import com.yy.yellow.util.Page;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.QueryCondition.ConditionJoin;
@@ -41,8 +43,8 @@ public class MovieController {
 	@Autowired
 	private UserService us;
 	
-	@Value("${web.config.freeMovieCount}")
-	private int freeMovieCount;//每天能免费观看的影片数量
+	@Autowired
+	private Cache cache;
 	
 	@RequestMapping("/movieList")
 	public ResponseObject movieList(@RequestParam(defaultValue="15") int pageSize,
@@ -81,7 +83,6 @@ public class MovieController {
 			return new ResponseObject(100, "返回成功", ms.findById(movieId));
 		} else { //未观看过
 			User user = us.findById(userId);
-			return null;
 		}
 	}
 	private ResponseObject unLogin(String movieId, String ip, Date startTime, Date endTime) { //未登陆
@@ -99,7 +100,7 @@ public class MovieController {
 		} else { //未观看过
 			qc.removeCondition("movieId", "=");
 			int count = mwrs.getCount(qc);
-			if(count < this.freeMovieCount) { //还未达到免费观看次数，返回影片，并添加观看记录
+			if(count < cache.getInt(CacheKeyPre.user_level_permission, "-1")) { //还未达到免费观看次数，返回影片，并添加观看记录
 				Movie movie = ms.findById(movieId);
 				if(movie != null) {
 					mwr = new MovieWatchRecord();

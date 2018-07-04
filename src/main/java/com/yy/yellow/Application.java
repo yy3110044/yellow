@@ -3,7 +3,6 @@ package com.yy.yellow;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -25,9 +24,11 @@ import com.yy.yellow.util.Cache;
  */
 @SpringBootApplication//相当于@Configuration、@ComponentScan、@EnableAutoConfiguration
 public class Application extends SpringBootServletInitializer implements WebMvcConfigurer {
+	/*
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
+	*/
 
 	@Autowired
 	private Cache cache;
@@ -39,7 +40,7 @@ public class Application extends SpringBootServletInitializer implements WebMvcC
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(Application.class);
 	}
-	
+
 	/**
 	 * 配置interceptor
 	 */

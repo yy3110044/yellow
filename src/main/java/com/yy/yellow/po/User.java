@@ -9,7 +9,7 @@ public class User {
 	private String nickName;
 	private String phone;
 	private String email;
-	private int vipLevel;
+	private int level;
 	private String lastLoginIp;
 	private Date lastLoginTime;
 	private String lastLoginType;
@@ -32,8 +32,8 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
-	public int getVipLevel() {
-		return vipLevel;
+	public int getLevel() {
+		return level;
 	}
 	public String getLastLoginIp() {
 		return lastLoginIp;
@@ -65,8 +65,8 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public void setVipLevel(int vipLevel) {
-		this.vipLevel = vipLevel;
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	public void setLastLoginIp(String lastLoginIp) {
 		this.lastLoginIp = lastLoginIp;
