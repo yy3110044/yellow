@@ -33,7 +33,9 @@ CREATE TABLE `yellow_user` (
   `userName` varchar(128) NOT NULL COMMENT '用户名',
   `passWord` varchar(128) NOT NULL COMMENT '密码(md5加密过后的)',
   `nickName` varchar(128) COMMENT '用户昵称',
+  `phone` varchar(128) COMMENT '手机号码',
   `email` varchar(128) COMMENT '用户邮箱',
+  `vipLevel` int(11) COMMENT '用户vip级别，默认为0'
   `lastLoginIp` varchar(128) COMMENT '最后登陆IP',
   `lastLoginTime` datetime COMMENT '最后登陆时间',
   `lastLoginType` varchar(64) COMMENT '最后登陆类型：web、app',
@@ -60,7 +62,7 @@ CREATE TABLE `yellow_user_login_log` (
 /*影片表*/
 DROP TABLE IF EXISTS `yellow_movie`;
 CREATE TABLE `yellow_movie` (
-  `id` varchar(64) NOT NULL COMMENT '主键id，UUID',
+  `id` char(64) NOT NULL COMMENT '主键id，UUID',
   `title` varchar(512) NOT NULL COMMENT '影片标题',
   `tags` varchar(512) COMMENT '标签',
   `imgUrl` varchar(512) COMMENT '缩略图链接',

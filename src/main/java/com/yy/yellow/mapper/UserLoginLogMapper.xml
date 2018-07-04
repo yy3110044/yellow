@@ -17,13 +17,14 @@
 	
 	<update id="update" parameterType="com.yy.yellow.po.UserLoginLog">
 		update yellow_user_login_log set
-		userId = #{userId}, userName = #{userName}, loginIp = #{loginIp},
-		loginTime = #{loginTime}, loginType = #{loginType}, userAgent = #{userAgent}, createTime = #{createTime}
+		id = #{id}, userId = #{userId}, userName = #{userName}, loginIp = #{loginIp},
+		loginTime = #{loginTime}, loginType = #{loginType}, userAgent = #{userAgent},
+		createTime = #{createTime}
 		where id = #{id}
 	</update>
 	
 	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.UserLoginLog">
-		select * from yellow_user_login_log
+		select id, userId, userName, loginIp, loginTime, loginType, userAgent, createTime from yellow_user_login_log
 		<if test="useWhere">
 			where
 			<foreach collection="conditions" index="index" item="obj">
@@ -45,11 +46,12 @@
 	</select>
 	
 	<select id="findById" parameterType="int" resultType="com.yy.yellow.po.UserLoginLog">
-		select * from yellow_user_login_log where id = #{id}
+		select id, userId, userName, loginIp, loginTime, loginType, userAgent, createTime from yellow_user_login_log
+		where id = #{id}
 	</select>
 	
 	<select id="query" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.UserLoginLog">
-		select * from yellow_user_login_log
+		select id, userId, userName, loginIp, loginTime, loginType, userAgent, createTime from yellow_user_login_log
 		<if test="useWhere"> <!-- 添加查询条件 -->
 			where
 			<foreach collection="conditions" index="index" item="obj">

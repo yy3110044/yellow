@@ -7,7 +7,9 @@ public class User {
 	private String userName;
 	private String passWord;
 	private String nickName;
+	private String phone;
 	private String email;
+	private int vipLevel;
 	private String lastLoginIp;
 	private Date lastLoginTime;
 	private String lastLoginType;
@@ -24,8 +26,23 @@ public class User {
 	public String getNickName() {
 		return nickName;
 	}
+	public String getPhone() {
+		return phone;
+	}
 	public String getEmail() {
 		return email;
+	}
+	public int getVipLevel() {
+		return vipLevel;
+	}
+	public String getLastLoginIp() {
+		return lastLoginIp;
+	}
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+	public String getLastLoginType() {
+		return lastLoginType;
 	}
 	public Date getCreateTime() {
 		return createTime;
@@ -42,23 +59,20 @@ public class User {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getLastLoginIp() {
-		return lastLoginIp;
-	}
-	public Date getLastLoginTime() {
-		return lastLoginTime;
+	public void setVipLevel(int vipLevel) {
+		this.vipLevel = vipLevel;
 	}
 	public void setLastLoginIp(String lastLoginIp) {
 		this.lastLoginIp = lastLoginIp;
 	}
 	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
-	}
-	public String getLastLoginType() {
-		return lastLoginType;
 	}
 	public void setLastLoginType(String lastLoginType) {
 		this.lastLoginType = lastLoginType;

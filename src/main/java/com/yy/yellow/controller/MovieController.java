@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.yy.yellow.po.Movie;
 import com.yy.yellow.po.MovieWatchRecord;
+import com.yy.yellow.po.User;
 import com.yy.yellow.service.MovieService;
 import com.yy.yellow.service.MovieWatchRecordService;
 import com.yy.yellow.service.UserService;
@@ -75,9 +76,12 @@ public class MovieController {
 		//先查看今天有没有观看过此影片，观看过，则直接返回
 		MovieWatchRecord mwr = mwrs.getLoginUserWatchRecord(userId, ip, movieId, startTime, endTime);
 		if(mwr != null) { //观看过，直接返回此影片
+			mwr.setLastWatchTime(new Date());
+			mwrs.update(mwr); //更新最后观影时间
 			return new ResponseObject(100, "返回成功", ms.findById(movieId));
 		} else { //未观看过
-			
+			User user = us.findById(userId);
+			return null;
 		}
 	}
 	private ResponseObject unLogin(String movieId, String ip, Date startTime, Date endTime) { //未登陆
@@ -89,9 +93,25 @@ public class MovieController {
 		qc.addCondition("lastWatchTime", "<=", endTime);
 		MovieWatchRecord mwr = mwrs.find(qc);
 		if(mwr != null) { //观看过，直接返回此影片
+			mwr.setLastWatchTime(new Date());
+			mwrs.update(mwr); //更新最后观影时间
 			return new ResponseObject(100, "返回成功", ms.findById(movieId));
 		} else { //未观看过
-			
+			qc.removeCondition("movieId", "=");
+			int count = mwrs.getCount(qc);
+			if(count < this.freeMovieCount) { //还未达到免费观看次数，返回影片，并添加观看记录
+				Movie movie = ms.findById(movieId);
+				if(movie != null) {
+					mwr = new MovieWatchRecord();
+					mwr.setIp(ip);
+					mwr.setMovieId(movieId);
+					mwr.setLastWatchTime(new Date());
+					mwrs.add(mwr);
+				}
+				return new ResponseObject(100, "返回成功", movie);
+			} else { //已达到免费观看次数
+				return new ResponseObject(101, "已达到今日的免费观看次数");
+			}
 		}
 	}
 }

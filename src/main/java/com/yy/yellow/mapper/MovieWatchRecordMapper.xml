@@ -17,13 +17,13 @@
 	
 	<update id="update" parameterType="com.yy.yellow.po.MovieWatchRecord">
 		update yellow_movie_watch_record set
-		userId = #{userId}, ip = #{ip}, movieId = #{movieId},
+		id = #{id}, userId = #{userId}, ip = #{ip}, movieId = #{movieId},
 		lastWatchTime = #{lastWatchTime}, createTime = #{createTime}
 		where id = #{id}
 	</update>
 	
 	<select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.MovieWatchRecord">
-		select * from yellow_movie_watch_record
+		select id, userId, ip, movieId, lastWatchTime, createTime from yellow_movie_watch_record
 		<if test="useWhere">
 			where
 			<foreach collection="conditions" index="index" item="obj">
@@ -45,11 +45,12 @@
 	</select>
 	
 	<select id="findById" parameterType="int" resultType="com.yy.yellow.po.MovieWatchRecord">
-		select * from yellow_movie_watch_record where id = #{id}
+		select id, userId, ip, movieId, lastWatchTime, createTime from yellow_movie_watch_record
+		where id = #{id}
 	</select>
 	
 	<select id="query" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.MovieWatchRecord">
-		select * from yellow_movie_watch_record
+		select id, userId, ip, movieId, lastWatchTime, createTime from yellow_movie_watch_record
 		<if test="useWhere"> <!-- 添加查询条件 -->
 			where
 			<foreach collection="conditions" index="index" item="obj">
@@ -87,7 +88,8 @@
 
 	<select id="getLoginUserWatchRecord" resultType="com.yy.yellow.po.MovieWatchRecord">
 		<![CDATA[
-			select * from yellow_movie_watch_record
+			select id, userId, ip, movieId, lastWatchTime, createTime from yellow_movie_watch_record
+			from yellow_movie_watch_record
 			where (userId = #{userId} OR ip = #{ip}) AND movieId = #{movieId}
 			AND lastWatchTime >= #{startTime} AND lastWatchTime <= #{endTime}
 			limit 0, 1
@@ -103,7 +105,8 @@
 	
 	<select id="getLoginUserWatchMovies" resultType="com.yy.yellow.po.MovieWatchRecord">
 		<![CDATA[
-			select * from yellow_movie_watch_record
+			select id, userId, ip, movieId, lastWatchTime, createTime from yellow_movie_watch_record
+			from yellow_movie_watch_record
 			where (userId = #{userId} OR ip = #{ip}) AND lastWatchTime >= #{startTime} AND lastWatchTime <= #{endTime}
 			order by lastWatchTime DESC
 		]]>

@@ -3,7 +3,6 @@ package com.yy.yellow.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -183,85 +182,5 @@ public class Util {
 	public static <T> T getBean(Class<T> requiredType, ServletContext sc) {
 		WebApplicationContext context = (WebApplicationContext)sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		return context.getBean(requiredType);
-	}
-	
-	/**
-	 * 生成插入sql语句
-	 * @param cls
-	 * @param tableName
-	 * @return
-	 */
-	public static String generateInsertSql(Class<?> cls, String tableName) {
-		Field[] fields = cls.getDeclaredFields();
-		StringBuilder result = new StringBuilder();
-		result.append("insert into ").append(tableName).append("(");
-
-		StringBuilder sb1 = new StringBuilder();
-		StringBuilder sb2 = new StringBuilder();
-		for(int i=0; i<fields.length; i++) {
-			sb1.append(fields[i].getName());
-			sb2.append("#{").append(fields[i].getName()).append("}");
-			if(i < fields.length - 1) {
-				sb1.append(", ");
-				sb2.append(", ");
-			}
-		}
-		
-		result.append(sb1).append(")").append(System.getProperty("line.separator", "\n")).append("values(").append(sb2).append(")");
-		return result.toString();
-	}
-	
-	/**
-	 * 生成update sql语句
-	 * @param cls
-	 * @param tableName
-	 * @return
-	 */
-	public static String generateUpdateSql(Class<?> cls, String tableName) {
-		Field[] fields = cls.getDeclaredFields();
-		StringBuilder result = new StringBuilder();
-		result.append("update ").append(tableName).append(" set").append(System.getProperty("line.separator", "\n"));
-		for(int i=0; i<fields.length; i++) {
-			result.append(fields[i].getName()).append(" = ").append("#{").append(fields[i].getName()).append("}");
-			if(i < fields.length - 1) {
-				result.append(", ");
-			}
-		}
-		result.append(System.getProperty("line.separator", "\n")).append("where id = #{id}");
-		return result.toString();
-	}
-	
-	/**
-	 * 生成select sql语句
-	 * @param cls
-	 * @param tableName
-	 * @return
-	 */
-	public static String generateSelectSql(Class<?> cls, String tableName) {
-		Field[] fields = cls.getDeclaredFields();
-		StringBuilder result = new StringBuilder();
-		result.append("select ");
-		for(int i=0; i<fields.length; i++) {
-			result.append(fields[i].getName());
-			if(i < fields.length - 1) {
-				result.append(", ");
-			}
-		}
-		result.append(" from ").append(tableName);
-		return result.toString();
-	}
-	public static void printSql(Class<?> cls, String tableName) {
-		System.out.println("--------------------------------------------insert---------------------------------------------------");
-		System.out.println(generateInsertSql(cls, tableName));
-		System.out.println("--------------------------------------------insert---------------------------------------------------");
-		System.out.println();
-		System.out.println("--------------------------------------------update---------------------------------------------------");
-		System.out.println(generateUpdateSql(cls, tableName));
-		System.out.println("--------------------------------------------update---------------------------------------------------");
-		System.out.println();
-		System.out.println("--------------------------------------------selecct---------------------------------------------------");
-		System.out.println(generateSelectSql(cls, tableName));
-		System.out.println("--------------------------------------------select---------------------------------------------------");
-		System.out.println();
 	}
 }
