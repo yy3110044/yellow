@@ -17,18 +17,16 @@ import org.apache.logging.log4j.Logger;
 public class MybatisMapperXmlGenerator {
 	private static final Logger logger = LogManager.getLogger(MybatisMapperXmlGenerator.class);
 	
-	//QueryCondition class
 	private static final Class<?> qcClass = QueryCondition.class;
-	//java源代码本地base目录
-	private static final String javaSourceFolder = "/home/yy/myFiles/eclipse-workspace/yellow/src/main/java";
 	private static final String mapperPackage = "com.yy.yellow.mapper";
 	private static final String servicePackage = "com.yy.yellow.service";
 	private static final String serviceImplPackage = "com.yy.yellow.service.impl";
 
-	
-	private Class<?> poClass;
-	private String tableName;
-	public MybatisMapperXmlGenerator(Class<?> poClass, String tableName) {
+	private final String javaSourceFolder;
+	private final Class<?> poClass;
+	private final String tableName;
+	public MybatisMapperXmlGenerator(String javaSourceFolder, Class<?> poClass, String tableName) {
+		this.javaSourceFolder = javaSourceFolder;
 		this.poClass = poClass;
 		this.tableName = tableName;
 	}
