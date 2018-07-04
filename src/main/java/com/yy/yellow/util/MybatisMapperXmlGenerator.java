@@ -359,20 +359,12 @@ public class MybatisMapperXmlGenerator {
 	
 	//把字符串写入到文件
 	private void saveStrToFile(String str, File file) {
-		BufferedWriter bw = null;
-		try {
-			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+		try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))) {
 			bw.write(str);
 			bw.flush();
 			logger.debug("已生成：" + file.getPath());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
-		} finally {
-			try {
-				bw.close();
-			} catch (IOException e) {
-				logger.error(e);
-			}
 		}
 	}
 }
