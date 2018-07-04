@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +20,6 @@ import com.yy.yellow.util.Cache;
 import com.yy.yellow.util.CacheKeyPre;
 import com.yy.yellow.util.Page;
 import com.yy.yellow.util.QueryCondition;
-import com.yy.yellow.util.QueryCondition.ConditionJoin;
 import com.yy.yellow.util.ResponseObject;
 import com.yy.yellow.util.Util;
 
@@ -64,14 +61,14 @@ public class MovieController {
 	}
 	
 	@RequestMapping("/movieDetail")
-	public ResponseObject movieDetail(@RequestParam String id, HttpServletRequest req) {
+	public ResponseObject movieDetail(@RequestParam String movieId, HttpServletRequest req) {
 		Integer userId = (Integer)req.getSession().getAttribute("userId");
 		long startTime = Util.getEveryDayStartTime(System.currentTimeMillis());
 		long endTime = startTime + Util._24HoursMillis - 1;
 		if(userId != null) { //已登陆
-			return this.isLogin(userId, req.getRemoteAddr(), id, new Date(startTime), new Date(endTime));
+			return this.isLogin(userId, req.getRemoteAddr(), movieId, new Date(startTime), new Date(endTime));
 		} else { //未登陆
-			return this.unLogin(id, req.getRemoteAddr(), new Date(startTime), new Date(endTime));
+			return this.unLogin(movieId, req.getRemoteAddr(), new Date(startTime), new Date(endTime));
 		}
 	}
 	private ResponseObject isLogin(int userId, String ip, String movieId, Date startTime, Date endTime) { //已登陆
@@ -83,6 +80,24 @@ public class MovieController {
 			return new ResponseObject(100, "返回成功", ms.findById(movieId));
 		} else { //未观看过
 			User user = us.findById(userId);
+			//用户对应级别每日可观看的影片数量
+			int watchMovieCount = cache.getInt(CacheKeyPre.user_level_permission, String.valueOf(user.getLevel()));
+			//今天已观看数据
+			int count = mwrs.getLoginUserWatchCount(userId, ip, startTime, endTime);
+			if(count < watchMovieCount) {//还未达到免费观看次数，返回影片，并添加观看记录
+				Movie movie = ms.findById(movieId);
+				if(movie != null) {
+					mwr = new MovieWatchRecord();
+					mwr.setIp(ip);
+					mwr.setUserId(userId);
+					mwr.setMovieId(movieId);
+					mwr.setLastWatchTime(new Date());
+					mwrs.add(mwr);
+				}
+				return new ResponseObject(100, "返回成功", movie);
+			} else { //已达到观看上限次数
+				return new ResponseObject(101, "已达到今日观看次数");
+			}
 		}
 	}
 	private ResponseObject unLogin(String movieId, String ip, Date startTime, Date endTime) { //未登陆

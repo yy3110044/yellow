@@ -87,6 +87,7 @@ var pathChange = function(index){
 //服务端接口定义
 var paths = [
 	{"path":"movieList", "paramNames":["pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"返回影片列表"},
+	{"path":"movieDetail", "paramNames":["token", "movieId"], "desc":"返回某个影片的信息"},
 	
 	//用户接口
 	{"path":"userRegistry", "paramNames":["userName", "passWord", "phone", "nickName", "email", "yzm"], "desc":"用户注册"},

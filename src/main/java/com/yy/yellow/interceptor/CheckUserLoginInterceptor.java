@@ -32,7 +32,7 @@ public class CheckUserLoginInterceptor implements HandlerInterceptor {
 		//session中没有再从cache中读取userId
 		String token = request.getParameter("token");
 		if(token != null) {
-			userId = (Integer)cache.get(CacheKeyPre.token, token);
+			userId = cache.getInt(CacheKeyPre.token, token);
 			if(userId != null) {
 				request.setAttribute("userId", userId);
 				return true;

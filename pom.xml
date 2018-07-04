@@ -70,6 +70,12 @@
 			<version>1.11.3</version>
 		</dependency>
 		
+		<!-- jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+		
 		<!-- apache commons -->
 		<dependency>
 			<groupId>commons-io</groupId>

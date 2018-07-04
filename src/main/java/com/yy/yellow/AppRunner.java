@@ -38,7 +38,7 @@ public class AppRunner implements CommandLineRunner, ApplicationRunner, Ordered 
 		List<UserLevelPermission> list = this.ulps.query(null);
 		for(UserLevelPermission ulp : list) {
 			logger.debug(CacheKeyPre.user_level_permission + ":" + String.valueOf(ulp.getLevel()) + "    " + ulp.getWatchMovieCount());
-			cache.set(CacheKeyPre.user_level_permission, String.valueOf(ulp.getLevel()), ulp.getWatchMovieCount());
+			cache.set(CacheKeyPre.user_level_permission, String.valueOf(ulp.getLevel()), String.valueOf(ulp.getWatchMovieCount()));
 		}
 	}
 

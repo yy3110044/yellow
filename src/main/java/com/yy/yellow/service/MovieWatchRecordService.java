@@ -19,6 +19,6 @@ public interface MovieWatchRecordService {
 	MovieWatchRecord getLoginUserWatchRecord(int userId, String ip, String movieId, Date startTime, Date endTime);
 	//得到登陆用户的每个观看数量
 	int getLoginUserWatchCount(int userId, String ip, Date startTime, Date endTime);
-	//返回登陆用户观盾的每日所有影片
+	//返回登陆用户观看的每日所有影片
 	List<MovieWatchRecord> getLoginUserWatchMovies(int userId, String ip, Date startTime, Date endTime, Page page);
 }
