@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +33,8 @@ import com.yy.yellow.util.Util;
 @RestController
 @RequestMapping(method=RequestMethod.POST)
 public class MovieController {
+	private static final Logger logger = LogManager.getLogger(MovieController.class);
+	
 	@Autowired
 	private MovieService ms;
 	
@@ -81,7 +85,11 @@ public class MovieController {
 		} else { //未观看过
 			User user = us.findById(userId);
 			//用户对应级别每日可观看的影片数量
-			int watchMovieCount = cache.getInt(CacheKeyPre.user_level_permission, String.valueOf(user.getLevel()));
+			Integer watchMovieCount = cache.getInt(CacheKeyPre.user_level_permission, String.valueOf(user.getLevel()));
+			if(watchMovieCount == null) {
+				logger.warn("级别对应的观影数量为空，level：" + user.getLevel());
+				throw new RuntimeException("级别对应的观影数量为空，level：" + user.getLevel());
+			}
 			//今天已观看数据
 			int count = mwrs.getLoginUserWatchCount(userId, ip, startTime, endTime);
 			if(count < watchMovieCount) {//还未达到免费观看次数，返回影片，并添加观看记录
@@ -114,8 +122,13 @@ public class MovieController {
 			return new ResponseObject(100, "返回成功", ms.findById(movieId));
 		} else { //未观看过
 			qc.removeCondition("movieId", "=");
+			Integer watchMovieCount = cache.getInt(CacheKeyPre.user_level_permission, "-1");
+			if(watchMovieCount == null) {
+				logger.warn("级别对应的观影数量为空，level：-1");
+				throw new RuntimeException("级别对应的观影数量为空，level：-1");
+			}
 			int count = mwrs.getCount(qc);
-			if(count < cache.getInt(CacheKeyPre.user_level_permission, "-1")) { //还未达到免费观看次数，返回影片，并添加观看记录
+			if(count < watchMovieCount) { //还未达到免费观看次数，返回影片，并添加观看记录
 				Movie movie = ms.findById(movieId);
 				if(movie != null) {
 					mwr = new MovieWatchRecord();

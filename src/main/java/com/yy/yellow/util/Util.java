@@ -160,9 +160,10 @@ public class Util {
 	 * @param o
 	 * @return
 	 */
+	private static ObjectMapper objectMapper = new ObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 	public static String toJsonStr(Object o) {
 		try {
-			return new ObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).writeValueAsString(o);
+			return objectMapper.writeValueAsString(o);
 		} catch (JsonProcessingException e) {
 			logger.error(o.toString() + "：转换json错误：" + e.toString());
 			throw new RuntimeException(e);
