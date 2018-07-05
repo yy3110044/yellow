@@ -69,9 +69,4 @@ public class CacheToRedis implements Cache {
 			return retVal;
 		}
 	}
-
-	@Override
-	public int size() {
-		throw new RuntimeException("redis cann't return size");
-	}
 }

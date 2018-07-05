@@ -19,7 +19,4 @@ public interface Cache {
 	
 	//删除一个缓存
 	public String remove(CacheKeyPre pre, String key);
-	
-	//返回缓存数量
-	public int size();
 }

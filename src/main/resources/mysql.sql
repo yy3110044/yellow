@@ -98,4 +98,20 @@ CREATE TABLE `yellow_user_level_permission` (
   UNIQUE KEY `level` (`level`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+/*网站访问记录*/
+DROP TABLE IF EXISTS `yellow_visit_log`;
+CREATE TABLE `yellow_visit_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `userId` int(11) COMMENT '用户id',
+  `ip` varchar(128) COMMENT '访问ip',
+  `userAgent` varchar(512) COMMENT 'userAgent',
+  `requestUrl` varchar(512) COMMENT '访问的接口url',
+  `params` varchar(512) COMMENT '参数',
+  `createTime` datetime COMMENT '时间',
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  KEY `ip` (`ip`),
+  KEY `createTime` (`createTime`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 show tables;

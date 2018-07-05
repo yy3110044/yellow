@@ -97,11 +97,6 @@ public class CacheToMap implements Cache {
 		}
 	}
 
-	@Override
-	public int size() {
-		return this.cacheMap.size();
-	}
-	
 	//清除无效缓存(已过期的)
 	public void cleanInvalidCache() {
 		List<CacheObject> coList = new ArrayList<CacheObject>(cacheMap.values());

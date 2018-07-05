@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.google.code.kaptcha.Constants;
 import com.yy.yellow.po.User;
 import com.yy.yellow.po.UserLoginLog;
 import com.yy.yellow.service.UserLoginLogService;
@@ -108,7 +107,7 @@ public class UserLoginAndRegistryController {
 			return new ResponseObject(101, "用户名或密码不能为空");
 		}
 		
-		String yzmCode = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		String yzmCode = (String)session.getAttribute("yzmCode");
 		if(yzmCode == null || !yzmCode.toUpperCase().equals(yzm.toUpperCase())) {
 			return new ResponseObject(102, "验证码错误");
 		}
@@ -117,9 +116,7 @@ public class UserLoginAndRegistryController {
 		if(user != null) {
 			return new ResponseObject(103, "此用户名已被注册");
 		}
-		
-		session.removeAttribute(Constants.KAPTCHA_SESSION_KEY); //成功使用后，删除验证码
-		
+
 		user = new User();
 		user.setUserName(userName.trim());
 		user.setPassWord(DigestUtils.md5Hex(passWord));
@@ -127,6 +124,7 @@ public class UserLoginAndRegistryController {
 		user.setNickName(nickName);
 		user.setEmail(email);
 		us.add(user);
+		session.removeAttribute("yzmCode"); //成功使用后，删除验证码
 		return new ResponseObject(100, "注册成功");
 	}
 }
