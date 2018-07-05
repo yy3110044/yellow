@@ -6,7 +6,7 @@
 		<a href="#">帮助</a>
 		-->
 		<i class="icon-off icon-white"></i>
-		<a href="admin/modifyAdminUserPassWord.jsp">修改管理员密码</a>
+		<a href="admin/adminUser/modifyAdminUserPassWord.jsp">修改管理员密码</a>
 		<i class="icon-user icon-white"></i>
 		<a href="javascript:;" onclick="logout()">退出</a>
 	</div>

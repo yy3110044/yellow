@@ -49,7 +49,7 @@ var addMovie = function(){
 	<div class="right">
 	<div class="right_cont">
 	<div class="breadcrumb">当前位置：
-		<a href="javascript:;">网站管理</a><span class="divider">/</span>
+		<a href="javascript:;">影片管理</a><span class="divider">/</span>
 		<a href="javascript:;">添加影片</a>
 	</div>
 	<div class="title_right"><strong>添加影片</strong><span style="color:red;font-size:18px;padding-left:200px;" id="showMsg"></span></div>

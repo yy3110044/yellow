@@ -2,11 +2,11 @@
 <html>
 <head>
 <base href="${basePath}"/>
-<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>标题</title>
-<link rel="stylesheet" href="admin/css/bootstrap.css" />
-<link rel="stylesheet" href="admin/css/css.css" />
+<link rel="stylesheet" href="admin/css/bootstrap.css">
+<link rel="stylesheet" href="admin/css/css.css">
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 </head>

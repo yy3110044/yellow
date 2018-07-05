@@ -33,7 +33,7 @@ var login = function(){
 		success : function(data){
 			$("#msg").html(data.msg);
 			if(data.code == 100) {
-				window.location.href = "${basePath}admin/webSiteInfo.jsp";
+				window.location.href = "${basePath}admin/webSite/webSiteInfo.jsp";
 			}
 		}
 	});

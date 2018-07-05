@@ -49,9 +49,11 @@ var getContentStr = function(param){
 		str += '<tr align="center" class="contentTr">';
 		for(var j=0; j<param.fields.length; j++) {
 			var field = param.fields[j];
-			str += '<td>';
+			var tdId = obj + field.field;
+			alert(tdId + "???");
+			str += '<td id="' + tdId + '">';
 			if(field.fn != null) { //方法不为空，执行方法，并返回
-				str += field.fn(obj);
+				str += field.fn(obj, tdId);
 			} else { //直接返回字段值
 				str += obj[field.field] == null ? '' : obj[field.field];
 			}

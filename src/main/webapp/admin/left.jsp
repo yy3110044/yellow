@@ -3,17 +3,17 @@
 	<div class="sdmenu" id="my_menu">
 		<div>
 			<span>网站管理</span>
-			<a href="admin/webSiteInfo.jsp">网站信息</a>
-			<a href="admin/movieList.jsp">影片列表</a>
-			<a href="admin/movieAdd.jsp">添加影片</a>
-			<a href="administrator/admin?action=blueberryQueryPage">蓝莓销售查询</a>
+			<a href="admin/webSite/webSiteInfo.jsp">网站信息</a>
 		</div>
-		<!--
+		<div>
+			<span>影片管理</span>
+			<a href="admin/movie/movieList.jsp">影片列表</a>
+			<a href="admin/movie/movieAdd.jsp">添加影片</a>
+		</div>
 		<div>
 			<span>用户管理</span>
-			<a href="">管理员列表</a>
+			<a href="">用户列表</a>
 		</div>
-		-->
 	</div>
 </div>
 <div class="Switch"></div>
