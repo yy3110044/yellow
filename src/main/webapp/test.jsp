@@ -106,6 +106,11 @@ var paths = [
 	{"path":"administration/modifyAdminUserPassWord", "paramNames":["oldPassWord", "newPassWord"], "desc":"修改管理员密码"},
 	{"path":"administration/getWebsiteInfo", "paramNames":[], "desc":"返回网站相关信息"},
 	
+	//用户观影权限管理
+	{"path":"administration/permissionList", "paramNames":[], "desc":"权限列表"},
+	{"path":"administration/permissionAdd", "paramNames":["level", "watchMovieCount"], "desc":"添加权限"},
+	{"path":"administration/permissionDelete", "paramNames":["perId"], "desc":"删除权限"},
+	
 	//后台影片管理
 	{"path":"administration/addMovie", "paramNames":["title", "tags", "imgUrl", "externalLink", "internalLink", "filePath", "createTime"], "desc":"添加一个影片"},
 	{"path":"administration/getMovie", "paramNames":["id"], "desc":"返回一个影片的信息"},

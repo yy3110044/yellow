@@ -70,7 +70,7 @@ public class VisitLogInterceptor implements HandlerInterceptor {
 
 		@Override
 		public void run() {
-			if(Arrays.binarySearch(doNotSave, Util.getSuffix(requestUrl)) < 0) {//没在排除数组里才保存
+			if(Arrays.binarySearch(doNotSave, Util.getSuffix(requestUrl)) < 0 && requestUrl.indexOf("/administration/") < 0 && requestUrl.indexOf("/error") < 0) {//没在排除数组里才保存
 				VisitLog log = new VisitLog();
 				log.setUserId(userId);
 				log.setIp(ip);

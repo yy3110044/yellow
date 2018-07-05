@@ -4,6 +4,8 @@
 		<div>
 			<span>网站管理</span>
 			<a href="admin/webSite/webSiteInfo.jsp">网站信息</a>
+			<a href="admin/webSite/permissionList.jsp">权限列表</a>
+			<a href="admin/webSite/permissionAdd.jsp">添加权限</a>
 		</div>
 		<div>
 			<span>影片管理</span>
@@ -17,6 +19,7 @@
 		<div>
 			<span>日志管理</span>
 			<a href="admin/log/visitLogList.jsp">访问日志</a>
+			<a href="admin/log/loginLogList.jsp">登录日志</a>
 		</div>
 	</div>
 </div>

@@ -39,12 +39,12 @@
 		</tr>
 		<tr>
 			<td align="right" nowrap="nowrap" bgcolor="#f1f1f1"></td>
-			<td colspan="3"><input type="button" value="修改" class="btn btn-info" style="width:80px;" /></td>
+			<td colspan="3"><input type="button" value="修改" class="btn btn-info" style="width:80px;"></td>
 		</tr>
 	</table>
 	<table class="margin-bottom-20 table no-border">
 		<tr>
-			<td class="text-center"><input type="button" value="修改" class="btn btn-info" style="width:80px;" /></td>
+			<td class="text-center"><input type="button" value="修改" class="btn btn-info" style="width:80px;"></td>
 		</tr>
  	</table>
 	</div> 
