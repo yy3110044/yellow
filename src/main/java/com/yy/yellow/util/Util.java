@@ -184,4 +184,25 @@ public class Util {
 		WebApplicationContext context = (WebApplicationContext)sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		return context.getBean(requiredType);
 	}
+	
+	/**
+	 * 得到url文件的后缀
+	 * @param urlStr
+	 * @return
+	 */
+	public static String getSuffix(String str) {
+		str = str.substring(str.lastIndexOf('/'));
+
+		int paramStrIndex = str.indexOf('?'); //参数字符串首字索引
+		if(paramStrIndex >= 0) { //没有参数字符串
+			str = str.substring(0, paramStrIndex);
+		} 
+
+		int index = str.lastIndexOf('.');
+		if(index < 0) {
+			return "";
+		} else {
+			return str.substring(index);
+		}
+	}
 }

@@ -112,7 +112,16 @@ var paths = [
 	{"path":"administration/deleteMovie", "paramNames":["id", "deleteFile"], "desc":"删除一个影片"},
 	{"path":"administration/updateMovie", "paramNames":["id", "title", "tags", "imgUrl", "externalLink", "internalLink", "filePath", "createTime"], "desc":"更新一个影片"},
 	{"path":"administration/listMovie", "paramNames":["startTime", "endTime", "pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"分页查询影片"},
-	{"path":"administration/checkFile", "paramNames":["id"], "desc":"检查影片是否存在"}
+	{"path":"administration/checkFile", "paramNames":["id"], "desc":"检查影片是否存在"},
+	
+	//后台用户管理
+	{"path":"administration/userList", "paramNames":["userName", "pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"用户列表"},
+	{"path":"administration/userDetail", "paramNames":["userId"], "desc":"某个用户详情"},
+	{"path":"administration/userDelete", "paramNames":["userId"], "desc":"删除某个用户"},
+	
+	//访问日志以及登陆日志管理
+	{"path":"administration/visitLogList", "paramNames":["userId", "ip", "startTime", "endTime", "pageSize", "pageNo", "showCount"], "desc":"访问日志列表"},
+	{"path":"administration/loginLogList", "paramNames":["userType", "userId", "userName", "startTime", "endTime", "pageSize", "pageNo", "showCount"], "desc":"登陆日志列表"}
 ];
 
 $(document).ready(function(){

@@ -48,6 +48,7 @@ public class Application extends SpringBootServletInitializer implements WebMvcC
 	private VisitLogService vls;
 	/**
 	 * 配置interceptor
+	 * 注意：经测试，spring的interceptor不会拦截Servlet和jsp，如果想拦截Servlet和jsp，请使用Filter
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

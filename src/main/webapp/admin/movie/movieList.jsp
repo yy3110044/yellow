@@ -52,17 +52,25 @@ var query = function(pageSize, pageNo){
 						{field : "externalLink"},
 						{field : "internalLink"},
 						{fn : function(obj, tdId){
-							loadData({
-								url : "administration/checkFile",
-								data : {
-									"id" : obj.id
-								},
-								success : function(data){
-									alert(tdId);
-									alert(data.msg);
-								}
-							});
-							
+							if(!empty(obj.filePath)) {
+								loadData({
+									url : "administration/checkFile",
+									data : {
+										"id" : obj.id
+									},
+									success : function(data){
+										var tdEle = $("#" + tdId);
+										if(data.code == 100) {
+											tdEle.html(tdEle.html() + '&nbsp;<span style="color:green;">☑</span>');
+											tdEle.attr("title", "文件存在");
+										} else {
+											tdEle.html(tdEle.html() + '&nbsp;<span style="color:red;">☒</span>');
+											tdEle.attr("title", "文件不存在");
+										}
+									}
+								});
+							}
+							return obj.filePath;
 						}},
 						{field : "createTime"},
 						{fn : function(obj){

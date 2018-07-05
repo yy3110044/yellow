@@ -14,6 +14,10 @@
 			<span>用户管理</span>
 			<a href="">用户列表</a>
 		</div>
+		<div>
+			<span>日志管理</span>
+			<a href="admin/log/visitLogList.jsp">访问日志</a>
+		</div>
 	</div>
 </div>
 <div class="Switch"></div>

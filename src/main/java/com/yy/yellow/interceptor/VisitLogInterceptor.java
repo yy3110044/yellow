@@ -1,5 +1,6 @@
 package com.yy.yellow.interceptor;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +46,12 @@ public class VisitLogInterceptor implements HandlerInterceptor {
 		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 	
+	//不要保存记录的访问文件
+	private static final String[] doNotSave = {".js", ".png", ".jpg", ".css", "jpeg", ".mp4"};
+	static {
+		Arrays.sort(doNotSave); //二分查找必须先排序
+	}
+	
 	//添加访问日志的执行线程操作
 	private class AddVisitLogRunnable implements Runnable {
 		private Integer userId;
@@ -63,13 +70,15 @@ public class VisitLogInterceptor implements HandlerInterceptor {
 
 		@Override
 		public void run() {
-			VisitLog log = new VisitLog();
-			log.setUserId(userId);
-			log.setIp(ip);
-			log.setUserAgent(userAgent);
-			log.setRequestUrl(requestUrl);
-			log.setParams(params);
-			vls.add(log);
+			if(Arrays.binarySearch(doNotSave, Util.getSuffix(requestUrl)) < 0) {//没在排除数组里才保存
+				VisitLog log = new VisitLog();
+				log.setUserId(userId);
+				log.setIp(ip);
+				log.setUserAgent(userAgent);
+				log.setRequestUrl(requestUrl);
+				log.setParams(params);
+				vls.add(log);
+			}
 		}
 	}
 }

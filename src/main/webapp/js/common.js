@@ -49,8 +49,7 @@ var getContentStr = function(param){
 		str += '<tr align="center" class="contentTr">';
 		for(var j=0; j<param.fields.length; j++) {
 			var field = param.fields[j];
-			var tdId = obj + field.field;
-			alert(tdId + "???");
+			var tdId = parseInt(Math.random() * 10000000000000000, 10);
 			str += '<td id="' + tdId + '">';
 			if(field.fn != null) { //方法不为空，执行方法，并返回
 				str += field.fn(obj, tdId);

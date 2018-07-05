@@ -123,7 +123,7 @@ public class MovieAdminController {
 	@RequestMapping("/listMovie")
 	public ResponseObject listMovie(@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startTime,
 	                                 @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date endTime,
-	                                 @RequestParam(defaultValue="15") int pageSize,
+	                                 @RequestParam(defaultValue="20") int pageSize,
 	                                 @RequestParam(defaultValue="1") int pageNo,
 	                                 @RequestParam(defaultValue="5") int showCount,
 	                                 @RequestParam(defaultValue="createTime") String sortField,
