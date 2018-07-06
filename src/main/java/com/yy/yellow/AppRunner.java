@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.yy.yellow.po.UserLevelPermission;
 import com.yy.yellow.service.UserLevelPermissionService;
 import com.yy.yellow.util.Cache;
-import com.yy.yellow.util.CacheKeyPre;
+import com.yy.yellow.util.CacheKey;
 
 /**
  * 开机启动操作
@@ -28,7 +28,7 @@ public class AppRunner implements CommandLineRunner, ApplicationRunner, Ordered 
 	
 	@Autowired
 	private Cache cache;
-
+	
 	//实现CommandLineRunner接口，并重写run方法，就可以在spring boot启动后执行一些操作，
 	//同时在要在实现类上加上@Component注解，这里直接用
 	@Override
@@ -37,8 +37,8 @@ public class AppRunner implements CommandLineRunner, ApplicationRunner, Ordered 
 		logger.debug("加载用户权限级别");
 		List<UserLevelPermission> list = this.ulps.query(null);
 		for(UserLevelPermission ulp : list) {
-			logger.debug(CacheKeyPre.user_level_permission + ":" + String.valueOf(ulp.getLevel()) + "    " + ulp.getWatchMovieCount());
-			cache.set(CacheKeyPre.user_level_permission, String.valueOf(ulp.getLevel()), String.valueOf(ulp.getWatchMovieCount()));
+			logger.debug(CacheKey.yellow_user_level_permission + ":" + String.valueOf(ulp.getLevel()) + "    " + ulp.getWatchMovieCount());
+			cache.set(CacheKey.yellow_user_level_permission, String.valueOf(ulp.getLevel()), String.valueOf(ulp.getWatchMovieCount()));
 		}
 	}
 

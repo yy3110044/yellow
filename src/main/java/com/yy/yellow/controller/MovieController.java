@@ -19,7 +19,7 @@ import com.yy.yellow.service.MovieService;
 import com.yy.yellow.service.MovieWatchRecordService;
 import com.yy.yellow.service.UserService;
 import com.yy.yellow.util.Cache;
-import com.yy.yellow.util.CacheKeyPre;
+import com.yy.yellow.util.CacheKey;
 import com.yy.yellow.util.Page;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.ResponseObject;
@@ -85,7 +85,7 @@ public class MovieController {
 		} else { //未观看过
 			User user = us.findById(userId);
 			//用户对应级别每日可观看的影片数量
-			Integer watchMovieCount = cache.getInt(CacheKeyPre.user_level_permission, String.valueOf(user.getLevel()));
+			Integer watchMovieCount = cache.getInt(CacheKey.yellow_user_level_permission, String.valueOf(user.getLevel()));
 			if(watchMovieCount == null) {
 				logger.warn("级别对应的观影数量为空，level：" + user.getLevel());
 				throw new RuntimeException("级别对应的观影数量为空，level：" + user.getLevel());
@@ -122,7 +122,7 @@ public class MovieController {
 			return new ResponseObject(100, "返回成功", ms.findById(movieId));
 		} else { //未观看过
 			qc.removeCondition("movieId", "=");
-			Integer watchMovieCount = cache.getInt(CacheKeyPre.user_level_permission, "-1");
+			Integer watchMovieCount = cache.getInt(CacheKey.yellow_user_level_permission, "-1");
 			if(watchMovieCount == null) {
 				logger.warn("级别对应的观影数量为空，level：-1");
 				throw new RuntimeException("级别对应的观影数量为空，level：-1");

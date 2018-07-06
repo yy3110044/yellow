@@ -28,9 +28,9 @@ public class LoginManager {
 	//app登陆
 	public String appLogin(Integer userId) {
 		//先检查此用户有没有app登陆过，如果有，则删除以前的token
-		String token = cache.remove(CacheKeyPre.user_current_token, userId.toString());
+		String token = cache.delete(CacheKey.yellow_userId_to_token, userId.toString());
 		if(token != null) { //删除以前的token缓存
-			cache.remove(CacheKeyPre.token, token);
+			cache.delete(CacheKey.yellow_token_to_userId, token);
 		}
 		
 		//再检查有没有web登陆过，如果有，清除session中的userId
@@ -43,17 +43,17 @@ public class LoginManager {
 		token = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 		//将新的当前用户token覆盖原来的token
 		int seconds = tokenExpirationTime * 60 * 60;
-		cache.set(CacheKeyPre.user_current_token, userId.toString(), token, seconds);
-		cache.set(CacheKeyPre.token, token, userId.toString(), seconds);
+		cache.set(CacheKey.yellow_userId_to_token, userId.toString(), token, seconds);
+		cache.set(CacheKey.yellow_token_to_userId, token, userId.toString(), seconds);
 		return token;
 	}
 	
 	//web登陆
 	public void webLogin(Integer userId, HttpSession session) {
 		//先检查此用户有没有app登陆过，如果有，则删除以前的token
-		String token = cache.remove(CacheKeyPre.user_current_token, userId.toString());
+		String token = cache.delete(CacheKey.yellow_userId_to_token, userId.toString());
 		if(token != null) { //删除以前的token缓存
-			cache.remove(CacheKeyPre.token, token);
+			cache.delete(CacheKey.yellow_token_to_userId, token);
 		}
 		
 		//先检查此用户有没有web登陆过，如果有，清除session中的userId
@@ -69,9 +69,9 @@ public class LoginManager {
 	//app退出登陆
 	public void appLogout(String token) {
 		if(token != null) {
-			String userId = cache.remove(CacheKeyPre.token, token);
+			String userId = cache.delete(CacheKey.yellow_token_to_userId, token);
 			if(userId != null) {
-				cache.remove(CacheKeyPre.user_current_token, userId);
+				cache.delete(CacheKey.yellow_userId_to_token, userId);
 			}
 		}
 	}

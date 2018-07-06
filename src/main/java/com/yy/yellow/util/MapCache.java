@@ -1,23 +1,37 @@
 package com.yy.yellow.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
- * 使用hashmap实现的缓存
+ * 使用map实现的cache
  * @author yy
  *
  */
-//@Component("cacheToMap")
-public class CacheToMap implements Cache {
+public class MapCache implements Cache {
+	public MapCache(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.xml中读取清除时间间隔
+		
+	}
+	
+	@Override
+	public void set(CacheKey key, String name, String value) {
+	}
+
+	@Override
+	public void set(CacheKey key, String name, String value, int seconds) {
+	}
+
+	@Override
+	public String getString(CacheKey key, String name) {
+	}
+
+	@Override
+	public String delete(CacheKey key, String name) {
+	}
+
+	@Override
+	public void clear() {
+	}
+	/*
 	public CacheToMap(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.properties中读取清除时间间隔
 		if(clearDelay < 1) {
 			throw new RuntimeException("clearDelay必须大于零");
@@ -111,6 +125,8 @@ public class CacheToMap implements Cache {
 		}
 	}
 	
+	private static final long foreverTime = 3471264000000L;
+	
 	//缓存对象
 	public class CacheObject implements Comparable<CacheObject> {
 		private String key; //key
@@ -118,7 +134,7 @@ public class CacheToMap implements Cache {
 		private long expirationTime; //到期时间
 
 		CacheObject(String key, String value) {
-			this(key, value, 3471264000000L);//到期时间，默认为2080-01-01表示为永久有
+			this(key, value, foreverTime);//到期时间，默认为2080-01-01表示为永久有
 		}
 		CacheObject(String key, String value, long expirationTime) {
 			this.key = key;
@@ -154,4 +170,10 @@ public class CacheToMap implements Cache {
 			}
 		}
 	}
+
+	@Override
+	public void clear() {
+		cacheMap.clear();
+	}
+	*/
 }

@@ -1,7 +1,5 @@
 package com.yy.yellow;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,9 +12,9 @@ import com.yy.yellow.interceptor.CheckUserLoginInterceptor;
 import com.yy.yellow.interceptor.VisitLogInterceptor;
 import com.yy.yellow.service.VisitLogService;
 import com.yy.yellow.util.Cache;
+
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedisPool;
 
 /**
  * 启动类配置
@@ -58,22 +56,41 @@ public class Application extends SpringBootServletInitializer implements WebMvcC
 	}
 	
 	/**
-	 * 配置redis
+	 * 配置redis(集群方式)
 	 * @return
 	 */
+	/*
 	@Bean(name="shardedJedisPool")
 	public ShardedJedisPool getShardedJedisPool() {
-		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-		jedisPoolConfig.setMaxTotal(10);//最大分配的对象数
-		jedisPoolConfig.setMaxIdle(10);//最大能够保持idel状态的对象数
-		jedisPoolConfig.setMinIdle(7);//最小空闲的对象数
-		jedisPoolConfig.setMaxWaitMillis(1000);//当池内没有返回对象时，最大等待时间
-		jedisPoolConfig.setLifo(false);//是否启用Lifo。如果不设置，默认为true。
-		jedisPoolConfig.setTestOnBorrow(false);//当调用borrow Object方法时，是否进行有效性检查
+		JedisPoolConfig config = new JedisPoolConfig();
+		config.setMaxTotal(20);//最大分配的对象数
+		config.setMaxIdle(10);//最大能够保持idel状态的对象数
+		config.setMinIdle(7);//最小空闲的对象数
+		config.setMaxWaitMillis(1000);//当池内没有返回对象时，最大等待时间
+		config.setLifo(false);//是否启用Lifo。如果不设置，默认为true。
+		config.setTestOnBorrow(false);//当调用borrow Object方法时，是否进行有效性检查
 		
 		List<JedisShardInfo> jedisShardInfoList = new ArrayList<>();
 		jedisShardInfoList.add(new JedisShardInfo("redis://localhost:6379/"));
 		
-		return new ShardedJedisPool(jedisPoolConfig, jedisShardInfoList);
+		return new ShardedJedisPool(config, jedisShardInfoList);
+	}
+	*/
+	
+	/**
+	 * 配置redis(单服务器方式)
+	 * @return
+	 */
+	@Bean(name="jedisPool")
+	public JedisPool getJedisPool() {
+		JedisPoolConfig config = new JedisPoolConfig();
+		config.setMaxTotal(20);//最大分配的对象数
+		config.setMaxIdle(10);//最大能够保持idel状态的对象数
+		config.setMinIdle(7);//最小空闲的对象数
+		config.setMaxWaitMillis(1000);//当池内没有返回对象时，最大等待时间
+		config.setLifo(false);//是否启用Lifo。如果不设置，默认为true。
+		config.setTestOnBorrow(false);//当调用borrow Object方法时，是否进行有效性检查
+		
+		return new JedisPool(config, "localhost", 6379);
 	}
 }
