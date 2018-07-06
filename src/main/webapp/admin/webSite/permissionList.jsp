@@ -46,6 +46,20 @@ var query = function(){
 							}
 						}},
 						{field : "watchMovieCount"},
+						{fn : function(obj, tdId){
+							loadData({
+								url : "administration/getPerByCache",
+								data : {
+									"level" : obj.level
+								},
+								success : function(data) {
+									if(data.code == 100) {
+										$("#" + tdId).html(data.result);
+									}
+								}
+							});
+							return "";
+						}},
 						{field : "createTime"},
 						{fn : function(obj){
 							return '<a href="javascript:;" onclick="del(' + obj.id + ')">删除</a>';
@@ -82,6 +96,7 @@ $(document).ready(function(){
 		<tr align="center">
 			<td><strong>用户等级</strong></td>
 			<td><strong>每日可观影数量</strong></td>
+			<td><strong>每日可观影数量(cache)</strong></td>
 			<td><strong>createTime</strong></td>
 			<td><strong>操作</strong></td>
 		</tr>

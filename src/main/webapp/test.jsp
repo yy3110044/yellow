@@ -110,6 +110,7 @@ var paths = [
 	{"path":"administration/permissionList", "paramNames":[], "desc":"权限列表"},
 	{"path":"administration/permissionAdd", "paramNames":["level", "watchMovieCount"], "desc":"添加权限"},
 	{"path":"administration/permissionDelete", "paramNames":["perId"], "desc":"删除权限"},
+	{"path":"administration/getPerByCache", "paramNames":["level"], "desc":"返回缓存中的用户级别数据"},
 	
 	//后台影片管理
 	{"path":"administration/addMovie", "paramNames":["title", "tags", "imgUrl", "externalLink", "internalLink", "filePath", "createTime"], "desc":"添加一个影片"},
@@ -123,10 +124,12 @@ var paths = [
 	{"path":"administration/userList", "paramNames":["userName", "pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"用户列表"},
 	{"path":"administration/userDetail", "paramNames":["userId"], "desc":"某个用户详情"},
 	{"path":"administration/userDelete", "paramNames":["userId"], "desc":"删除某个用户"},
+	{"path":"administration/userAdd", "paramNames":["userName", "passWord", "nickName", "phone", "email"], "desc":"添加用户"},
 	
 	//访问日志以及登陆日志管理
 	{"path":"administration/visitLogList", "paramNames":["userId", "ip", "startTime", "endTime", "pageSize", "pageNo", "showCount"], "desc":"访问日志列表"},
-	{"path":"administration/loginLogList", "paramNames":["userType", "userId", "userName", "startTime", "endTime", "pageSize", "pageNo", "showCount"], "desc":"登陆日志列表"}
+	{"path":"administration/loginLogList", "paramNames":["userType", "userId", "userName", "startTime", "endTime", "pageSize", "pageNo", "showCount"], "desc":"登陆日志列表"},
+	{"path":"administration/movieWatchRecordList", "paramNames":["userId", "ip", "startTime", "endTime"], "desc":"观影记录"}
 ];
 
 $(document).ready(function(){

@@ -54,4 +54,11 @@ public class UserLevelPermissionAdminController {
 		cache.delete(CacheKeyPre.yellow_user_level_permission, String.valueOf(perId));//删除缓存
 		return new ResponseObject(100, "success");
 	}
+	
+	//返回cache中的级别
+	@RequestMapping("/getPerByCache")
+	public ResponseObject getPerByCache(@RequestParam String level) {
+		Integer result = cache.getInt(CacheKeyPre.yellow_user_level_permission, level);
+		return new ResponseObject(100, "success", result);
+	}
 }

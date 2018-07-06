@@ -33,9 +33,7 @@
 			</td>
 		</tr>
 		<tr align="center">
-			<td><strong>城市</strong></td>
-			<td><strong>至郑起步价</strong></td>
-			<td><strong>操</strong></td>
+			<td><strong></strong></td>
 		</tr>
 	</table>
 	<table class="margin-bottom-20 table no-border">

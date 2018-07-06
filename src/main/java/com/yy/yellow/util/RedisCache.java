@@ -10,7 +10,7 @@ import redis.clients.jedis.JedisPool;
  * @author yy
  *
  */
-@Component("redisCache")
+//@Component("redisCache")
 public class RedisCache implements Cache {
 	@Autowired
 	private JedisPool jedisPool;

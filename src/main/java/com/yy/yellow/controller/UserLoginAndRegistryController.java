@@ -103,7 +103,7 @@ public class UserLoginAndRegistryController {
 										String email,
 										@RequestParam String yzm,
 										HttpSession session) {
-		if(Util.empty(userName) || Util.empty(passWord)) {
+		if(Util.empty(userName, passWord)) {
 			return new ResponseObject(101, "用户名或密码不能为空");
 		}
 		
@@ -111,14 +111,14 @@ public class UserLoginAndRegistryController {
 		if(yzmCode == null || !yzmCode.toUpperCase().equals(yzm.toUpperCase())) {
 			return new ResponseObject(102, "验证码错误");
 		}
-		
+		userName = userName.trim();
 		User user = us.find(new QueryCondition().addCondition("userName", "=", userName));
 		if(user != null) {
 			return new ResponseObject(103, "此用户名已被注册");
 		}
 
 		user = new User();
-		user.setUserName(userName.trim());
+		user.setUserName(userName);
 		user.setPassWord(DigestUtils.md5Hex(passWord));
 		user.setPhone(phone);
 		user.setNickName(nickName);

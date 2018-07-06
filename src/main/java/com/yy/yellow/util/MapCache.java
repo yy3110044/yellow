@@ -9,12 +9,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * 使用map实现的cache
  * @author yy
  *
  */
+@Component("mapCache")
 public class MapCache implements Cache {
 	//定时任务线程池，用于清除已过期的缓存数据
 	private ScheduledExecutorService service;

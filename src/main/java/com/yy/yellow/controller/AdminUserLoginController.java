@@ -93,14 +93,14 @@ public class AdminUserLoginController {
 		if(!this.addAdminUser) {
 			return new ResponseObject(102, "不允许添加管理员");
 		}
-		
+		userName = userName.trim();
 		AdminUser au = aus.find(new QueryCondition().addCondition("userName", "=", userName));
 		if(au != null) {
 			return new ResponseObject(103, userName + "已存在");
 		}
 		
 		au = new AdminUser();
-		au.setUserName(userName.trim());
+		au.setUserName(userName);
 		au.setPassWord(DigestUtils.md5Hex(passWord));
 		aus.add(au);
 		return new ResponseObject(100, "添加管理员成功");

@@ -14,12 +14,14 @@
 		</div>
 		<div>
 			<span>用户管理</span>
-			<a href="">用户列表</a>
+			<a href="admin/user/userList.jsp">用户列表</a>
+			<a href="admin/user/userAdd.jsp">添加用户</a>
 		</div>
 		<div>
 			<span>日志管理</span>
 			<a href="admin/log/visitLogList.jsp">访问日志</a>
 			<a href="admin/log/loginLogList.jsp">登录日志</a>
+			<a href="admin/log/movieWatchRecordList.jsp">观影记录</a>
 		</div>
 	</div>
 </div>
