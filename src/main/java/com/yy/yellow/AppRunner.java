@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.yy.yellow.po.UserLevelPermission;
 import com.yy.yellow.service.UserLevelPermissionService;
 import com.yy.yellow.util.Cache;
-import com.yy.yellow.util.CacheKey;
+import com.yy.yellow.util.CacheKeyPre;
 
 /**
  * 开机启动操作
@@ -37,8 +37,8 @@ public class AppRunner implements CommandLineRunner, ApplicationRunner, Ordered 
 		logger.debug("加载用户权限级别");
 		List<UserLevelPermission> list = this.ulps.query(null);
 		for(UserLevelPermission ulp : list) {
-			logger.debug(CacheKey.yellow_user_level_permission + ":" + String.valueOf(ulp.getLevel()) + "    " + ulp.getWatchMovieCount());
-			cache.set(CacheKey.yellow_user_level_permission, String.valueOf(ulp.getLevel()), String.valueOf(ulp.getWatchMovieCount()));
+			logger.debug(CacheKeyPre.yellow_user_level_permission + ":" + String.valueOf(ulp.getLevel()) + "    " + ulp.getWatchMovieCount());
+			cache.set(CacheKeyPre.yellow_user_level_permission, String.valueOf(ulp.getLevel()), String.valueOf(ulp.getWatchMovieCount()));
 		}
 	}
 

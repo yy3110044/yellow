@@ -1,5 +1,13 @@
 package com.yy.yellow.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -8,31 +16,13 @@ import org.springframework.beans.factory.annotation.Value;
  *
  */
 public class MapCache implements Cache {
-	public MapCache(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.xml中读取清除时间间隔
-		
-	}
+	//定时任务线程池，用于清除已过期的缓存数据
+	private ScheduledExecutorService service;
 	
-	@Override
-	public void set(CacheKey key, String name, String value) {
-	}
+	//缓存map
+	private Map<String, CacheObject> cacheMap;
 
-	@Override
-	public void set(CacheKey key, String name, String value, int seconds) {
-	}
-
-	@Override
-	public String getString(CacheKey key, String name) {
-	}
-
-	@Override
-	public String delete(CacheKey key, String name) {
-	}
-
-	@Override
-	public void clear() {
-	}
-	/*
-	public CacheToMap(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.properties中读取清除时间间隔
+	public MapCache(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.properties中读取清除时间间隔
 		if(clearDelay < 1) {
 			throw new RuntimeException("clearDelay必须大于零");
 		}
@@ -45,12 +35,6 @@ public class MapCache implements Cache {
 			}
 		}, clearDelay, clearDelay, TimeUnit.MINUTES);
 	}
-	
-	//定时任务线程池，用于清除已过期的缓存数据
-	private ScheduledExecutorService service;
-	
-	//缓存map
-	private Map<String, CacheObject> cacheMap;
 
 	@Override
 	public void set(CacheKeyPre pre, String key, String value) {
@@ -81,27 +65,7 @@ public class MapCache implements Cache {
 	}
 
 	@Override
-	public Integer getInt(CacheKeyPre pre, String key) {
-		String value = getString(pre, key);
-		if(value != null) {
-			return Integer.valueOf(value);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public Double getDouble(CacheKeyPre pre, String key) {
-		String value = getString(pre, key);
-		if(value != null) {
-			return Double.valueOf(value);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public String remove(CacheKeyPre pre, String key) {
+	public String delete(CacheKeyPre pre, String key) {
 		key = pre + ":" + key;
 		CacheObject co = this.cacheMap.remove(key);
 		if(co != null) {
@@ -175,5 +139,4 @@ public class MapCache implements Cache {
 	public void clear() {
 		cacheMap.clear();
 	}
-	*/
 }

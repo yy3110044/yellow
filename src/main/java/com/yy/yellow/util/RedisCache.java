@@ -1,7 +1,5 @@
 package com.yy.yellow.util;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -18,33 +16,36 @@ public class RedisCache implements Cache {
 	private JedisPool jedisPool;
 
 	@Override
-	public void set(CacheKey key, String name, String value) {
+	public void set(CacheKeyPre pre, String key, String value) {
+		key = pre.name() + ":" + key;
 		try(Jedis jedis = jedisPool.getResource()) {
-			jedis.hmset(key.name(), getMap(name, value));
+			jedis.set(key, value);
 		}
 	}
 
 	@Override
-	public void set(CacheKey key, String name, String value, int seconds) {
+	public void set(CacheKeyPre pre, String key, String value, int seconds) {
+		key = pre.name() + ":" + key;
 		try(Jedis jedis = jedisPool.getResource()) {
-			jedis.hmset(key.name(), getMap(name, value));
-			jedis.expire(key.name(), seconds);
-			有效时间有问题
+			jedis.set(key, value);
+			jedis.expire(key, seconds);
 		}
 	}
 
 	@Override
-	public String getString(CacheKey key, String name) {
+	public String getString(CacheKeyPre pre, String key) {
+		key = pre.name() + ":" + key;
 		try(Jedis jedis = jedisPool.getResource()) {
-			return jedis.hget(key.name(), name);
+			return jedis.get(key);
 		}
 	}
 
 	@Override
-	public String delete(CacheKey key, String name) {
+	public String delete(CacheKeyPre pre, String key) {
+		key = pre.name() + ":" + key;
 		try(Jedis jedis = jedisPool.getResource()) {
-			String value = jedis.hget(key.name(), name);
-			jedis.hdel(key.name(), name);
+			String value = jedis.get(key);
+			jedis.del(key);
 			return value;
 		}
 	}
@@ -54,12 +55,5 @@ public class RedisCache implements Cache {
 		try(Jedis jedis = jedisPool.getResource()) {
 			jedis.flushAll();
 		}
-	}
-	
-	//根据一个key和一个value生成一个map
-	private Map<String, String> getMap(String name, String value) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put(name, value);
-		return map;
 	}
 }

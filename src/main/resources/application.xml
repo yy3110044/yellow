@@ -25,6 +25,6 @@
 	<!-- 网站相关配置 -->
 	<entry key="web.config.upload.path">/upload</entry><!-- 上传文件目录，以webapp目录为基目录 -->
 	<entry key="web.config.addAdminUser">true</entry><!-- 此参数为true时，可以直接添加一个后台管理员，请在生产环境将此参数设为false -->
-	<entry key="web.config.cache.clearDelay">60</entry><!-- 定时清除无效缓存的间隔时间(适用于自己实现的缓存类)，单位：分 -->
 	<entry key="web.config.token.expirationTime">360</entry><!-- token过期时间，单位：小时 -->
+	<entry key="web.config.cache.clearDelay">60</entry><!-- 定时清除无效缓存的间隔时间(适用于自己实现的缓存类)，单位：分 -->
 </properties>

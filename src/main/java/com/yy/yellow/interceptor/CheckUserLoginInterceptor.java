@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import com.yy.yellow.util.Cache;
-import com.yy.yellow.util.CacheKey;
+import com.yy.yellow.util.CacheKeyPre;
 import com.yy.yellow.util.ResponseObject;
 import com.yy.yellow.util.Util;
 
@@ -32,7 +32,7 @@ public class CheckUserLoginInterceptor implements HandlerInterceptor {
 		//session中没有再从redis中读取userId
 		String token = request.getParameter("token");
 		if(token != null) {
-			userId = cache.getInt(CacheKey.yellow_token_to_userId, token);
+			userId = cache.getInt(CacheKeyPre.yellow_token_to_userId, token);
 			if(userId != null) {
 				request.setAttribute("userId", userId);
 				return true;

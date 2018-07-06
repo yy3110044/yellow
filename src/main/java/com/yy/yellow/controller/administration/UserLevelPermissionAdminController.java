@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yy.yellow.po.UserLevelPermission;
 import com.yy.yellow.service.UserLevelPermissionService;
 import com.yy.yellow.util.Cache;
-import com.yy.yellow.util.CacheKey;
+import com.yy.yellow.util.CacheKeyPre;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.ResponseObject;
 import com.yy.yellow.util.QueryCondition.SortType;
@@ -44,14 +44,14 @@ public class UserLevelPermissionAdminController {
 		per.setLevel(level);
 		per.setWatchMovieCount(watchMovieCount);
 		ulps.add(per); //添加到数据库
-		cache.set(CacheKey.yellow_user_level_permission, String.valueOf(per.getLevel()), String.valueOf(per.getWatchMovieCount()));//添加到缓存
+		cache.set(CacheKeyPre.yellow_user_level_permission, String.valueOf(per.getLevel()), String.valueOf(per.getWatchMovieCount()));//添加到缓存
 		return new ResponseObject(100, "success");
 	}
 	
 	@RequestMapping("/permissionDelete")
 	public ResponseObject permissionDelete(@RequestParam int perId) {
 		ulps.delete(perId);//删除数据库
-		cache.delete(CacheKey.yellow_user_level_permission, String.valueOf(perId));//删除缓存
+		cache.delete(CacheKeyPre.yellow_user_level_permission, String.valueOf(perId));//删除缓存
 		return new ResponseObject(100, "success");
 	}
 }
