@@ -4,13 +4,15 @@
 <base href="${basePath}"/>
 <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>添加用户</title>
+<title>修改用户</title>
 <link rel="stylesheet" href="admin/css/bootstrap.css">
 <link rel="stylesheet" href="admin/css/css.css">
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
+var userId = '${param.userId}';
 $(document).ready(function(){
+	//先加载权限数据
 	loadData({
 		url : "administration/permissionList",
 		success : function(data) {
@@ -22,12 +24,27 @@ $(document).ready(function(){
 					str += '<option value="' + obj.level + '">' + obj.level + '----' + obj.watchMovieCount + '</option>';
 				}
 				$("#level").html(str);
+				
+				//再加载用户数据
+				loadData({
+					url : "administration/userDetail",
+					data : {
+						"userId" : userId
+					},
+					success : function(data) {
+						if(data.code == 100) {
+							$("#nickName").val(data.result.nickName);
+							$("#phone").val(data.result.phone);
+							$("#email").val(data.result.email);
+							$("#level").val(data.result.level);
+						}
+					}
+				});
 			}
 		}
 	});
 });
-var addUser = function(){
-	var userName = $.trim($("#userName").val());
+var updateUser = function(){
 	var passWord = $("#passWord").val();
 	var nickName = $.trim($("#nickName").val());
 	var phone = $.trim($("#phone").val());
@@ -35,9 +52,9 @@ var addUser = function(){
 	var level = $.trim($("#level").val());
 	
 	loadData({
-		url : "administration/userAdd",
+		url : "administration/userUpdate",
 		data : {
-			"userName" : userName,
+			"userId" : userId,
 			"passWord" : passWord,
 			"nickName" : nickName,
 			"phone" : phone,
@@ -45,16 +62,9 @@ var addUser = function(){
 			"level" : level
 		},
 		success : function(data) {
+			$("#showMsg").html(data.msg);
 			if(data.code == 100) {
-				$("#showMsg").html(data.msg);
-				$("#userName").val("");
-				$("#passWord").val("");
-				$("#nickName").val("");
-				$("#phone").val("");
-				$("#email").val("");
-				$("#level").val("");
 			} else {
-				$("#showMsg").html(data.msg);
 			}
 		}
 	});
@@ -65,21 +75,17 @@ var addUser = function(){
 <%@include file="/admin/header.jsp"%>
 <div id="middle">
 <jsp:include page="/admin/left.jsp">
-	<jsp:param name="p" value="添加用户"/>
+	<jsp:param name="p" value="修改用户"/>
 </jsp:include>
 	<div class="right">
 	<div class="right_cont">
 	<div class="breadcrumb">当前位置：
 		<a href="javascript:;">用户管理</a><span class="divider">/</span>
-		<a href="javascript:;">添加用户</a>
+		<a href="javascript:;">修改用户</a>
 	</div>
-	<div class="title_right"><strong>添加用户</strong><span style="color:red;font-size:18px;padding-left:200px;" id="showMsg"></span></div>
+	<div class="title_right"><strong>修改用户</strong><span style="color:red;font-size:18px;padding-left:200px;" id="showMsg"></span></div>
 	<div style="width:900px; margin:auto">
 	<table class="table table-bordered">
-		<tr>
-			<td width="12%" align="right" nowrap="nowrap" bgcolor="#f1f1f1">用户名：</td>
-			<td><input type="text" id="userName"></td>
-		</tr>
 		<tr>
 			<td align="right" nowrap="nowrap" bgcolor="#f1f1f1">密码：</td>
 			<td><input type="text" id="passWord"></td>
@@ -102,7 +108,7 @@ var addUser = function(){
 		</tr>
 		<tr>
 			<td align="right" nowrap="nowrap" bgcolor="#f1f1f1"></td>
-			<td colspan="3"><input type="button" value="添加" onclick="addUser()" class="btn btn-info" style="width:80px;"></td>
+			<td colspan="3"><input type="button" value="修改" onclick="updateUser()" class="btn btn-info" style="width:80px;"></td>
 		</tr>
 	</table>
 	</div> 

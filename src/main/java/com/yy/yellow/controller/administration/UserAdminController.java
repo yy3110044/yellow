@@ -83,6 +83,25 @@ public class UserAdminController {
 		return new ResponseObject(100, "添加用户成功");
 	}
 	
+	@RequestMapping("/userUpdate")
+	public ResponseObject userUpdate(@RequestParam int userId,
+			                          @RequestParam String passWord,
+			                          String nickName,
+			                          String phone,
+			                          String email,
+			                          int level) {
+		User user = us.findById(userId);
+		if(!Util.empty(passWord)) {
+			user.setPassWord(DigestUtils.md5Hex(passWord));
+		}
+		user.setNickName(nickName);
+		user.setPhone(phone);
+		user.setEmail(email);
+		user.setLevel(level);
+		us.update(user);
+		return new ResponseObject(100, "success");
+	}
+	
 	@RequestMapping("/userDetail")
 	public ResponseObject userDetail(@RequestParam int userId) {
 		User user = us.findById(userId);

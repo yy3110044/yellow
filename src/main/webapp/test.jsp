@@ -124,7 +124,8 @@ var paths = [
 	{"path":"administration/userList", "paramNames":["userName", "pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"用户列表"},
 	{"path":"administration/userDetail", "paramNames":["userId"], "desc":"某个用户详情"},
 	{"path":"administration/userDelete", "paramNames":["userId"], "desc":"删除某个用户"},
-	{"path":"administration/userAdd", "paramNames":["userName", "passWord", "nickName", "phone", "email"], "desc":"添加用户"},
+	{"path":"administration/userAdd", "paramNames":["userName", "passWord", "nickName", "phone", "email", "level"], "desc":"添加用户"},
+	{"path":"administration/userUpdate", "paramNames":["userId", "passWord", "nickName", "phone", "email", "level"], "desc":"修改用户"},
 	
 	//访问日志以及登陆日志管理
 	{"path":"administration/visitLogList", "paramNames":["userId", "ip", "startTime", "endTime", "pageSize", "pageNo", "showCount"], "desc":"访问日志列表"},

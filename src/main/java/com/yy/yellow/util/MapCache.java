@@ -24,7 +24,7 @@ public class MapCache implements Cache {
 	//缓存map
 	private Map<String, CacheObject> cacheMap;
 
-	public MapCache(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.properties中读取清除时间间隔
+	public MapCache(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.xml中读取清除时间间隔
 		if(clearDelay < 1) {
 			throw new RuntimeException("clearDelay必须大于零");
 		}

@@ -9,6 +9,13 @@
 <link rel="stylesheet" href="admin/css/css.css" />
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+
+<script src="js/jquery-ui.widget.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+
+<script src="js/jquery.fileupload-process.js"></script>
+<script src="js/jquery.fileupload-validate.js"></script>
 <script type="text/javascript">
 var addMovie = function(){
 	var title = $.trim($("#title").val());
@@ -38,6 +45,27 @@ var addMovie = function(){
 		redirectUrl : "admin/login.jsp?msg=" + encodeURI("请先登陆")
 	});
 }
+
+//上传文件
+var uploadFile = function(){
+	var obj = $("#uploadFileInput").fileupload({
+		url : "upload",
+		type : "POST",
+		dataType : "json",
+		autoUpload : false,
+		maxNumberOfFiles : 1, //最大上传文件数目
+		maxFileSize : 1000000, // 文件上限1MB
+		minFileSize : 100,//文件下限  100b
+		messages : {//文件错误信息
+			acceptFileTypes : '文件类型不匹配',
+			maxFileSize : '文件过大',
+			minFileSize : '文件过小'
+		}
+	}).on("fileuploadadd", function(e, data){
+		
+	});
+	alert(obj);
+};
 </script>
 </head>
 <body>
@@ -58,6 +86,13 @@ var addMovie = function(){
 		<tr>
 			<td width="12%" align="right" nowrap="nowrap" bgcolor="#f1f1f1">标题：</td>
 			<td><input type="text" id="title" style="width:350px;"></td>
+		</tr>
+		<tr>
+			<td width="12%" align="right" nowrap="nowrap" bgcolor="#f1f1f1">缩略图：</td>
+			<td>
+				<input id="uploadFileInput" type="file">
+				<input type="button" value="上传" onclick="uploadFile()">
+			</td>
 		</tr>
 		<tr>
 			<td align="right" nowrap="nowrap" bgcolor="#f1f1f1">标签：</td>

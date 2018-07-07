@@ -58,7 +58,7 @@ var query = function(pageSize, pageNo) {
 						{field : "lastLoginTime"},
 						{field : "lastLoginType"},
 						{field : "createTime"},
-						{fn : function(obj){return '<a href="javascript:;" onclick="del(' + obj.id + ', this)">删除</a>';}}
+						{fn : function(obj){return '<a href="javascript:;" onclick="del(' + obj.id + ', this)">删除</a>&nbsp;<a href="admin/user/userUpdate.jsp?userId=' + obj.id + '" target="_blank">修改</a>';}}
 					]
 				});
 				$("table.table-bordered").append(str);
