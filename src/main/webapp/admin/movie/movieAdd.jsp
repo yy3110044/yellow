@@ -27,6 +27,7 @@ var addMovie = function(){
 		data : {
 			"title" : title,
 			"tags" : tags,
+			"imgUrl" : imgUrl,
 			"externalLink" : externalLink,
 			"internalLink" : internalLink,
 			"filePath" : filePath
@@ -51,6 +52,7 @@ $(document).ready(function(){
 		url : "${basePath}upload",
 		type : "POST",
 		dataType : "json",
+		//acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i, //上传文件限制
 		progressall : function(e, data) {
 			//data.loaded 已上传字节
 			//data.total 文件总字节
