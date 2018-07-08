@@ -10,12 +10,10 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 
-<script src="js/jquery-ui.widget.js"></script>
+<script src="js/jquery.ui.widget.js"></script>
 <script src="js/jquery.fileupload.js"></script>
 <script src="js/jquery.iframe-transport.js"></script>
 
-<script src="js/jquery.fileupload-process.js"></script>
-<script src="js/jquery.fileupload-validate.js"></script>
 <script type="text/javascript">
 var addMovie = function(){
 	var title = $.trim($("#title").val());
@@ -46,26 +44,23 @@ var addMovie = function(){
 	});
 }
 
-//上传文件
-var uploadFile = function(){
-	var obj = $("#uploadFileInput").fileupload({
-		url : "upload",
+$(document).ready(function(){
+	//添加文件上传事件
+	$("#uploadFileInput").fileupload({
+		url : "${basePath}upload",
 		type : "POST",
 		dataType : "json",
-		autoUpload : false,
-		maxNumberOfFiles : 1, //最大上传文件数目
-		maxFileSize : 1000000, // 文件上限1MB
-		minFileSize : 100,//文件下限  100b
-		messages : {//文件错误信息
-			acceptFileTypes : '文件类型不匹配',
-			maxFileSize : '文件过大',
-			minFileSize : '文件过小'
+		progressall : function(e, data) {
+			var progress = parseInt(data.loaded / data.total * 100, 10);
+			$("#progressDiv .loaded").html(data.loaded);
+			$("#progressDiv .total").html(data.total);
+		},
+		//上传完成回调函数
+		done : function(e, data){
+			alert(data.result.msg);
 		}
-	}).on("fileuploadadd", function(e, data){
-		
 	});
-	alert(obj);
-};
+});
 </script>
 </head>
 <body>
@@ -90,8 +85,12 @@ var uploadFile = function(){
 		<tr>
 			<td width="12%" align="right" nowrap="nowrap" bgcolor="#f1f1f1">缩略图：</td>
 			<td>
-				<input id="uploadFileInput" type="file">
-				<input type="button" value="上传" onclick="uploadFile()">
+				<div><input id="uploadFileInput" type="file" name="file"></div>
+				<div id="progressDiv">
+					loaded：<span class="loaded"></span>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					total：<span class="total"></span>
+				</div>
 			</td>
 		</tr>
 		<tr>

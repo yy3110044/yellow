@@ -7,6 +7,10 @@
 	<entry key="server.port">8080</entry>
 	<entry key="server.servlet.context-path">/yellow</entry>
 	
+	<!-- 上传文件大小限制设置 -->
+	<entry key="spring.servlet.multipart.max-file-size">450MB</entry>
+	<entry key="spring.servlet.multipart.max-request-size">450MB</entry>
+	
 	<!-- 数据库连接配置 -->
 	<entry key="spring.datasource.url"><![CDATA[jdbc:mysql://47.92.88.95:3306/yellow?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull]]></entry>
 	<entry key="spring.datasource.username">yellow</entry>
