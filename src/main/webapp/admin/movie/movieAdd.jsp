@@ -18,6 +18,7 @@
 var addMovie = function(){
 	var title = $.trim($("#title").val());
 	var tags = $.trim($("#tags").val());
+	var imgUrl = $.trim($("#imgUrl").val());
 	var externalLink = $.trim($("#externalLink").val());
 	var internalLink = $.trim($("#internalLink").val());
 	var filePath = $.trim($("#filePath").val());
@@ -51,13 +52,19 @@ $(document).ready(function(){
 		type : "POST",
 		dataType : "json",
 		progressall : function(e, data) {
-			var progress = parseInt(data.loaded / data.total * 100, 10);
-			$("#progressDiv .loaded").html(data.loaded);
-			$("#progressDiv .total").html(data.total);
+			//data.loaded 已上传字节
+			//data.total 文件总字节
+			var rate = parseInt(data.loaded / data.total * 100, 10);
+			$("#progress").html(rate + "%");
 		},
 		//上传完成回调函数
 		done : function(e, data){
-			alert(data.result.msg);
+			if(data.result.code == 100) { //上传成功
+				$("#imgUrl").val(data.result.result.serverUrl);
+				$("#uploadImg").html('<img src="' + data.result.result.serverUrl + '">');
+			} else { //上传失败
+				$("#showMsg").html(data.result.msg);
+			}
 		}
 	});
 });
@@ -85,11 +92,11 @@ $(document).ready(function(){
 		<tr>
 			<td width="12%" align="right" nowrap="nowrap" bgcolor="#f1f1f1">缩略图：</td>
 			<td>
-				<div><input id="uploadFileInput" type="file" name="file"></div>
-				<div id="progressDiv">
-					loaded：<span class="loaded"></span>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					total：<span class="total"></span>
+				<div id="uploadImg"></div>
+				<div>
+					<input type="hidden" id="imgUrl">
+					<input id="uploadFileInput" type="file" name="file">
+					<span id="progress" style="color:green;"></span>
 				</div>
 			</td>
 		</tr>
