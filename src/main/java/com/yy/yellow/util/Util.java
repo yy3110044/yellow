@@ -3,6 +3,7 @@ package com.yy.yellow.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -204,5 +205,25 @@ public class Util {
 		} else {
 			return str.substring(index);
 		}
+	}
+	
+	/**
+	 * 将对象转为map
+	 * @param obj
+	 * @return
+	 */
+	public static Map<String, Object> ObjectToMap(Object obj) {
+		Field[] fields = obj.getClass().getFields();
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			for(Field field : fields) {
+				field.setAccessible(true);
+				map.put(field.getName(), field.get(obj));
+			}
+		} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			logger.error(e);
+			throw new RuntimeException(e);
+		}
+		return map;
 	}
 }
