@@ -1,4 +1,4 @@
-var empty = function(str){
+var empty = function(str) {
 	return str == null || "" == str;
 };
 
@@ -42,7 +42,7 @@ var loadData = function(obj) {
 };
 
 //填充内容
-var getContentStr = function(param){
+var getContentStr = function(param) {
 	var str = '';
 	for(var i=0; i<param.list.length; i++) {
 		var obj = param.list[i];
@@ -94,4 +94,3 @@ var getPageStr = function(page){
 	str += '</span>';
 	return str;
 };
-

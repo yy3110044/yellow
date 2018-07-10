@@ -7,12 +7,11 @@
 <title>添加影片</title>
 <link rel="stylesheet" href="admin/css/bootstrap.css" />
 <link rel="stylesheet" href="admin/css/css.css" />
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
-
+<script src="js/jquery.js"></script>
 <script src="js/jquery.ui.widget.js"></script>
 <script src="js/jquery.fileupload.js"></script>
 <script src="js/jquery.iframe-transport.js"></script>
+<script src="js/common.js"></script>
 
 <script type="text/javascript">
 var addMovie = function(){
@@ -47,27 +46,34 @@ var addMovie = function(){
 }
 
 $(document).ready(function(){
-	//添加文件上传事件
 	$("#uploadFileInput").fileupload({
-		url : "${basePath}upload",
-		type : "POST",
-		dataType : "json",
-		//acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i, //上传文件限制
-		progressall : function(e, data) {
-			//data.loaded 已上传字节
-			//data.total 文件总字节
-			var rate = parseInt(data.loaded / data.total * 100, 10);
-			$("#progress").html(rate + "%");
-		},
-		//上传完成回调函数
-		done : function(e, data){
-			if(data.result.code == 100) { //上传成功
-				$("#imgUrl").val(data.result.result.serverUrl);
-				$("#uploadImg").html('<img src="' + data.result.result.serverUrl + '">');
-			} else { //上传失败
-				$("#showMsg").html(data.result.msg);
-			}
-		}
+	    url : "upload",
+	    type : "POST",
+	    dataType : "json",
+	    add : function(e, data) { //添加文件的时候回调函数
+	        var fileType = data.originalFiles[0].type;
+	        if(fileType == "image/gif" || fileType == "image/jpeg" || fileType == "image/jpg" || fileType == "image/png") {
+	        	data.submit();
+	        } else {
+	        	$("#showMsg").html("只能上传gif、jpg、png格式的图片");
+	        }
+	    },
+	    progressall : function(e, data) {
+	        //data.loaded 已上传字节
+	        //data.total 文件总字节
+	        var rate = parseInt(data.loaded / data.total * 100, 10);
+	        $("#progress").html(rate + "%");
+	    },
+	    //上传完成回调函数
+	    done : function(e, data){
+	        if(data.result.code == 100) { //上传成功
+	            $("#imgUrl").val(data.result.result.serverUrl);
+	            $("#uploadImg").attr("src", data.result.result.serverUrl);
+	            $("#progress").html("上传成功");
+	        } else { //上传失败
+	            $("#showMsg").html(data.result.msg);
+	        }
+	    }
 	});
 });
 </script>
@@ -94,7 +100,7 @@ $(document).ready(function(){
 		<tr>
 			<td width="12%" align="right" nowrap="nowrap" bgcolor="#f1f1f1">缩略图：</td>
 			<td>
-				<div id="uploadImg"></div>
+				<div><img id="uploadImg" alt="上传图片" src="" style="width:300px;height:200px;"></div>
 				<div>
 					<input type="hidden" id="imgUrl">
 					<input id="uploadFileInput" type="file" name="file">
