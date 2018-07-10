@@ -12,21 +12,21 @@
 	<entry key="spring.servlet.multipart.max-request-size">450MB</entry>
 	
 	<!-- 数据库连接配置 -->
-	<!--
 	<entry key="spring.datasource.url"><![CDATA[jdbc:mysql://47.92.88.95:3306/yellow?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull]]></entry>
 	<entry key="spring.datasource.username">yellow</entry>
 	<entry key="spring.datasource.password">twepsxXyabi6i4XZ</entry>
 	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
-	-->
 	
+	<!--
 	<entry key="spring.datasource.url"><![CDATA[jdbc:mysql://localhost:3306/yellow?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull]]></entry>
 	<entry key="spring.datasource.username">root</entry>
 	<entry key="spring.datasource.password">910123</entry>
 	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
-
+	-->
+	
 	<!-- 日志相关配置 TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
 	<entry key="logging.file">/tmp/testlogs/yellow/yellow.log</entry>
-	<entry key="logging.level.com.yy.yellow">INFO</entry>
+	<entry key="logging.level.com.yy.yellow">DEBUG</entry>
 	<entry key="logging.level.org.mybatis">INFO</entry>
 	
 	<!-- jackson时间格式设置 -->

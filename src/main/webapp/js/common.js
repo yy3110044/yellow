@@ -41,6 +41,43 @@ var loadData = function(obj) {
 	});
 };
 
+/**
+ * 添加上传文件事件
+ * obj.inputId：上传文件表单id
+ * obj.url：上传服务器url
+ * obj.fileTypes：允许的文件类型数组
+ * obj.progressall：进度回调函数 loaded：已上传字节，total：文件总字节
+ * obj.done：完成回调函数
+ */
+var addUploadEvent = function(obj) {
+	$("#" + obj.inputId).fileupload({
+		url : obj.url,
+		type : "POST",
+		dataType : "json",
+		add : function(e, data){
+			var fileType = data.originalFiles[0].type;
+			if(obj.fileTypes != null && obj.fileTypes.length > 0) {
+				var result = false;
+				for(var i=0; i<obj.fileTypes.length; i++) {
+					if(fileType == obj.fileTypes[i]) {
+						result = true;
+						break;
+					}
+				}
+				if(result) {
+					data.submit();
+				} else {
+					$("#showMsg").html("文件类型错误");
+				}
+			} else {
+				data.submit();
+			}
+		},
+		progressall : obj.progressall,
+		done : obj.done
+	});
+};
+
 //填充内容
 var getContentStr = function(param) {
 	var str = '';
