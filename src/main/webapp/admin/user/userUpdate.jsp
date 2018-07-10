@@ -21,7 +21,9 @@ $(document).ready(function(){
 				var str = '';
 				for(var i=0; i<list.length; i++) {
 					var obj = list[i];
-					str += '<option value="' + obj.level + '">' + obj.level + '----' + obj.watchMovieCount + '</option>';
+					if(obj.level != -1) {
+						str += '<option value="' + obj.level + '">' + obj.level + '----' + obj.watchMovieCount + '</option>';
+					}
 				}
 				$("#level").html(str);
 				
