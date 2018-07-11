@@ -23,7 +23,7 @@
 	<entry key="spring.datasource.password">910123</entry>
 	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
 	-->
-	
+
 	<!-- 日志相关配置 TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
 	<entry key="logging.file">/tmp/testlogs/yellow/yellow.log</entry>
 	<entry key="logging.level.com.yy.yellow">DEBUG</entry>

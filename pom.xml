@@ -34,7 +34,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		 <!-- 添加此依赖可以使spring boot可以热部署 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
