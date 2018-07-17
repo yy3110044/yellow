@@ -22,8 +22,8 @@ public class LoginManager {
 	@Autowired
 	private Cache cache;
 	
-	@Value("${web.config.token.expirationTime}")
-	private int tokenExpirationTime;//token过期时间，单位：小时
+	@Value("${web.config.token.expirationTime:1296000000}")
+	private long tokenExpirationTime;//token过期时间，单位：毫秒
 	
 	//app登陆
 	public String appLogin(Integer userId) {
@@ -42,9 +42,8 @@ public class LoginManager {
 		//创建新的token，使用uuid作为token
 		token = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 		//将新的当前用户token覆盖原来的token
-		int seconds = tokenExpirationTime * 60 * 60;
-		cache.set(CacheKeyPre.yellow_userId_to_token, userId.toString(), token, seconds);
-		cache.set(CacheKeyPre.yellow_token_to_userId, token, userId.toString(), seconds);
+		cache.set(CacheKeyPre.yellow_userId_to_token, userId.toString(), token, tokenExpirationTime);
+		cache.set(CacheKeyPre.yellow_token_to_userId, token, userId.toString(), tokenExpirationTime);
 		return token;
 	}
 	

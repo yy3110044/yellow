@@ -16,13 +16,6 @@
 	<entry key="spring.datasource.username">yellow</entry>
 	<entry key="spring.datasource.password">twepsxXyabi6i4XZ</entry>
 	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
-	
-	<!--
-	<entry key="spring.datasource.url"><![CDATA[jdbc:mysql://localhost:3306/yellow?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull]]></entry>
-	<entry key="spring.datasource.username">root</entry>
-	<entry key="spring.datasource.password">910123</entry>
-	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
-	-->
 
 	<!-- 日志相关配置 TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
 	<entry key="logging.file">/tmp/testlogs/yellow/yellow.log</entry>
@@ -34,8 +27,12 @@
 	<entry key="spring.jackson.time-zone">GMT+8</entry>
 
 	<!-- 网站相关配置 -->
-	<entry key="web.config.upload.path">/upload</entry><!-- 上传文件目录，以webapp目录为基目录 -->
 	<entry key="web.config.addAdminUser">true</entry><!-- 此参数为true时，可以直接添加一个后台管理员，请在生产环境将此参数设为false -->
-	<entry key="web.config.token.expirationTime">360</entry><!-- token过期时间，单位：小时 -->
-	<entry key="web.config.cache.clearDelay">60</entry><!-- 定时清除无效缓存的间隔时间(适用于自己实现的缓存类)，单位：分 -->
+	<entry key="web.config.token.expirationTime">1296000000</entry><!-- token过期时间，单位：毫秒 -->
+	<entry key="web.config.cache.clearDelay">43200000</entry><!-- 定时清除无效缓存的间隔时间(适用于自己实现的缓存类)，单位：毫秒 -->
+
+	<entry key="web.config.download.connectionTimeout">60000</entry><!-- 下载影片的连接超时时间，单位：毫秒 -->
+	<entry key="web.config.download.readTimeout">60000</entry><!-- 下载影片的读取超时时间，单位：毫秒 -->
+	<entry key="web.config.staticSource.host">http://static.yy.com:8080/</entry><!-- 静态资源网站地址 -->
+	<entry key="web.config.staticSource.rootPath">/tmp/staticSource</entry><!-- 静态资源网站根目录 -->
 </properties>

@@ -9,8 +9,8 @@ public interface Cache {
 	//缓存一个数据，永久有效
 	void set(CacheKeyPre pre, String key, String value);
 	
-	//缓存一个数据，并设置有效时间，单位：秒
-	void set(CacheKeyPre pre, String key, String value, int seconds);
+	//缓存一个数据，并设置有效时间，单位：毫秒
+	void set(CacheKeyPre pre, String key, String value, long milliseconds);
 	
 	//返回一个String
 	String getString(CacheKeyPre pre, String key);

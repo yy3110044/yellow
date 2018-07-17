@@ -1,22 +1,17 @@
 package com.yy.yellow.util;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -100,62 +95,7 @@ public class Util {
 			return millis;
 		}
 	}
-	
-	//保存上传文件方法
-	public static ResponseObject saveFile(MultipartFile file, ServletContext context, String uploadPath) {
-		ResponseObject ro = new ResponseObject();
-		
-		if(file != null && file.getSize() > 0) {
-			CreateFolderResult result = getBaseFolder(context, uploadPath);
-			String originalFileName = file.getOriginalFilename(); //文件原始名称
-			int index = originalFileName.lastIndexOf(".");
-			String newFileName = UUID.randomUUID().toString() + (index < 0 ? "" : originalFileName.substring(index));
-			File newFile = new File(result.baseFolder, newFileName);
-			
-			try {
-				file.transferTo(newFile);
-				ro.setCode(100);
-				ro.setMsg("文件上传成功");
-				Map<String, Object> roResult = new HashMap<String, Object>();
-				roResult.put("serverUrl", result.baseUrl + newFileName);
-				ro.setResult(roResult);
-				logger.debug(newFile.getPath());
-			} catch (IllegalStateException | IOException e) {
-				ro.setCode(102);
-				ro.setMsg("文件上传失败");
-				logger.warn(e.toString());
-			}
-		} else {
-			ro.setCode(101);
-			ro.setMsg("上传文件为空");
-		}
-		return ro;
-	}
-	private static CreateFolderResult getBaseFolder(ServletContext context, String uploadPath) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String dateStr = sdf.format(new Date());
-		
-		String baseFolder = context.getRealPath(uploadPath + "/" + dateStr);
-		File file = new File(baseFolder);
-		if(!file.exists()) { //不存在目录则先创建
-			file.mkdirs();
-		}
-		
-		String baseUrl = uploadPath + "/" + dateStr + "/";
-		if(baseUrl.charAt(0) == '/') {
-			baseUrl = baseUrl.substring(1);
-		}
-		return new CreateFolderResult(file, baseUrl);
-	}
-	private static class CreateFolderResult {
-		private File baseFolder;
-		private String baseUrl;
-		public CreateFolderResult(File baseFolder, String baseUrl) {
-			this.baseFolder = baseFolder;
-			this.baseUrl = baseUrl;
-		}
-	}
-	
+
 	/**
 	 * 将对象转换成json字符串
 	 * @param o

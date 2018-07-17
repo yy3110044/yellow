@@ -24,7 +24,7 @@ public class MapCache implements Cache {
 	//缓存map
 	private Map<String, CacheObject> cacheMap;
 
-	public MapCache(@Value("${web.config.cache.clearDelay:720}") final long clearDelay) {//从application.xml中读取清除时间间隔
+	public MapCache(@Value("${web.config.cache.clearDelay:43200000}") final long clearDelay) {//从application.xml中读取清除时间间隔
 		if(clearDelay < 1) {
 			throw new RuntimeException("clearDelay必须大于零");
 		}
@@ -35,7 +35,7 @@ public class MapCache implements Cache {
 			public void run() {
 				cleanInvalidCache();
 			}
-		}, clearDelay, clearDelay, TimeUnit.MINUTES);
+		}, clearDelay, clearDelay, TimeUnit.MILLISECONDS);
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class MapCache implements Cache {
 	}
 
 	@Override
-	public void set(CacheKeyPre pre, String key, String value, int seconds) {
+	public void set(CacheKeyPre pre, String key, String value, long milliseconds) {
 		key = pre + ":" + key;
-		this.cacheMap.put(key, new CacheObject(key, value, System.currentTimeMillis() + seconds * 1000));
+		this.cacheMap.put(key, new CacheObject(key, value, System.currentTimeMillis() + milliseconds));
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class MapCache implements Cache {
 	private static final long foreverTime = 3471264000000L;
 	
 	//缓存对象
-	public class CacheObject implements Comparable<CacheObject> {
+	private class CacheObject implements Comparable<CacheObject> {
 		private String key; //key
 		private String value; //缓存数据
 		private long expirationTime; //到期时间
@@ -105,24 +105,6 @@ public class MapCache implements Cache {
 		CacheObject(String key, String value, long expirationTime) {
 			this.key = key;
 			this.value = value;
-			this.expirationTime = expirationTime;
-		}
-		public String getKey() {
-			return key;
-		}
-		public void setKey(String key) {
-			this.key = key;
-		}
-		public String getValue() {
-			return value;
-		}
-		public void setValue(String value) {
-			this.value = value;
-		}
-		public long getExpirationTime() {
-			return expirationTime;
-		}
-		public void setExpirationTime(long expirationTime) {
 			this.expirationTime = expirationTime;
 		}
 		@Override

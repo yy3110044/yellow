@@ -24,11 +24,11 @@ public class RedisCache implements Cache {
 	}
 
 	@Override
-	public void set(CacheKeyPre pre, String key, String value, int seconds) {
+	public void set(CacheKeyPre pre, String key, String value, long milliseconds) {
 		key = pre.name() + ":" + key;
 		try(Jedis jedis = jedisPool.getResource()) {
 			jedis.set(key, value);
-			jedis.expire(key, seconds);
+			jedis.pexpire(key, milliseconds);
 		}
 	}
 
