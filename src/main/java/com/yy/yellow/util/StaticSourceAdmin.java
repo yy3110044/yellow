@@ -2,22 +2,21 @@ package com.yy.yellow.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import com.yy.yellow.po.Movie;
+import com.yy.yellow.po.Movie.DownloadStatus;
 import com.yy.yellow.service.MovieService;
 
 /**
@@ -34,7 +33,7 @@ public class StaticSourceAdmin {
 
 	@Value("${web.config.download.readTimeout:60}")
 	private int readTimeout;
-	
+
 	@Value("${web.config.staticSource.host}")
 	private String staticSourceHost;
 	
@@ -69,15 +68,38 @@ public class StaticSourceAdmin {
 			return new ResponseObject(101, "上传文件为空");
 		}
 	}
+	
+	/**
+	 * 下载文件
+	 * @param url
+	 */
+	public ResponseObject saveDownloadFile(String url) {
+		CreateFolderResult cfr = this.getBaseFolder();
+		
+		String newFileName = UUID.randomUUID().toString() + Util.getSuffix(url);
+		File newFile = new File(cfr.baseFolder, newFileName);
+		
+		try {
+			FileUtils.copyURLToFile(new URL(url), newFile, connectionTimeout, readTimeout);
+			return new ResponseObject(100, "文件下载成功", new MyMap().set("serverUrl", cfr.baseUrl + newFileName).set("filePath", newFile.getPath()));
+		} catch (IOException e) {
+			logger.error(e.toString());
+			return new ResponseObject(101, "文件下载失败");
+		}
+	}
 
-	private Map<String, Future<DownloadResult>> downloadRecord = new ConcurrentHashMap<>();
 	private ExecutorService service = Executors.newFixedThreadPool(5);
 	/**
 	 * 下载文件
 	 */
 	public void downloadFile(String movieId) {
-		Future<DownloadResult> future = service.submit(new DownloadCallable(movieId, ms));
-		f
+		//提交任务，并将状态设为准备中
+		Movie movie = ms.findById(movieId);
+		if(movie != null) {
+			movie.setDownloadStatus(DownloadStatus.准备中);
+			ms.update(movie);
+			service.execute(new DownloadRunnable(movieId, ms, this));
+		}
 	}
 	
 	private CreateFolderResult getBaseFolder() {

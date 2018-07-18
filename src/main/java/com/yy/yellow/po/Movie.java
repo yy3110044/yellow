@@ -10,6 +10,7 @@ public class Movie {
 	private String tags;
 	private String imgUrl;
 	private String externalLink;
+	private DownloadStatus downloadStatus = DownloadStatus.未下载;
 	private String internalLink;
 	private String filePath;
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -61,5 +62,15 @@ public class Movie {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public DownloadStatus getDownloadStatus() {
+		return downloadStatus;
+	}
+	public void setDownloadStatus(DownloadStatus downloadStatus) {
+		this.downloadStatus = downloadStatus;
+	}
+
+	public enum DownloadStatus {
+		未下载, 准备中, 下载中, 已完成, 已取消;
 	}
 }
