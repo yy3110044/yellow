@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.yy.yellow.po.Movie;
+import com.yy.yellow.po.Movie.DownloadStatus;
 import com.yy.yellow.service.MovieService;
 import com.yy.yellow.util.Page;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.ResponseObject;
+import com.yy.yellow.util.StaticSourceAdmin;
 import com.yy.yellow.util.Util;
 
 @RestController
@@ -25,6 +27,9 @@ import com.yy.yellow.util.Util;
 public class MovieAdminController {
 	@Autowired
 	private MovieService ms;
+	
+	@Autowired
+	private StaticSourceAdmin ssa;
 	
 	/**
 	 * 添加一个影片
@@ -123,6 +128,7 @@ public class MovieAdminController {
 	@RequestMapping("/listMovie")
 	public ResponseObject listMovie(@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startTime,
 	                                 @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date endTime,
+	                                 @RequestParam String downloadStatus,
 	                                 @RequestParam(defaultValue="20") int pageSize,
 	                                 @RequestParam(defaultValue="1") int pageNo,
 	                                 @RequestParam(defaultValue="5") int showCount,
@@ -135,6 +141,9 @@ public class MovieAdminController {
 		if(endTime != null) {
 			qc.addCondition("createTime", "<=", endTime);
 		}
+		if(!"全部".equals(downloadStatus)) {
+			qc.addCondition("downloadStatus", "=", DownloadStatus.valueOf(downloadStatus));
+		}
 		qc.setPage(new Page(pageSize, pageNo, showCount));
 		qc.addSort(sortField, sortType);
 		List<Movie> movieList = ms.query(qc);
@@ -143,5 +152,15 @@ public class MovieAdminController {
 		result.put("list", movieList);
 		result.put("page", qc.getPage().setRowCount(ms.getCount(qc)));
 		return new ResponseObject(100, "返回成功", result);
+	}
+	
+	/**
+	 * 下载影片
+	 * @return
+	 */
+	@RequestMapping("/downloadMovie")
+	public ResponseObject downloadMovie(@RequestParam String id) {
+		ssa.downloadFile(id);
+		return new ResponseObject(100, "已添加到下载队列");
 	}
 }

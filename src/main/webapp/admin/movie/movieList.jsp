@@ -11,6 +11,20 @@
 <script type="text/javascript" src="laydate/laydate.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
+var downloadMovie = function(id, e){
+	loadData({
+		url : "administration/downloadMovie",
+		data : {
+			"id" : id
+		},
+		success : function(data){
+			alert(data.msg);
+			if(data.code == 100) {
+				$(e).remove();
+			}
+		}
+	})
+};
 var del = function(id, e){
 	var deleteFile = confirm("是否同时删除服务器文件？");
 	if(confirm("确定删除吗？删除后无法恢复")) {
@@ -37,6 +51,7 @@ var query = function(pageSize, pageNo){
 		data : {
 			"startTime" : startTime,
 			"endTime" : endTime,
+			"downloadStatus" : $("#downloadStatus").val(),
 			"pageSize" : pageSize,
 			"pageNo" : pageNo
 		},
@@ -73,6 +88,17 @@ var query = function(pageSize, pageNo){
 							return obj.filePath;
 						}},
 						{field : "createTime"},
+						{fn : function(obj){
+							switch(obj.downloadStatus) {
+							case "准备中":
+							case "下载中":
+							case "已完成":
+								return obj.downloadStatus;
+							case "未下载":
+							case "已取消":
+								return obj.downloadStatus + '&nbsp;<a href="javascript:;" onclick="downloadMovie(\'' + obj.id + '\', this)">下载</a>';
+							}
+						}},
 						{fn : function(obj){
 							var str = '<a href="javascript:;" onclick="del(\'' + obj.id + '\', this)">删除</a>';
 							return str;
@@ -114,6 +140,7 @@ $(document).ready(function(){
 				<input type="text" id="startTime" class="laydate-icon" onclick="laydate({istime:true,format:'YYYY-MM-DD hh:mm:ss'});" style="width:140px;cursor:pointer;" readonly="readonly" placeholder="开始时间">
 				-
 				<input type="text" id="endTime" class="laydate-icon" onclick="laydate({istime:true,format:'YYYY-MM-DD hh:mm:ss'});" style="width:140px;cursor:pointer;" readonly="readonly" placeholder="结束时间">
+				&nbsp;&nbsp;<select id="downloadStatus" style="width:80px;"><option value="全部">全部</option><%for(com.yy.yellow.po.Movie.DownloadStatus ds : com.yy.yellow.po.Movie.DownloadStatus.values()){%><option value="<%=ds.name()%>"><%=ds.name()%></option><%}%></select>
 				&nbsp;&nbsp;<input type="button" value="查询" onclick="query(20, 1)">
 			</td>
 		</tr>
@@ -125,6 +152,7 @@ $(document).ready(function(){
 			<td><strong>内部链接</strong></td>
 			<td><strong>本地文件路径</strong></td>
 			<td><strong>添加时间</strong></td>
+			<td><strong>下载状态</strong></td>
 			<td><strong>操作</strong></td>
 		</tr>
 	</table>
