@@ -71,7 +71,8 @@ CREATE TABLE `yellow_movie` (
   `internalLink` varchar(512) COMMENT '资源内部链接',
   `filePath` varchar(256) COMMENT '文件本地路径',
   `createTime` datetime COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `externalLink` (`externalLink`(128))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*观影日志表*/
