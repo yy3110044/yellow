@@ -4,8 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yy.yellow.mapper.MovieMapper">
     <insert id="add" parameterType="com.yy.yellow.po.Movie">
-        insert into yellow_movie(id, title, tags, imgUrl, externalLink, downloadStatus, internalLink, filePath, createTime)
-        values(#{id}, #{title}, #{tags}, #{imgUrl}, #{externalLink}, #{downloadStatus}, #{internalLink}, #{filePath}, #{createTime})
+        insert into yellow_movie(id, title, tags, imgUrl, externalLink, internalLink, createTime)
+        values(#{id}, #{title}, #{tags}, #{imgUrl}, #{externalLink}, #{internalLink}, #{createTime})
     </insert>
 
     <delete id="delete" parameterType="String">
@@ -14,12 +14,12 @@
 
     <update id="update" parameterType="com.yy.yellow.po.Movie">
         update yellow_movie set
-        id = #{id}, title = #{title}, tags = #{tags}, imgUrl = #{imgUrl}, externalLink = #{externalLink}, downloadStatus = #{downloadStatus}, internalLink = #{internalLink}, filePath = #{filePath}, createTime = #{createTime}
+        id = #{id}, title = #{title}, tags = #{tags}, imgUrl = #{imgUrl}, externalLink = #{externalLink}, internalLink = #{internalLink}, createTime = #{createTime}
         where id = #{id}
     </update>
 
     <select id="find" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.Movie">
-        select id, title, tags, imgUrl, externalLink, downloadStatus, internalLink, filePath, createTime from yellow_movie
+        select id, title, tags, imgUrl, externalLink, internalLink, createTime from yellow_movie
         <if test="useWhere">
             where
             <foreach collection="conditions" index="index" item="obj">
@@ -41,12 +41,12 @@
     </select>
 
     <select id="findById" parameterType="String" resultType="com.yy.yellow.po.Movie">
-        select id, title, tags, imgUrl, externalLink, downloadStatus, internalLink, filePath, createTime from yellow_movie
+        select id, title, tags, imgUrl, externalLink, internalLink, createTime from yellow_movie
         where id = #{id}
     </select>
 
     <select id="query" parameterType="com.yy.yellow.util.QueryCondition" resultType="com.yy.yellow.po.Movie">
-        select id, title, tags, imgUrl, externalLink, downloadStatus, internalLink, filePath, createTime from yellow_movie
+        select id, title, tags, imgUrl, externalLink, internalLink, createTime from yellow_movie
         <if test="useWhere"> <!-- 添加查询条件 -->
             where
             <foreach collection="conditions" index="index" item="obj">
@@ -81,4 +81,10 @@
             </foreach>
         </if>
     </select>
+    
+    <update id="updateDownloadUrl">
+    	update yellow_movie set
+    	internalLink = #{internalLink}
+    	where externalLink = #{externalLink}
+    </update>
 </mapper>

@@ -67,9 +67,7 @@ CREATE TABLE `yellow_movie` (
   `tags` varchar(512) COMMENT '标签',
   `imgUrl` varchar(512) COMMENT '缩略图链接',
   `externalLink` varchar(512) COMMENT '资源外部链接',
-  `downloadStatus` enum('未下载', '准备中', '下载中', '已完成', '已取消') COMMENT '下载状态',
   `internalLink` varchar(512) COMMENT '资源内部链接',
-  `filePath` varchar(256) COMMENT '文件本地路径',
   `createTime` datetime COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `externalLink` (`externalLink`(128))

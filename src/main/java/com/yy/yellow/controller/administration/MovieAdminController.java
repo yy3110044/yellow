@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yy.yellow.po.Movie;
 import com.yy.yellow.po.Movie.DownloadStatus;
 import com.yy.yellow.service.MovieService;
+import com.yy.yellow.util.MyMap;
 import com.yy.yellow.util.Page;
 import com.yy.yellow.util.QueryCondition;
 import com.yy.yellow.util.ResponseObject;
-import com.yy.yellow.util.StaticSourceAdmin;
 import com.yy.yellow.util.Util;
 
 @RestController
@@ -28,8 +32,8 @@ public class MovieAdminController {
 	@Autowired
 	private MovieService ms;
 	
-	@Autowired
-	private StaticSourceAdmin ssa;
+	@Value("${web.config.staticSource.downloadUrl}")
+	private String downloadUrl;
 	
 	/**
 	 * 添加一个影片
@@ -159,8 +163,14 @@ public class MovieAdminController {
 	 * @return
 	 */
 	@RequestMapping("/downloadMovie")
-	public ResponseObject downloadMovie(@RequestParam String id) {
-		ssa.downloadFile(id);
-		return new ResponseObject(100, "已添加到下载队列");
+	public ResponseObject downloadMovie(@RequestParam String id, HttpServletRequest req) {
+		Movie movie = ms.findById(id);
+		if(movie != null && !Util.empty(movie.getExternalLink())) {
+			String basePath = (String)req.getAttribute("basePath");
+			Util.requestPost(downloadUrl, new MyMap().set("sourceUrl", movie.getExternalLink()).set("notifyUrl", basePath + "downloadCallback"));
+			return new ResponseObject(100, "已添加到下载队列");
+		} else {
+			return new ResponseObject(101, "资源为空");
+		}
 	}
 }

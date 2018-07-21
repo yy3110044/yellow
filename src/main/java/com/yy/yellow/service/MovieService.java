@@ -12,4 +12,5 @@ public interface MovieService {
     Movie findById(String id);
     List<Movie> query(QueryCondition qc);
     int getCount(QueryCondition qc);
+    void updateDownloadUrl(String internalLink, String externalLink);
 }

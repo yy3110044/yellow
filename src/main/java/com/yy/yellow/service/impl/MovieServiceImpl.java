@@ -49,4 +49,9 @@ public class MovieServiceImpl implements MovieService {
     public int getCount(QueryCondition qc) {
         return mapper.getCount(qc);
     }
+
+	@Override
+	public void updateDownloadUrl(String internalLink, String externalLink) {
+		mapper.updateDownloadUrl(internalLink, externalLink);
+	}
 }
