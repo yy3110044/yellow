@@ -28,9 +28,7 @@ var addMovie = function(){
 			"tags" : tags,
 			"imgUrl" : imgUrl,
 			"externalLink" : externalLink,
-			"internalLink" : internalLink,
-			"filePath" : filePath,
-			"downloadStatus" : $("#downloadStatus").val()
+			"internalLink" : internalLink
 		},
 		success : function(data){
 			$("#showMsg").html(data.msg);
@@ -115,16 +113,6 @@ $(document).ready(function(){
 		<tr>
             <td align="right" nowrap="nowrap" bgcolor="#f1f1f1">本地文件路径：</td>
             <td><input type="text" id="filePath" style="width:350px;"></td>
-        </tr>
-        <tr>
-            <td align="right" nowrap="nowrap" bgcolor="#f1f1f1">下载状态：</td>
-            <td>
-                <select id="downloadStatus" style="width:80px;">
-                    <%for(com.yy.yellow.po.Movie.DownloadStatus ds : com.yy.yellow.po.Movie.DownloadStatus.values()){%>
-                    <option value="<%=ds.name()%>"><%=ds.name()%></option>
-                    <%}%>
-                </select>
-            </td>
         </tr>
 		<tr>
 			<td align="right" nowrap="nowrap" bgcolor="#f1f1f1"></td>

@@ -1,15 +1,11 @@
 package com.yy.yellow.controller.administration;
 
-import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.yy.yellow.po.Movie;
-import com.yy.yellow.po.Movie.DownloadStatus;
 import com.yy.yellow.service.MovieService;
 import com.yy.yellow.util.MyMap;
 import com.yy.yellow.util.Page;
@@ -94,35 +89,8 @@ public class MovieAdminController {
 	 */
 	@RequestMapping("/deleteMovie")
 	public ResponseObject deleteMovie(@RequestParam String id, @RequestParam(defaultValue="true") boolean deleteFile) {
-		if(deleteFile) {
-			Movie movie = ms.findById(id);
-			if(movie != null) {
-				if(!Util.empty(movie.getFilePath())) { //删除本地文件
-					FileUtils.deleteQuietly(new File(movie.getFilePath()));
-				}
-				ms.delete(id);
-			}
-		} else {
-			ms.delete(id);
-		}
+		ms.delete(id);
 		return new ResponseObject(100, "删除成功");
-	}
-	
-	/**
-	 * 检查本地文件是否存在
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping("/checkFile")
-	public ResponseObject checkFile(@RequestParam String id) {
-		Movie movie = ms.findById(id);
-		if(movie != null && !Util.empty(movie.getFilePath())) {
-			File file = new File(movie.getFilePath());
-			if(file.exists()) {
-				return new ResponseObject(100, "文件存在");
-			}
-		}
-		return new ResponseObject(101, "文件不存在");
 	}
 
 	/**
@@ -132,7 +100,6 @@ public class MovieAdminController {
 	@RequestMapping("/listMovie")
 	public ResponseObject listMovie(@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startTime,
 	                                 @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date endTime,
-	                                 @RequestParam String downloadStatus,
 	                                 @RequestParam(defaultValue="20") int pageSize,
 	                                 @RequestParam(defaultValue="1") int pageNo,
 	                                 @RequestParam(defaultValue="5") int showCount,
@@ -144,9 +111,6 @@ public class MovieAdminController {
 		}
 		if(endTime != null) {
 			qc.addCondition("createTime", "<=", endTime);
-		}
-		if(!"全部".equals(downloadStatus)) {
-			qc.addCondition("downloadStatus", "=", DownloadStatus.valueOf(downloadStatus));
 		}
 		qc.setPage(new Page(pageSize, pageNo, showCount));
 		qc.addSort(sortField, sortType);

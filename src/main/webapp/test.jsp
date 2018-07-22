@@ -113,12 +113,11 @@ var paths = [
 	{"path":"administration/getPerByCache", "paramNames":["level"], "desc":"返回缓存中的用户级别数据"},
 	
 	//后台影片管理
-	{"path":"administration/addMovie", "paramNames":["title", "tags", "imgUrl", "externalLink", "internalLink", "filePath", "createTime"], "desc":"添加一个影片"},
+	{"path":"administration/addMovie", "paramNames":["title", "tags", "imgUrl", "externalLink", "internalLink", "createTime"], "desc":"添加一个影片"},
 	{"path":"administration/getMovie", "paramNames":["id"], "desc":"返回一个影片的信息"},
-	{"path":"administration/deleteMovie", "paramNames":["id", "deleteFile"], "desc":"删除一个影片"},
-	{"path":"administration/updateMovie", "paramNames":["id", "title", "tags", "imgUrl", "externalLink", "internalLink", "filePath", "createTime"], "desc":"更新一个影片"},
+	{"path":"administration/deleteMovie", "paramNames":["id"], "desc":"删除一个影片"},
+	{"path":"administration/updateMovie", "paramNames":["id", "title", "tags", "imgUrl", "externalLink", "internalLink", "createTime"], "desc":"更新一个影片"},
 	{"path":"administration/listMovie", "paramNames":["startTime", "endTime", "pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"分页查询影片"},
-	{"path":"administration/checkFile", "paramNames":["id"], "desc":"检查影片是否存在"},
 	
 	//后台用户管理
 	{"path":"administration/userList", "paramNames":["userName", "pageSize", "pageNo", "showCount", "sortField", "sortType"], "desc":"用户列表"},

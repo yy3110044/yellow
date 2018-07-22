@@ -134,6 +134,10 @@ public class Util {
 		WebApplicationContext context = (WebApplicationContext)sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		return context.getBean(requiredType);
 	}
+	public static String getProperty(String name, ServletContext sc) {
+		WebApplicationContext context = (WebApplicationContext)sc.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		return context.getEnvironment().getProperty(name);
+	}
 	
 	/**
 	 * 得到url文件的后缀
