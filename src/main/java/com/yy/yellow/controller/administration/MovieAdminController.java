@@ -131,8 +131,8 @@ public class MovieAdminController {
 		Movie movie = ms.findById(id);
 		if(movie != null && !Util.empty(movie.getExternalLink())) {
 			String basePath = (String)req.getAttribute("basePath");
-			Util.requestPost(downloadUrl, new MyMap().set("sourceUrl", movie.getExternalLink()).set("notifyUrl", basePath + "downloadCallback"));
-			return new ResponseObject(100, "已添加到下载队列");
+			String result = Util.requestPost(downloadUrl, new MyMap().set("sourceUrl", movie.getExternalLink()).set("notifyUrl", basePath + "downloadCallback"));
+			return new ResponseObject(100, "提交成功", result);
 		} else {
 			return new ResponseObject(101, "资源为空");
 		}

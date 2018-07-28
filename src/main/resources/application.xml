@@ -18,8 +18,8 @@
 	<entry key="spring.datasource.driver-class-name">com.mysql.jdbc.Driver</entry>
 
 	<!-- 日志相关配置 TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
-	<entry key="logging.file">/tmp/testlogs/yellow/yellow.log</entry>
-	<entry key="logging.level.com.yy.yellow">DEBUG</entry>
+	<entry key="logging.file">/tmp/logs/yellow/yellow.log</entry>
+	<entry key="logging.level.com.yy.yellow">INFO</entry>
 	<entry key="logging.level.org.mybatis">INFO</entry>
 	
 	<!-- jackson时间格式设置 -->

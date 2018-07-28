@@ -11,17 +11,14 @@
 <script type="text/javascript" src="laydate/laydate.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
-var downloadMovie = function(id, e){
+var downloadMovie = function(id){
 	loadData({
 		url : "administration/downloadMovie",
 		data : {
 			"id" : id
 		},
 		success : function(data){
-			alert(data.msg);
-			if(data.code == 100) {
-				$(e).remove();
-			}
+			alert(data.msg + "：" + data.result);
 		}
 	})
 };
@@ -59,9 +56,16 @@ var query = function(pageSize, pageNo){
 					list : data.result.list,
 					fields : [
 						{field : "id"},
+						{fn : function(obj){
+							return '<img style="height:100px;width:133px;" src="' + obj.imgUrl + '">';
+						}},
 						{field : "title"},
 						{field : "tags"},
-						{field : "externalLink"},
+						{fn : function(obj){
+							var str = '<a href="' + obj.externalLink + '" target="_blank">' + obj.externalLink + '</a>';
+							str += '&nbsp;<a href="javascript:;" style="color:red;" onclick="downloadMovie(\'' + obj.id + '\')">下载</a>';
+							return str;
+						}},
 						{field : "internalLink"},
 						{field : "createTime"},
 						{fn : function(obj){
@@ -110,6 +114,7 @@ $(document).ready(function(){
 		</tr>
 		<tr align="center">
 			<td><strong>ID</strong></td>
+			<td><strong>缩略图</strong></td>
 			<td><strong>标题</strong></td>
 			<td><strong>标签</strong></td>
 			<td><strong>外部链接</strong></td>
