@@ -81,12 +81,11 @@
 		</dependency>
 		
 		<!-- htmlunit -->
-		<!--
 		<dependency>
 			<groupId>net.sourceforge.htmlunit</groupId>
 			<artifactId>htmlunit</artifactId>
+			<version>2.33</version>
 		</dependency>
-		-->
 	</dependencies>
 	<build>
 		<finalName>yellow</finalName>
